@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vito.uic.domain.UserMapper">
+    <sql id="ColumnList">
+        u.id,
+        u.create_time,
+        u.update_key,
+        u.name,
+        u.nick_name
+    </sql>
+    <sql id="WhereClause">
+        <where>
+            1 = 1
+            <if test="name != null and name != ''">
+                <bind name="name_pattern" value="'%' + name + '%'" />
+                AND (u.name LIKE #{name_pattern})
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" resultType="map" parameterType="map">
+        select
+        <include refid="ColumnList"/>
+        from sys_user u
+        <include refid="WhereClause"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by u.create_time DESC, ${orderBy}
+        </if>
+    </select>
+
+    <select id="countList" resultType="java.lang.Long" parameterType="map">
+        select count(1) from sys_user u
+        <include refid="WhereClause" />
+    </select>
+</mapper>
+
