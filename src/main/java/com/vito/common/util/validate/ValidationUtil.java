@@ -1,6 +1,7 @@
 package com.vito.common.util.validate;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -13,7 +14,7 @@ import java.util.Set;
  */
 public class ValidationUtil {
 	
-	protected final static Logger logger = Logger.getLogger(ValidationUtil.class);
+	protected final static Logger logger = LoggerFactory.getLogger(ValidationUtil.class);
 
     public static <T> Set<ConstraintViolation<T>> validate(T entity) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

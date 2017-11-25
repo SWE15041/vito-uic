@@ -7,9 +7,6 @@ import com.vito.website.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 作者: zhaixm
  * 日期: 2017/11/23 18:18
@@ -24,12 +21,13 @@ public class UserController extends BaseGridController<User> {
 
     @RequestMapping(method = RequestMethod.GET)
     public Page<User> query() {
-//        return super.pageQuery();
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", "zx");
-        Page page = new Page();
-        page.setItems(userService.query(params));
-        return page;
+        logger.debug("log4j test**************");
+        return pageQuery();
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("name", "zx");
+//        Page page = new Page();
+//        page.setItems(userService.query(params));
+//        return page;
     }
 
     @RequestMapping(method = RequestMethod.POST)

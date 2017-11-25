@@ -1,6 +1,7 @@
 package com.vito.common.util.html;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +13,7 @@ public class HtmlUtil {
     private static final String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式  
     private static final String regEx_space = "\\s*|\t|\r|\n";//定义空格回车换行符  
     
-    private static Logger logger = Logger.getLogger(HtmlUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(HtmlUtil.class);
       
     /** 
      * @param htmlStr 

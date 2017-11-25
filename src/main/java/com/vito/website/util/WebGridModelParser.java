@@ -5,7 +5,8 @@ import com.vito.common.util.web.WebUtil;
 import com.vito.storage.model.Condition;
 import com.vito.storage.model.Order;
 import com.vito.storage.model.Page;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.Map;
  */
 public class WebGridModelParser implements GridModelParser {
 
-    private static final Logger LOG = Logger.getLogger(WebGridModelParser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WebGridModelParser.class);
 
     private HttpServletRequest request;
 

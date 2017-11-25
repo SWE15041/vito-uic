@@ -4,7 +4,8 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ContextClassLoaderLocal;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +14,7 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes"})
 public class BeanUtilBean extends BeanUtilsBean {
 	
-	private static Logger logger = Logger.getLogger(BeanUtilBean.class);
+	private static Logger logger = LoggerFactory.getLogger(BeanUtilBean.class);
 	
 	private static final ContextClassLoaderLocal beansByClassLoader = new ContextClassLoaderLocal() {
 

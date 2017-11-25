@@ -1,6 +1,7 @@
 package com.vito.common.comp.event;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
  */
 public class EventManager<L extends EventListener> {
 
-    private static final Logger LOG = Logger.getLogger(EventManager.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EventManager.class);
 
     private boolean throwException = false;
 

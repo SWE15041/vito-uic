@@ -1,6 +1,7 @@
 package com.vito.common.util.collection;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -22,7 +23,7 @@ import java.util.*;
  */
 public class CollectionUtil {
 	
-	private static Logger logger = Logger.getLogger(CollectionUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(CollectionUtil.class);
 	
 	/**
 	 * 判断集合中存储的对象列表中是否存在一个某属性与指定值相匹配的元素

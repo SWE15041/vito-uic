@@ -1,6 +1,8 @@
 package com.vito.storage.service;
 
 import com.vito.storage.domain.BaseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.io.Serializable;
  * 描述:
  */
 public abstract class EntityCRUDServiceImpl<T extends BaseEntity, ID extends Serializable> implements EntityCRUDService<T, ID> {
+
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected abstract JpaRepository<T, ID> getRepository();
 

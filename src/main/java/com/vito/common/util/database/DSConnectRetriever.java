@@ -3,7 +3,8 @@
  */
 package com.vito.common.util.database;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -16,7 +17,7 @@ import java.util.Properties;
 
 public class DSConnectRetriever {
 	/** 日志记录器 */
-	private static Logger logger = Logger.getLogger(DSConnectRetriever.class);
+	private static Logger logger = LoggerFactory.getLogger(DSConnectRetriever.class);
 
 	/** 驱动 */
 	public static final String ORACLE = "oracle.jdbc.driver.OracleDriver";
@@ -77,7 +78,7 @@ public class DSConnectRetriever {
 		try {
 			Class.forName(driverName);
 		} catch (ClassNotFoundException ex) {
-			logger.fatal("没有找到指定的数据库驱动器类：" + ex.getMessage());
+			logger.error("没有找到指定的数据库驱动器类：" + ex.getMessage());
 		}
 		Properties sysProps = new Properties();
 		sysProps.put("user", userName);

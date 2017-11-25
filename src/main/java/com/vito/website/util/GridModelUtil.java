@@ -4,7 +4,8 @@ import com.vito.common.util.validate.Validator;
 import com.vito.storage.model.Condition;
 import com.vito.storage.model.Order;
 import com.vito.website.model.DataType;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
  */
 public class GridModelUtil {
 
-    private static final Logger LOG = Logger.getLogger(GridModelUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GridModelUtil.class);
 
     private static final String CONDITION_PREFIX = "_filter_";
 

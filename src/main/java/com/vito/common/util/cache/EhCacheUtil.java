@@ -2,10 +2,11 @@ package com.vito.common.util.cache;
 
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.CacheManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EhCacheUtil {
-	private static Logger logger = Logger.getLogger(EhCacheUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(EhCacheUtil.class);
 
 	/**
 	 * 缓存管理器

@@ -1,12 +1,13 @@
 package com.vito.common.util.cmd;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
 public class StreamGobbler extends Thread {
 	
-	private Logger logger = Logger.getLogger(StreamGobbler.class);
+	private Logger logger = LoggerFactory.getLogger(StreamGobbler.class);
 
 	InputStream is;
 	StreamGobblerType type;

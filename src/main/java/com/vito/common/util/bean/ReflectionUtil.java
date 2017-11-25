@@ -2,7 +2,8 @@ package com.vito.common.util.bean;
 
 import com.vito.common.util.validate.Validator;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -20,7 +21,7 @@ public class ReflectionUtil {
 
     public static final String CGLIB_CLASS_SEPARATOR = "$$";
 
-    private static Logger logger = Logger.getLogger(ReflectionUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(ReflectionUtil.class);
 
     /**
      * 调用Getter方法.

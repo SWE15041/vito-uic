@@ -1,6 +1,7 @@
 package com.vito.common.util.string;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -8,7 +9,7 @@ import java.net.URLEncoder;
 
 public class EncodeUtil {
 	
-	private static final Logger LOG = Logger.getLogger(EncodeUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EncodeUtil.class);
 	
 	public static final String ISO_8859_1 = "ISO-8859-1";
 	public static final String GBK = "GBK";

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vito.uic.domain.RoleMapper">
+    <sql id="ColumnList">
+        r.id,
+        r.create_time,
+        r.update_key,
+        r.name,
+        r.code,
+        r.is_default
+    </sql>
+    <sql id="WhereClause">
+        <where>
+            1 = 1
+            <if test="name != null and name != ''">
+                <bind name="name_pattern" value="'%' + name + '%'"/>
+                AND (r.name LIKE #{name_pattern})
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" resultType="map" parameterType="map">
+        select
+        <include refid="ColumnList"/>
+        from sys_role r
+        <include refid="WhereClause"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by r.create_time DESC, ${orderBy}
+        </if>
+    </select>
+
+    <select id="countList" resultType="java.lang.Long" parameterType="map">
+        select count(1) from sys_role r
+        <include refid="WhereClause"/>
+    </select>
+</mapper>
+

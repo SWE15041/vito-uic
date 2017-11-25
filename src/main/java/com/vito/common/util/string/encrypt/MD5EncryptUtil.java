@@ -1,6 +1,7 @@
 package com.vito.common.util.string.encrypt;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
 
@@ -11,7 +12,7 @@ import java.security.MessageDigest;
  */
 public class MD5EncryptUtil {
 
-    private static final Logger LOG = Logger.getLogger(MD5EncryptUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MD5EncryptUtil.class);
     private static final String SALT_KEY = "zhai@ravan";
 
     /**

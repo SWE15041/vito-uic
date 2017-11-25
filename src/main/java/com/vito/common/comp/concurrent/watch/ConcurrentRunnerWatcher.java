@@ -1,6 +1,7 @@
 package com.vito.common.comp.concurrent.watch;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Queue;
 import java.util.concurrent.Future;
@@ -19,8 +20,8 @@ import java.util.concurrent.TimeoutException;
 @SuppressWarnings("rawtypes")
 public class ConcurrentRunnerWatcher implements Runnable {
 	
-	private static final Logger LOG = Logger.getLogger(ConcurrentRunnerWatcher.class);
-	
+	private static final Logger LOG = LoggerFactory.getLogger(ConcurrentRunnerWatcher.class);
+
 	/**
 	 * 线程队列
 	 */

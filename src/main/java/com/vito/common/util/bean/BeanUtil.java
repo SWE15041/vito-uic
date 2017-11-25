@@ -2,11 +2,12 @@ package com.vito.common.util.bean;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BeanUtil extends BeanUtils {
 
-	private static Logger logger = Logger.getLogger(BeanUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(BeanUtil.class);
 
 	static {
 		ConvertUtils.register(new StrToDateConverter(), java.util.Date.class);

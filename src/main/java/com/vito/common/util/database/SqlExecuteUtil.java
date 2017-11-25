@@ -5,7 +5,8 @@
  */
 package com.vito.common.util.database;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class SqlExecuteUtil {
 	/** 写日志器 */
-	private static Logger logger = Logger.getLogger(SqlExecuteUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(SqlExecuteUtil.class);
 
 	/**
 	 * 执行insert ,update ,delete等SQL操作
