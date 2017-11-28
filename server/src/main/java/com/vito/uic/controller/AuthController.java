@@ -1,13 +1,12 @@
 package com.vito.uic.controller;
 
-import com.vito.common.model.Pair;
-import com.vito.common.util.string.CodeGenerateUtil;
 import com.vito.common.util.validate.Validator;
 import com.vito.common.util.web.WebUtil;
 import com.vito.uic.controller.vo.AuthRequest;
 import com.vito.uic.controller.vo.AuthResponse;
 import com.vito.uic.domain.User;
 import com.vito.uic.service.UserService;
+import com.vito.website.constant.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
+import static com.vito.uic.controller.support.UserTicketCache.*;
 
 /**
  * 作者: zhaixm
@@ -31,29 +28,22 @@ import java.util.Map;
 @Controller
 public class AuthController {
 
-    private Map<String, User> stUserCache = Collections.synchronizedMap(new HashMap<>());
-    private Map<String, Pair<User, Date>> tgcUserCache = Collections.synchronizedMap(new HashMap<>());
-
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String toLogin(String target, HttpServletRequest request, HttpServletResponse response) {
-//        try {
-//            response.addCookie(new Cookie("tgc", "test"));
-//            response.sendRedirect("http://www.baidu.com");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-        //todo check request cookie 直接验证tgc是否合法，生成serviceTicket返回给应用
         Cookie ticketGrantCookie = WebUtil.getCookie("tgc", request);
-        String ticketGrantVal = ticketGrantCookie.getValue();
-        if (Validator.isNotNull(ticketGrantVal)) {
-            Pair<User, Date> userDatePair = tgcUserCache.get(ticketGrantVal);
-            User loginUser = userDatePair.getFirst();
-            String st = genServiceTicket(loginUser);
-            redirect(target, st, response);
+        if (Validator.isNotNull(ticketGrantCookie)) {
+            String ticketGrantVal = ticketGrantCookie.getValue();
+            if (Validator.isNotNull(ticketGrantVal)) {
+                // 验证tgc是否合法，生成serviceTicket返回给应用
+                User authUser = getTgcUser(ticketGrantVal);
+                if (Validator.isNotNull(authUser)) {
+                    String st = genServiceTicket(authUser);
+                    redirect(target, st, response);
+                }
+            }
         }
         return "login";
     }
@@ -77,13 +67,11 @@ public class AuthController {
         User loginUser = userService.findByLoginName(loginName);
         if (loginUser.getPassword().equals(password)) {
             String serviceTicket = genServiceTicket(loginUser);
-            String ticketGrantVal = CodeGenerateUtil.generateUUID();
-            Pair<User, Date> userDatePair = new Pair<>(loginUser, new Date());
-            tgcUserCache.put(ticketGrantVal, userDatePair);
+            String ticketGrantCookie = genTicketGrantCookie(loginUser);
+            request.getSession().setAttribute(SessionConstant.USER, loginUser);
             // 向客户端浏览器设置tgc，以便浏览器跳转用户中心管理的新应用时无需再进行登录即可通过认证
-            response.addCookie(new Cookie("tgc", ticketGrantVal));
+            response.addCookie(new Cookie("tgc", ticketGrantCookie));
             redirect(target, serviceTicket, response);
-
         } else {
             //TODO 抛出特定的http错误
             throw new RuntimeException("");
@@ -99,12 +87,6 @@ public class AuthController {
         }
     }
 
-    private String genServiceTicket(User loginUser) {
-        String serviceTicket = CodeGenerateUtil.generateUUID();
-        stUserCache.put(serviceTicket, loginUser);
-        return serviceTicket;
-    }
-
     /**
      * 通过st(serviceTicket)来验证是否已通过合法认证登录，如果验证通过则返回用户信息
      * 该接口有uic-client中的uicAuthFilter访问
@@ -116,15 +98,14 @@ public class AuthController {
     @ResponseBody
     public AuthResponse auth(@RequestBody AuthRequest authRequest) {
         String serviceTicket = authRequest.getServiceTicket();
-        User authUser = stUserCache.get(serviceTicket);
+        User authUser = getStUser(serviceTicket);
         if (Validator.isNotNull(authUser)) {
             AuthResponse authResponse = new AuthResponse();
             authResponse.setResult(true);
             authResponse.setUser(authUser);
-            stUserCache.remove(serviceTicket); //一旦st使用过就马上清理
             return authResponse;
         } else {
-            //todo throw ticket invalid exception
+            //todo throw service ticket invalid exception
             throw new RuntimeException("");
         }
     }
