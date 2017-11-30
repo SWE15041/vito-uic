@@ -3,10 +3,8 @@ package com.vito.uic.core;
 import com.vito.common.model.enums.YesNoEnum;
 import com.vito.uic.domain.RegApp;
 import com.vito.uic.service.RegAppService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.vito.website.core.Application;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,20 +14,20 @@ import java.util.stream.Collectors;
  * 日期: 2017/11/28 17:10
  * 描述:
  */
-@Component
 public class AppDataCache {
 
-    private List<RegApp> enableAppsCache = new ArrayList<>();
+    private static List<RegApp> enableApps = new ArrayList<>();
 
-    @Autowired
-    private RegAppService regAppService;
-
-    @PostConstruct
-    public void init() {
+    public static void init() {
+        RegAppService regAppService = Application.getBeanContext().getBean(RegAppService.class);
         List<RegApp> regApps = regAppService.findAll();
-        enableAppsCache = regApps.stream()
-                                 .filter(regApp -> regApp.getEnable() == YesNoEnum.YES)
-                                 .collect(Collectors.toList());
+        enableApps = regApps.stream()
+                            .filter(regApp -> regApp.getEnable() == YesNoEnum.YES)
+                            .collect(Collectors.toList());
+    }
+
+    public static List<RegApp> getEnableRegApps() {
+        return enableApps;
     }
 
 }

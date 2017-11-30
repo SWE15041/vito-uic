@@ -1,4 +1,4 @@
-package com.vito.uic.controller.vo;
+package com.vito.uic.web.vo;
 
 /**
  * 作者: zhaixm
@@ -7,8 +7,26 @@ package com.vito.uic.controller.vo;
  */
 public class AuthRequest {
 
+    private String appKey;
+    private String appSecret;
     private String serviceTicket;
     private String tickGrantCookie;
+
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
+
+    public String getAppSecret() {
+        return appSecret;
+    }
+
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
+    }
 
     public String getServiceTicket() {
         return serviceTicket;

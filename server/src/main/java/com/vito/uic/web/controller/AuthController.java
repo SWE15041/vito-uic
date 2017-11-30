@@ -1,29 +1,31 @@
-package com.vito.uic.controller;
+package com.vito.uic.web.controller;
 
 import com.vito.common.util.validate.Validator;
 import com.vito.common.util.web.WebUtil;
-import com.vito.uic.controller.vo.AuthRequest;
-import com.vito.uic.controller.vo.AuthResponse;
+import com.vito.uic.web.vo.AuthRequest;
+import com.vito.uic.web.vo.AuthResponse;
 import com.vito.uic.domain.User;
 import com.vito.uic.service.UserService;
 import com.vito.website.constant.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.vito.uic.controller.support.UserTicketCache.*;
+import static com.vito.uic.web.support.UserTicketCache.*;
 
 /**
  * 作者: zhaixm
  * 日期: 2017/11/25 23:18
- * 描述:
+ * 描述: 认证控制器
  */
 @Controller
 public class AuthController {
@@ -32,7 +34,7 @@ public class AuthController {
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String toLogin(String target, HttpServletRequest request, HttpServletResponse response) {
+    public String toLogin(String target, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
         Cookie ticketGrantCookie = WebUtil.getCookie("tgc", request);
         if (Validator.isNotNull(ticketGrantCookie)) {
             String ticketGrantVal = ticketGrantCookie.getValue();
@@ -45,6 +47,7 @@ public class AuthController {
                 }
             }
         }
+        modelMap.put("target", target);
         return "login";
     }
 
@@ -56,26 +59,35 @@ public class AuthController {
      * @param target
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public void login(String loginName,
+    public String login(String loginName,
                       String password,
                       String target,
+                      ModelMap modelMap,
                       HttpServletRequest request,
                       HttpServletResponse response) {
+        modelMap.put("target", target);
         if (Validator.isNull(target)) {
-            // todo 必须有目标地址
+            modelMap.put("errMsg", "访问方式不合法！");
+            return "invalid";
         }
         User loginUser = userService.findByLoginName(loginName);
-        if (loginUser.getPassword().equals(password)) {
-            String serviceTicket = genServiceTicket(loginUser);
-            String ticketGrantCookie = genTicketGrantCookie(loginUser);
-            request.getSession().setAttribute(SessionConstant.USER, loginUser);
-            // 向客户端浏览器设置tgc，以便浏览器跳转用户中心管理的新应用时无需再进行登录即可通过认证
-            response.addCookie(new Cookie("tgc", ticketGrantCookie));
-            redirect(target, serviceTicket, response);
+        if (Validator.isNull(loginUser)) {
+            modelMap.put("errMsg", "用户名不存在");
         } else {
-            //TODO 抛出特定的http错误
-            throw new RuntimeException("");
+            if (loginUser.getPassword().equals(password)) {
+                String serviceTicket = genServiceTicket(loginUser);
+                String ticketGrantCookie = genTicketGrantCookie(loginUser);
+                request.getSession().setAttribute(SessionConstant.USER, loginUser);
+                // 向客户端浏览器设置tgc，以便浏览器跳转用户中心管理的新应用时无需再进行登录即可通过认证
+                response.addCookie(new Cookie("tgc", ticketGrantCookie));
+                redirect(target, serviceTicket, response);
+            } else {
+                //TODO 抛出特定的http错误
+//                throw new RuntimeException("");
+                modelMap.put("errMsg", "用户名密码错误");
+            }
         }
+        return "login";
     }
 
     private void redirect(String target, String serviceTicket, HttpServletResponse response) {

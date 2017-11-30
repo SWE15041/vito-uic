@@ -1,4 +1,4 @@
-package com.vito.uic.controller.vo;
+package com.vito.uic.web.vo;
 
 import com.vito.uic.domain.User;
 

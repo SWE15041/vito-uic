@@ -5,7 +5,7 @@
  * 日期: 2014-7-1
  * 描述:
  */
-package com.vito.website.controller;
+package com.vito.website.web.controller;
 
 import com.vito.common.util.web.WebUtil;
 import org.slf4j.Logger;

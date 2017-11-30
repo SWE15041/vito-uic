@@ -11,7 +11,7 @@ import javax.persistence.Table;
 /**
  * 作者: zhaixm
  * 日期: 2017/11/28 23:57
- * 描述:
+ * 描述: 应用注册信息
  */
 @Entity
 @Table(name = "sys_reg_app")
@@ -59,5 +59,13 @@ public class RegApp extends BaseBusinessEntity {
 
     public void setEnable(YesNoEnum enable) {
         this.enable = enable;
+    }
+
+    public String getWhiteIps() {
+        return whiteIps;
+    }
+
+    public void setWhiteIps(String whiteIps) {
+        this.whiteIps = whiteIps;
     }
 }

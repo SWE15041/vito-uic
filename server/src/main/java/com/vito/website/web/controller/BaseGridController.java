@@ -1,4 +1,4 @@
-package com.vito.website.controller;
+package com.vito.website.web.controller;
 
 import com.vito.common.util.bean.ReflectionUtil;
 import com.vito.storage.model.Condition;

@@ -1,6 +1,6 @@
 package com.vito.website.core;
 
-import com.vito.website.controller.BaseController;
+import com.vito.website.web.controller.BaseController;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,7 +15,7 @@ public class ControllerAdvisor {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerAdvisor.class);
 
-    @Before("within(com.vito.website.controller.BaseController+)")
+    @Before("within(com.vito.website.web.controller.BaseController+)")
     public void before(JoinPoint joinPoint) {
         Object target = joinPoint.getTarget();
         if (target instanceof BaseController) {
@@ -25,7 +25,7 @@ public class ControllerAdvisor {
         }
     }
 
-    @AfterReturning("within(com.vito.website.controller.BaseController+)")
+    @AfterReturning("within(com.vito.website.web.controller.BaseController+)")
     public void afterReturning(JoinPoint joinPoint) {
         Object target = joinPoint.getTarget();
         if (target instanceof BaseController) {

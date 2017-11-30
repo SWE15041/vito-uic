@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @MapperScan(basePackages = "com.vito", markerInterface = MybatisMapper.class)
 @ComponentScan("com.vito")
-public class Application {
+public class ApplicationMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ApplicationMain.class, args);
     }
 
 }

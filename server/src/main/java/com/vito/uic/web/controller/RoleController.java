@@ -1,9 +1,9 @@
-package com.vito.uic.controller;
+package com.vito.uic.web.controller;
 
 import com.vito.storage.model.Page;
 import com.vito.uic.domain.Role;
 import com.vito.uic.service.RoleService;
-import com.vito.website.controller.BaseGridController;
+import com.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

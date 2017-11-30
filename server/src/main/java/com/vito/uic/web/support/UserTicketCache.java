@@ -1,4 +1,4 @@
-package com.vito.uic.controller.support;
+package com.vito.uic.web.support;
 
 import com.vito.common.model.Pair;
 import com.vito.common.util.string.CodeGenerateUtil;
