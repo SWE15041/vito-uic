@@ -1,5 +1,7 @@
-package com.vito.uic.web;
+package com.vito.uic.web.config;
 
+import com.vito.uic.web.AppInitListener;
+import com.vito.uic.web.AuthFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;

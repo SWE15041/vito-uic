@@ -2,11 +2,12 @@ package com.vito.uic.web.controller;
 
 import com.vito.common.util.validate.Validator;
 import com.vito.common.util.web.WebUtil;
-import com.vito.uic.web.vo.AuthRequest;
-import com.vito.uic.web.vo.AuthResponse;
 import com.vito.uic.domain.User;
 import com.vito.uic.service.UserService;
+import com.vito.uic.web.vo.AuthRequest;
+import com.vito.uic.web.vo.AuthResponse;
 import com.vito.website.constant.SessionConstant;
+import com.vito.website.core.exception.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -60,11 +60,11 @@ public class AuthController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(String loginName,
-                      String password,
-                      String target,
-                      ModelMap modelMap,
-                      HttpServletRequest request,
-                      HttpServletResponse response) {
+                        String password,
+                        String target,
+                        ModelMap modelMap,
+                        HttpServletRequest request,
+                        HttpServletResponse response) {
         modelMap.put("target", target);
         if (Validator.isNull(target)) {
             modelMap.put("errMsg", "访问方式不合法！");
@@ -117,8 +117,8 @@ public class AuthController {
             authResponse.setUser(authUser);
             return authResponse;
         } else {
-            //todo throw service ticket invalid exception
-            throw new RuntimeException("");
+            // throw service ticket invalid exception
+            throw new HttpException("令牌无效，请重新获取授权", "INVALID_ST");
         }
     }
 

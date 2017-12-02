@@ -8,9 +8,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@EnableJpaRepositories(basePackages = {"com.vito"}, repositoryBaseClass = MyJpaRepositoryImpl.class, repositoryFactoryBeanClass = MyRepositoryFactoryBean.class)
 @SpringBootApplication
+@EnableWebMvc
+@EnableJpaRepositories(basePackages = {"com.vito"}, repositoryBaseClass = MyJpaRepositoryImpl.class, repositoryFactoryBeanClass = MyRepositoryFactoryBean.class)
 @MapperScan(basePackages = "com.vito", markerInterface = MybatisMapper.class)
 @ComponentScan("com.vito")
 public class ApplicationMain {
@@ -20,3 +22,4 @@ public class ApplicationMain {
     }
 
 }
+

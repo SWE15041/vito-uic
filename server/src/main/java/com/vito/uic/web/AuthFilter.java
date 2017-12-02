@@ -39,7 +39,7 @@ public class AuthFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpReq = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResp = (HttpServletResponse) servletResponse;
-        String ctxPath = httpReq.getContextPath();
+        String ctxPath = httpReq.getServletPath();
         logger.debug("当前请求路径为：{}", ctxPath);
         if (ctxPath.startsWith("auth")) {
             String reqIp = WebUtil.getIpAddr(httpReq);

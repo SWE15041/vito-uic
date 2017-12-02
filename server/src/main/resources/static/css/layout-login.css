@@ -1,0 +1,32 @@
+.login-page .mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #697882;
+}
+
+.login-page .login-wrapper {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    width: 400px;
+    margin-left: -201px;
+    min-height: 200px;
+    /*background: rgba(255, 255, 255, 0.1);*/
+    background: #fff;
+    border: 1px solid #0e97dd;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+}
+
+.login-page .login-wrapper .login-bd {
+    min-height: 100px;
+    padding: 10px 20px;
+}
+
+.login-page .login-wrapper .login-ft {
+    padding: 10px 20px 0;
+}

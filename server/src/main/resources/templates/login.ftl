@@ -8,24 +8,45 @@
     <meta name="author" content="fyunli">
 
     <base id="base" href="${base}">
-    <title>Spring Boot - hello</title>
+    <title>登录页</title>
 
     <!-- Bootstrap core CSS -->
     <link href="//cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${base}/css/main.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="//cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="${base}/css/layout.css" rel="stylesheet">
+    <link href="${base}/css/layout-login.css" rel="stylesheet">
 </head>
 <body>
-<form method="post" action="/login?target=${target}">
-    <input type="text" name="loginName" placeholder="用户名"/>
-    <input type="password" name="password" placeholder="密码"/>
-    <input type="submit" value="登录"/>
-    <div>${errMsg!''}</div>
-</form>
+<div class="login-page page-container">
+    <div class="mask"></div>
+    <form class="form-horizontal" method="post" action="/login?target=${target!''}">
+        <div class="login-wrapper">
+            <div class="login-hd">
+                <h2 class="text-center">登录</h2>
+            </div>
+            <div class="login-bd">
+                <div class="form-group">
+                    <label for="username" class="col-xs-3 control-label">账 号：</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" name="loginName" placeholder="用户名"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-xs-3 control-label">密 码：</label>
+                    <div class="col-xs-9">
+                        <input type="password" class="form-control" name="password" placeholder="密码"/>
+                    </div>
+                </div>
+            </div>
+            <div class="login-ft">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-info form-control">登录</button>
+                        <div>${errMsg!''}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
