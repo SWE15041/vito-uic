@@ -7,7 +7,8 @@ import com.vito.uic.service.UserService;
 import com.vito.uic.web.vo.AuthRequest;
 import com.vito.uic.web.vo.AuthResponse;
 import com.vito.website.constant.SessionConstant;
-import com.vito.website.core.exception.HttpException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +30,8 @@ import static com.vito.uic.web.support.UserTicketCache.*;
  */
 @Controller
 public class AuthController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     private UserService userService;
@@ -109,17 +112,22 @@ public class AuthController {
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     @ResponseBody
     public AuthResponse auth(@RequestBody AuthRequest authRequest) {
+        AuthResponse authResponse = new AuthResponse();
         String serviceTicket = authRequest.getServiceTicket();
         User authUser = getStUser(serviceTicket);
+//        authUser = new User();
+//        authUser.setLoginName("zxm");
+//        authUser.setName("zhaixm");
+//        authResponse.setRoleCodes(new ImmutableSet.Builder<String>().add("ORDER", "STALL").build());
         if (Validator.isNotNull(authUser)) {
-            AuthResponse authResponse = new AuthResponse();
             authResponse.setResult(true);
             authResponse.setUser(authUser);
-            return authResponse;
         } else {
-            // throw service ticket invalid exception
-            throw new HttpException("令牌无效，请重新获取授权", "INVALID_ST");
+            authResponse.setResult(false);
+            authResponse.setErrMsg("令牌无效，请重新获取授权");
         }
+        logger.debug("认证结果{}", authResponse.getResult());
+        return authResponse;
     }
 
 }

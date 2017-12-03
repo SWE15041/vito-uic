@@ -1,12 +1,10 @@
 /**
  * Created by lenovo on 2016/2/14.
  */
-package com.vito.uic.domain;
+package com.vito.uic.client.model;
 
 
-import com.vito.storage.domain.BaseBusinessEntity;
-
-import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,14 +13,14 @@ import java.util.Set;
  * CreateUser: zhaixm
  * CreateTime: 2016/2/14 0:04
  */
-@Entity
-@Table(name = "sys_user")
-//暂时将userId映射到id字段 解决无法忽略该字段的问题
-@AttributeOverride(name = "userId", column = @Column(name = "id", insertable = false, updatable = false))
-public class User extends BaseBusinessEntity {
+public class User {
 
-    public static final Long ADMIN_USER_ID = 1L;
-
+    protected Long id;
+    private Date createTime;
+    private Date updateTime;
+    private String updateKey;
+    private Long userId;
+    private Long groupId;
     private String loginName;
     private String password;
     private String name;
@@ -31,7 +29,9 @@ public class User extends BaseBusinessEntity {
     private String weixinOpenId;
     private String email;
     private String mobile;
+
     private String headImg;
+
     private Integer sex;
     private Integer enable;
     private Integer loginable;
@@ -43,27 +43,6 @@ public class User extends BaseBusinessEntity {
 
 
     private Set<String> roleCodes = new HashSet<>();
-    private Set<Long> roleIds = new HashSet<>();
-    private Set<String> resourceCodes = new HashSet<>();
-
-    public boolean authorizeResource(String resourceCode) {
-        if (getResourceCodes() == null) {
-            return false;
-        } else {
-            return getResourceCodes().contains(resourceCode);
-        }
-    }
-
-    @Transient
-    public Set<String> getResourceCodes() {
-        return resourceCodes;
-    }
-
-    public void addResourceCode(String... resourceCodes) {
-        for (String resourceCode : resourceCodes) {
-            this.resourceCodes.add(resourceCode);
-        }
-    }
 
     public String getLoginName() {
         return loginName;
@@ -145,7 +124,6 @@ public class User extends BaseBusinessEntity {
         this.enable = enable;
     }
 
-    @Transient
     public boolean enable() {
         return enable != null && enable == 1;
     }
@@ -178,12 +156,10 @@ public class User extends BaseBusinessEntity {
         return manager != null && manager.equals(1);
     }
 
-    @Transient
     public boolean loginable() {
         return loginable != null && loginable == 1;
     }
 
-    @Transient
     public Set<String> getRoleCodes() {
         return roleCodes;
     }
@@ -202,18 +178,51 @@ public class User extends BaseBusinessEntity {
         return this.roleCodes.contains(roleCode);
     }
 
-    @Transient
-    public Set<Long> getRoleIds() {
-        return roleIds;
+    public Long getId() {
+        return id;
     }
 
-    public void setRoleIds(Set<Long> roleIds) {
-        this.roleIds = roleIds;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void addRoleId(Long... roleIds) {
-        for (Long roleId : roleIds) {
-            this.roleIds.add(roleId);
-        }
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getUpdateKey() {
+        return updateKey;
+    }
+
+    public void setUpdateKey(String updateKey) {
+        this.updateKey = updateKey;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 }

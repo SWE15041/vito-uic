@@ -1,6 +1,4 @@
-package com.vito.uic.web.vo;
-
-import com.vito.uic.domain.User;
+package com.vito.uic.client.model;
 
 import java.util.Set;
 
