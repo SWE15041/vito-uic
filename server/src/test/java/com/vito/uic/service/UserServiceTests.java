@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Set;
+
 /**
  * 作者: zhaixm
  * 日期: 2017/11/28 0:01
@@ -21,5 +23,12 @@ public class UserServiceTests extends ApplicationTests {
         User user = userService.findByLoginName("zxm2");
         Assert.assertNotNull(user);
         Assert.assertEquals(user.getId().longValue(), 1L);
+    }
+
+    @Test
+    public void testFindUserResources() {
+        User user = userService.findByLoginName("zxm");
+        Set<String> resourceCodes = userService.findUserResources(user.getId());
+        System.out.println(resourceCodes);
     }
 }

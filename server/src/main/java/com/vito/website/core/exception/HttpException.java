@@ -36,9 +36,20 @@ public class HttpException extends RuntimeException {
     }
 
     public static HttpException of(HttpStatus httpStatus, String code, String message, Throwable cause) {
-        HttpException kmErrorMessage = new HttpException(message, code, cause);
-        kmErrorMessage.setHttpStatus(httpStatus);
-        return kmErrorMessage;
+        switch (httpStatus) {
+            case FORBIDDEN:
+                return new HttpForbiddenException(message, code);
+            case BAD_REQUEST:
+                return new HttpRequestException(message, code);
+            case INTERNAL_SERVER_ERROR:
+                return new HttpServerException(message, code);
+            case UNAUTHORIZED:
+                return new HttpUnauthorizedException(message, code);
+            default:
+                HttpException httpException = new HttpException(message, code, cause);
+                httpException.setHttpStatus(httpStatus);
+                return httpException;
+        }
     }
 
     public HttpStatus getHttpStatus() {

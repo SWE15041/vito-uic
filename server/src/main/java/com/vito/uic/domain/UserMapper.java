@@ -11,4 +11,6 @@ public interface UserMapper extends MybatisMapper {
 
     Long countList(Map<String, Object> params);
 
+    List<String> queryUserResources(Long userId);
+
 }

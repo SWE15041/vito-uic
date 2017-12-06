@@ -9,8 +9,7 @@ public class AuthRequest {
 
     private String appKey;
     private String appSecret;
-    private String serviceTicket;
-    private String tickGrantCookie;
+    private String appToken;
 
     public String getAppKey() {
         return appKey;
@@ -28,19 +27,12 @@ public class AuthRequest {
         this.appSecret = appSecret;
     }
 
-    public String getServiceTicket() {
-        return serviceTicket;
+    public String getAppToken() {
+        return appToken;
     }
 
-    public void setServiceTicket(String serviceTicket) {
-        this.serviceTicket = serviceTicket;
+    public void setAppToken(String appToken) {
+        this.appToken = appToken;
     }
 
-    public String getTickGrantCookie() {
-        return tickGrantCookie;
-    }
-
-    public void setTickGrantCookie(String tickGrantCookie) {
-        this.tickGrantCookie = tickGrantCookie;
-    }
 }

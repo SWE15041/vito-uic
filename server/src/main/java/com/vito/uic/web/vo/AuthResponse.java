@@ -1,7 +1,5 @@
 package com.vito.uic.web.vo;
 
-import com.vito.uic.domain.User;
-
 import java.util.Set;
 
 /**
@@ -11,43 +9,40 @@ import java.util.Set;
  */
 public class AuthResponse {
 
-    private Boolean result;
+    private String token;
+    private Long userId;
+    private String userName;
+    private Set<String> resources;
 
-    private String errMsg;
-
-    private User user;
-
-    private Set<String> roleCodes;
-
-    public Boolean getResult() {
-        return result;
+    public String getToken() {
+        return token;
     }
 
-    public void setResult(Boolean result) {
-        this.result = result;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getErrMsg() {
-        return errMsg;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public Set<String> getRoleCodes() {
-        return roleCodes;
+    public Set<String> getResources() {
+        return resources;
     }
 
-    public void setRoleCodes(Set<String> roleCodes) {
-        this.roleCodes = roleCodes;
+    public void setResources(Set<String> resources) {
+        this.resources = resources;
     }
 }

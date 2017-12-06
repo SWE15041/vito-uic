@@ -12,7 +12,7 @@
         <where>
             1 = 1
             <if test="name != null and name != ''">
-                <bind name="name_pattern" value="'%' + name + '%'" />
+                <bind name="name_pattern" value="'%' + name + '%'"/>
                 AND (u.name LIKE #{name_pattern})
             </if>
         </where>
@@ -30,7 +30,16 @@
 
     <select id="countList" resultType="java.lang.Long" parameterType="map">
         select count(1) from sys_user u
-        <include refid="WhereClause" />
+        <include refid="WhereClause"/>
     </select>
+
+    <select id="queryUserResources" resultType="java.lang.String" parameterType="java.lang.Long">
+        select
+          r.code
+        from sys_user_role ur, sys_role_resource rr, sys_resource r
+          where ur.role_id=rr.role_id and rr.resource_id=r.id
+          and ur.user_id=#{id}
+    </select>
+
 </mapper>
 

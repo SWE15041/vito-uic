@@ -12,17 +12,17 @@ import javax.persistence.MappedSuperclass;
 //@Access(AccessType.PROPERTY)
 public class BaseBusinessEntity extends BaseEntity {
 
-    private Long userId;
+    private Long createUser;
 
     private Long groupId;
 
-    @Column(name = "user_id")
-    public Long getUserId() {
-        return userId;
+    @Column(name = "create_user")
+    public Long getCreateUser() {
+        return createUser;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setCreateUser(Long createUser) {
+        this.createUser = createUser;
     }
 
     @Column(name = "group_id")

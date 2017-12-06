@@ -4,7 +4,9 @@
 package com.vito.uic.domain;
 
 
+import com.vito.common.model.enums.YesNoEnum;
 import com.vito.storage.domain.BaseBusinessEntity;
+import com.vito.uic.constant.UserSex;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,7 +20,7 @@ import java.util.Set;
 @Entity
 @Table(name = "sys_user")
 //暂时将userId映射到id字段 解决无法忽略该字段的问题
-@AttributeOverride(name = "userId", column = @Column(name = "id", insertable = false, updatable = false))
+//@AttributeOverride(name = "userId", column = @Column(name = "id", insertable = false, updatable = false))
 public class User extends BaseBusinessEntity {
 
     public static final Long ADMIN_USER_ID = 1L;
@@ -32,9 +34,15 @@ public class User extends BaseBusinessEntity {
     private String email;
     private String mobile;
     private String headImg;
-    private Integer sex;
-    private Integer enable;
-    private Integer loginable;
+
+    @Enumerated(EnumType.ORDINAL)
+    private UserSex sex;
+
+    @Enumerated(EnumType.ORDINAL)
+    private YesNoEnum enable;
+
+    @Enumerated(EnumType.ORDINAL)
+    private YesNoEnum loginable;
 
     /**
      * 是否管理员
@@ -97,11 +105,11 @@ public class User extends BaseBusinessEntity {
         this.nickName = nickName;
     }
 
-    public Integer getSex() {
+    public UserSex getSex() {
         return sex;
     }
 
-    public void setSex(Integer sex) {
+    public void setSex(UserSex sex) {
         this.sex = sex;
     }
 
@@ -137,24 +145,24 @@ public class User extends BaseBusinessEntity {
         this.weixinOpenId = weixinOpenId;
     }
 
-    public Integer getEnable() {
+    public YesNoEnum getEnable() {
         return enable;
     }
 
-    public void setEnable(Integer enable) {
+    public void setEnable(YesNoEnum enable) {
         this.enable = enable;
     }
 
     @Transient
     public boolean enable() {
-        return enable != null && enable == 1;
+        return enable != null && enable == YesNoEnum.YES;
     }
 
-    public Integer getLoginable() {
+    public YesNoEnum getLoginable() {
         return loginable;
     }
 
-    public void setLoginable(Integer loginable) {
+    public void setLoginable(YesNoEnum loginable) {
         this.loginable = loginable;
     }
 
@@ -180,7 +188,7 @@ public class User extends BaseBusinessEntity {
 
     @Transient
     public boolean loginable() {
-        return loginable != null && loginable == 1;
+        return loginable != null && loginable == YesNoEnum.YES;
     }
 
     @Transient

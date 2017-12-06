@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
-public class ControllerExceptionHandler {
+public class ControllerExceptionAdvisor {
 
     @ExceptionHandler(value = {HttpForbiddenException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(value = {HttpException.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiErrorResponse httpException(HttpException ex, WebRequest req) {
         ApiErrorResponse errorResponse = new ApiErrorResponse();
         errorResponse.setErrCode(ex.getCode());

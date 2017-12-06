@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.vito.uic.client.support;
+package com.vito.uic.client.core;
 
 import com.alibaba.fastjson.JSONObject;
 import com.vito.common.util.json.JsonParser;

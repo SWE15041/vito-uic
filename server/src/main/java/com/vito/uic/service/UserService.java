@@ -3,8 +3,7 @@ package com.vito.uic.service;
 import com.vito.storage.service.EntityCRUDService;
 import com.vito.uic.domain.User;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * 作者: zhaixm
@@ -15,6 +14,6 @@ public interface UserService extends EntityCRUDService<User, Long> {
 
     User findByLoginName(String loginName);
 
-    List<Map<String, Object>> query(Map<String, Object> params);
+    Set<String> findUserResources(Long userId);
 
 }
