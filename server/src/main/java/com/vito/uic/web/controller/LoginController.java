@@ -47,7 +47,7 @@ public class LoginController {
         } else {
             if (loginUser.getPassword().equals(user.getPassword())) {
                 //todo 获取用户分配的应用及相关资源
-                TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getName());
+                TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
                 tokenData.setManager(loginUser.manager());
                 tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
 //                tokenData.setAppDomains("");

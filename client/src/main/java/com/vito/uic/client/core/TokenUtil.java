@@ -25,11 +25,15 @@ public class TokenUtil {
     private static final Logger logger = LoggerFactory.getLogger(TokenUtil.class);
 
     private static final String USER_ID_KEY = "uid";
+    private static final String GROUP_ID_KEY = "gid";
     private static final String USER_NAME_KEY = "uname";
     private static final String MANAGER_KEY = "manager";
 
+    private static final String secret = "vtsj52";
+
     /**
      * 生成token
+     *
      * @param tokenData
      * @return
      */
@@ -37,14 +41,15 @@ public class TokenUtil {
     public static String genToken(TokenData tokenData) {
         try {
             long begin = System.currentTimeMillis();
-            Algorithm algorithm = Algorithm.HMAC256("secret");
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                               .withIssuer(tokenData.getUicDomain())
                               .withIssuedAt(tokenData.getLoginTime())
                               .withAudience(tokenData.getAppDomains()
                                                      .toArray(new String[tokenData.getAppDomains().size()]))
                               .withClaim(USER_ID_KEY, tokenData.getUserId())
-                              .withClaim(USER_NAME_KEY, tokenData.getUserName())
+                              .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
+//                              .withClaim(USER_NAME_KEY, tokenData.getUserName())
                               .withClaim(MANAGER_KEY, tokenData.isManager())
                               .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60))
                               .sign(algorithm);
@@ -66,7 +71,7 @@ public class TokenUtil {
     public static TokenData parseToken(String jwtToken, String uicDomain, String appDomain) {
         long begin = System.currentTimeMillis();
         try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
                                       .withIssuer(uicDomain)
 //                                      .withAudience(appDomain) // 由于token生成时未加入用户所拥有的app
@@ -75,11 +80,13 @@ public class TokenUtil {
             DecodedJWT jwt = verifier.verify(jwtToken);
             Claim uidClaim = jwt.getClaim(USER_ID_KEY);
             Long userId = uidClaim.asLong();
-            Claim unameClaim = jwt.getClaim(USER_NAME_KEY);
-            String userName = unameClaim.asString();
+            Claim gidClaim = jwt.getClaim(GROUP_ID_KEY);
+            Long groupId = gidClaim.asLong();
+//            Claim unameClaim = jwt.getClaim(USER_NAME_KEY);
+//            String userName = unameClaim.asString();
             Claim managerClaim = jwt.getClaim(MANAGER_KEY);
             boolean manager = managerClaim.asBoolean();
-            TokenData tokenData = new TokenData(userId, userName, manager);
+            TokenData tokenData = new TokenData(userId, groupId, manager);
             List<String> appDomains = jwt.getAudience();
             if (Validator.isNotNull(appDomains)) {
                 tokenData.setAppDomains(new HashSet<>(appDomains));
@@ -87,7 +94,7 @@ public class TokenUtil {
             Date loginTime = jwt.getIssuedAt();
             tokenData.setLoginTime(loginTime);
             long end = System.currentTimeMillis();
-            logger.debug("genAppToken花费时间：{}", (end - begin));
+            logger.debug("解析token花费时间：{}", (end - begin));
             return tokenData;
         } catch (JWTVerificationException e) {
             logger.error("appToken验证失败", e);
@@ -96,6 +103,15 @@ public class TokenUtil {
             logger.error("appToken解析失败", e);
             throw new RuntimeException("appToken解析失败", e);
         }
+    }
+
+    public static void main(String[] args) {
+        long begin = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            parseToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsIm1hbmFnZXIiOmZhbHNlLCJpc3MiOiJsb2NhbGhvc3QiLCJleHAiOjE1MTI2MTg0ODcsImlhdCI6MTUxMjYxNDg4N30.5xX4XqG_8Pn--7Jpr_8882Liy_0D9QejvnlNe3h_Rl0", "localhost", "");
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - begin);
     }
 
 }

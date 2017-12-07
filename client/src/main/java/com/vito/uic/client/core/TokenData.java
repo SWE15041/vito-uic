@@ -20,16 +20,21 @@ public class TokenData {
     private Date loginTime;
 
     public TokenData() {
-
-    }
-
-    public TokenData(Long userId, String userName) {
-        this.userId = userId;
-        this.userName = userName;
         this.loginTime = new Date();
     }
-    public TokenData(Long userId, String userName, Boolean manager) {
-        this(userId, userName);
+
+    public TokenData(Long userId) {
+        this();
+        this.userId = userId;
+    }
+
+    public TokenData(Long userId, Long groupId) {
+        this(userId);
+        this.groupId = groupId;
+    }
+
+    public TokenData(Long userId, Long groupId, Boolean manager) {
+        this(userId, groupId);
         this.manager = manager;
     }
 

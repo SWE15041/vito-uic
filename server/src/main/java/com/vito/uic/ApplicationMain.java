@@ -2,8 +2,6 @@ package com.vito.uic;
 
 import com.vito.storage.core.MyJpaRepositoryImpl;
 import com.vito.storage.core.MyRepositoryFactoryBean;
-import com.vito.storage.domain.MybatisMapper;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @SpringBootApplication
 @EnableWebMvc
 @EnableJpaRepositories(basePackages = {"com.vito"}, repositoryBaseClass = MyJpaRepositoryImpl.class, repositoryFactoryBeanClass = MyRepositoryFactoryBean.class)
-@MapperScan(basePackages = "com.vito", markerInterface = MybatisMapper.class)
+//@MapperScan(basePackages = "com.vito", markerInterface = MybatisMapper.class)  mapper对应的class使用@Mapper注解即可，这是默认方式
 @ComponentScan("com.vito")
 public class ApplicationMain {
 
