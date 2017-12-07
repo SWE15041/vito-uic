@@ -1,4 +1,4 @@
-package com.vito.uic.core;
+package com.vito.uic.core.cache;
 
 import com.vito.common.model.enums.YesNoEnum;
 import com.vito.uic.domain.RegApp;

@@ -1,4 +1,4 @@
-package com.vito.website.web.config;
+package com.vito.website.core.config;
 
 import com.vito.uic.web.vo.ApiErrorResponse;
 import com.vito.website.core.exception.HttpException;

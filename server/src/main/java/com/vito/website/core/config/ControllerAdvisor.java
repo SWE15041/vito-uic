@@ -1,4 +1,4 @@
-package com.vito.website.web.config;
+package com.vito.website.core.config;
 
 import com.vito.website.web.controller.BaseController;
 import org.aspectj.lang.JoinPoint;
