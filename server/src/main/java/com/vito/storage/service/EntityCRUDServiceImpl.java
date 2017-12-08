@@ -20,7 +20,7 @@ public abstract class EntityCRUDServiceImpl<T extends BaseEntity, ID extends Ser
 
     @Override
     public T get(ID id) {
-        return getRepository().getOne(id);
+        return getRepository().findOne(id);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class AuthFilter implements Filter {
                 }
             }
         }
-        if (!exclude) {
+        if (!exclude && false) {
             String authorization = httpReq.getHeader("Authorization");
             if (Validator.isNotNull(authorization)) {
                 String token = authorization.split(" ")[1];
@@ -63,17 +63,25 @@ public class AuthFilter implements Filter {
                     UserContextHolder.setUserContext(tokenData);
                 } catch (Exception e) {
                     logger.error("token解析失败", e);
-                    httpResp.setContentType("application/json");
-                    httpResp.setStatus(HttpStatus.SC_FORBIDDEN);
-                    ApiErrorResponse errorResponse = new ApiErrorResponse();
-                    errorResponse.setMsg("token验证失败，无权访问该数据");
-                    errorResponse.setErrCode("INVALID_AUTH_TOKEN");
-                    httpResp.getWriter().write(JsonParser.convertObjectToJson(errorResponse));
+                    authFail(httpResp);
                     return;
                 }
+            } else {
+                authFail(httpResp);
+                return;
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private void authFail(HttpServletResponse httpResp) throws IOException {
+        httpResp.setContentType("application/json");
+        httpResp.setCharacterEncoding("UTF-8");
+        httpResp.setStatus(HttpStatus.SC_FORBIDDEN);
+        ApiErrorResponse errorResponse = new ApiErrorResponse();
+        errorResponse.setMsg("token验证失败，无权访问该数据");
+        errorResponse.setErrCode("INVALID_AUTH_TOKEN");
+        httpResp.getWriter().write(JsonParser.convertObjectToJson(errorResponse));
     }
 
     @Override

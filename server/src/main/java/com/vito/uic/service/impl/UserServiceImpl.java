@@ -4,6 +4,7 @@ import com.vito.storage.service.EntityCRUDServiceImpl;
 import com.vito.uic.domain.User;
 import com.vito.uic.domain.UserMapper;
 import com.vito.uic.domain.UserRepository;
+import com.vito.uic.service.UserRoleService;
 import com.vito.uic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +22,9 @@ import java.util.Set;
  */
 @Service
 public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implements UserService {
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @Autowired
     private UserRepository userRepository;
@@ -45,6 +49,13 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
 
     public List<Map<String, Object>> query(Map<String, Object> params) {
         return userMapper.selectList(params);
-//        return null;
+    }
+
+    @Override
+    public User get(Long id) {
+        User user = super.get(id);
+        List<Long> userRoles = userRoleService.findUserRoles(id);
+        user.setRoleIds(new HashSet<>(userRoles));
+        return user;
     }
 }

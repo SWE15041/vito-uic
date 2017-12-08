@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 作者: zhaixm
  * 日期: 2017/11/23 18:16
@@ -17,11 +20,20 @@ import org.springframework.stereotype.Service;
 public class RoleResourceServiceImpl extends EntityCRUDServiceImpl<RoleResource, Long> implements RoleResourceService {
 
     @Autowired
-    private RoleResourceRepository permissionRepository;
+    private RoleResourceRepository roleResourceRepository;
 
     @Override
     protected JpaRepository<RoleResource, Long> getRepository() {
-        return permissionRepository;
+        return roleResourceRepository;
     }
 
+    @Override
+    public List<Long> findRoleResources(Long roleId) {
+        List<RoleResource> roleResources = roleResourceRepository.findByRoleId(roleId);
+        List<Long> resourceIds = new ArrayList<>();
+        roleResources.forEach(roleResource -> {
+            resourceIds.add(roleResource.getResourceId());
+        });
+        return resourceIds;
+    }
 }

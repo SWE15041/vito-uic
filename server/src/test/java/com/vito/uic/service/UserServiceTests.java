@@ -31,4 +31,11 @@ public class UserServiceTests extends ApplicationTests {
         Set<String> resourceCodes = userService.findUserResources(user.getId());
         System.out.println(resourceCodes);
     }
+
+    @Test
+    public void testGetUser() {
+        User user = userService.get(1L);
+        System.out.println(user.getRoleIds());
+        Assert.assertNotNull(user.getRoleIds());
+    }
 }

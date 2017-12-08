@@ -19,15 +19,21 @@ public class UserController extends BaseGridController<User> {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo", "pageSize"})
     public Page<User> query() {
-        logger.debug("log4j test**************");
         return pageQuery();
 //        Map<String, Object> params = new HashMap<>();
 //        params.put("name", "zx");
 //        Page page = new Page();
 //        page.setItems(userService.query(params));
 //        return page;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public User get(@PathVariable("id") Long id) {
+        User user = userService.get(id);
+        return user;
     }
 
     @RequestMapping(method = RequestMethod.POST)

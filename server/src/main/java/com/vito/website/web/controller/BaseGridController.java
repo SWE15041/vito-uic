@@ -1,12 +1,13 @@
 package com.vito.website.web.controller;
 
 import com.vito.common.util.bean.ReflectionUtil;
+import com.vito.storage.domain.BaseEntity;
 import com.vito.storage.model.Condition;
 import com.vito.storage.model.Order;
 import com.vito.storage.model.Page;
 import com.vito.storage.service.QueryService;
-import com.vito.website.util.GridModelUtil;
 import com.vito.website.util.GridModelParser;
+import com.vito.website.util.GridModelUtil;
 import com.vito.website.util.WebGridModelParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +19,7 @@ import java.util.Map;
  * CreateUser: zhaixm
  * CreateTime: 2016/3/3 15:30
  */
-public abstract class BaseGridController<T> extends BaseController {
+public abstract class BaseGridController<T extends BaseEntity> extends BaseController {
 
     @Autowired
     private QueryService queryService;

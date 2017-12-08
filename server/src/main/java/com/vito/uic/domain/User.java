@@ -47,8 +47,8 @@ public class User extends BaseBusinessEntity {
     /**
      * 是否管理员
      */
-    private Integer manager;
-
+    @Enumerated(EnumType.ORDINAL)
+    private YesNoEnum manager;
 
     private Set<String> roleCodes = new HashSet<>();
     private Set<Long> roleIds = new HashSet<>();
@@ -153,7 +153,6 @@ public class User extends BaseBusinessEntity {
         this.enable = enable;
     }
 
-    @Transient
     public boolean enable() {
         return enable != null && enable == YesNoEnum.YES;
     }
@@ -174,19 +173,18 @@ public class User extends BaseBusinessEntity {
         this.headImg = headImg;
     }
 
-    public Integer getManager() {
+    public YesNoEnum getManager() {
         return manager;
     }
 
-    public void setManager(Integer manager) {
+    public void setManager(YesNoEnum manager) {
         this.manager = manager;
     }
 
     public boolean manager() {
-        return manager != null && manager.equals(1);
+        return manager != null && manager == YesNoEnum.YES;
     }
 
-    @Transient
     public boolean loginable() {
         return loginable != null && loginable == YesNoEnum.YES;
     }

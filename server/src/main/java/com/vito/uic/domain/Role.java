@@ -7,10 +7,9 @@ package com.vito.uic.domain;
 import com.vito.common.model.enums.YesNoEnum;
 import com.vito.storage.domain.BaseBusinessEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Describe:
@@ -27,6 +26,8 @@ public class Role extends BaseBusinessEntity {
 
     @Enumerated(EnumType.ORDINAL)
     private YesNoEnum isDefault;
+
+    private Set<Long> resourceIds = new HashSet<>();
 
     /**
      * 每个用户对应有多条站内消息
@@ -55,4 +56,14 @@ public class Role extends BaseBusinessEntity {
     public void setIsDefault(YesNoEnum isDefault) {
         this.isDefault = isDefault;
     }
+
+    @Transient
+    public Set<Long> getResourceIds() {
+        return resourceIds;
+    }
+
+    public void setResourceIds(Set<Long> resourceIds) {
+        this.resourceIds = resourceIds;
+    }
+
 }

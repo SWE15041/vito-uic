@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 作者: zhaixm
  * 日期: 2017/11/23 18:16
@@ -22,6 +25,16 @@ public class UserRoleServiceImpl extends EntityCRUDServiceImpl<UserRole, Long> i
     @Override
     protected JpaRepository<UserRole, Long> getRepository() {
         return userRoleRepository;
+    }
+
+    @Override
+    public List<Long> findUserRoles(Long userId) {
+        List<UserRole> userRoles = userRoleRepository.findByUserId(userId);
+        List<Long> roleIds = new ArrayList<>();
+        userRoles.forEach(userRole -> {
+            roleIds.add(userRole.getRoleId());
+        });
+        return roleIds;
     }
 
 }

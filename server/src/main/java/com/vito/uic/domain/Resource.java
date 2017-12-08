@@ -58,7 +58,7 @@ public class Resource extends BaseBusinessEntity {
     /**
      * 排序号
      */
-    private Integer orderNo;
+    private Integer sortNo;
 
     /**
      * 是否启用 1-启用 0-禁用
@@ -95,7 +95,7 @@ public class Resource extends BaseBusinessEntity {
     }
 
     @OneToMany(mappedBy = "parent", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
-    @OrderBy("orderNo asc")
+    @OrderBy("sortNo asc")
     @Fetch(FetchMode.SELECT)
     public List<Resource> getChildren() {
         if (children == null) {
@@ -160,7 +160,7 @@ public class Resource extends BaseBusinessEntity {
         jsonObject.put("name", getName());
         jsonObject.put("code", getCode());
         jsonObject.put("resUrl", getUrl());
-        jsonObject.put("orderNo", getOrderNo());
+        jsonObject.put("sortNo", getSortNo());
         jsonObject.put("enable", getEnable());
         jsonObject.put("resourceType", getResourceType());
         return jsonObject;
@@ -202,12 +202,12 @@ public class Resource extends BaseBusinessEntity {
         return resourceType;
     }
 
-    public Integer getOrderNo() {
-        return orderNo;
+    public Integer getSortNo() {
+        return sortNo;
     }
 
-    public void setOrderNo(Integer orderNo) {
-        this.orderNo = orderNo;
+    public void setSortNo(Integer sortNo) {
+        this.sortNo = sortNo;
     }
 
     public Long getParentId() {
