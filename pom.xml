@@ -7,11 +7,6 @@
     <artifactId>vito-uic</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <modules>
-        <module>server</module>
-        <module>client</module>
-    </modules>
-
     <name>vito-uic</name>
     <description>vito UIC</description>
 
