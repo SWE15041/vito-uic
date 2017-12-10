@@ -54,7 +54,7 @@ public class AuthFilter implements Filter {
                 }
             }
         }
-        if (!exclude && false) {
+        if (!exclude) {
             String authorization = httpReq.getHeader("Authorization");
             if (Validator.isNotNull(authorization)) {
                 String token = authorization.split(" ")[1];
