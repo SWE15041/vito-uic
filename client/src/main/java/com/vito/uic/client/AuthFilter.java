@@ -45,6 +45,10 @@ public class AuthFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpReq = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResp = (HttpServletResponse) servletResponse;
+        if (httpReq.getMethod() == "OPTIONS") {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         String ctxPath = httpReq.getServletPath();
         boolean exclude = false;
         if (Validator.isNotNull(excludePaths)) {
