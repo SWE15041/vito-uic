@@ -22,6 +22,7 @@ public class UICAuthFilter extends AuthFilter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         super.init(filterConfig);
+        this.excludePaths = new String[]{"/login"};
         if (Validator.isNull(this.uicDomain)) {
             this.uicDomain = SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class);
         }

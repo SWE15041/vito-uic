@@ -24,7 +24,7 @@ public class AuthFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
-    private String[] excludePaths;
+    protected String[] excludePaths;
 
     protected String uicDomain;
     protected String appDomain;
