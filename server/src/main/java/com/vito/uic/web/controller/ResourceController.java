@@ -20,7 +20,7 @@ import java.util.Map;
  * 描述:
  */
 @RestController
-@RequestMapping("/resources")
+@RequestMapping("/api/resources")
 public class ResourceController extends BaseGridController<Resource> {
 
     @Autowired

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * 描述:
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController extends BaseGridController<User> {
 
     @Autowired

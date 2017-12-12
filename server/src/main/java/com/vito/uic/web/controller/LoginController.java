@@ -39,7 +39,7 @@ public class LoginController {
      *
      * @param user
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public AuthResponse login(@RequestBody User user) {
         User loginUser = userService.findByLoginName(user.getLoginName());
         if (Validator.isNull(loginUser)) {

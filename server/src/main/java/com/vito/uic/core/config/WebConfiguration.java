@@ -40,7 +40,7 @@ public class WebConfiguration {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
+                registry.addMapping("/api/**")
                         .allowedHeaders("*")
                         .allowedMethods("*")
                         .allowedOrigins("*");
