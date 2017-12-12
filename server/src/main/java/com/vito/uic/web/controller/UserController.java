@@ -19,7 +19,6 @@ public class UserController extends BaseGridController<User> {
     @Autowired
     private UserService userService;
 
-
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<User> query() {
         return pageQuery();
