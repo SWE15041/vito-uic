@@ -26,7 +26,7 @@ public class RoleController extends BaseGridController<Role> {
     @Autowired
     private RoleResourceService roleResourceService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<Role> query() {
         return pageQuery();
     }

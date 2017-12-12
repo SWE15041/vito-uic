@@ -26,7 +26,7 @@ public class ResourceController extends BaseGridController<Resource> {
     @Autowired
     private ResourceService resourceService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<Resource> query() {
         return pageQuery();
     }

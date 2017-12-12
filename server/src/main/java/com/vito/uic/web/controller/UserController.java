@@ -20,7 +20,7 @@ public class UserController extends BaseGridController<User> {
     private UserService userService;
 
 
-    @RequestMapping(method = RequestMethod.GET, params = {"pageNo", "pageSize"})
+    @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<User> query() {
         return pageQuery();
 //        Map<String, Object> params = new HashMap<>();
