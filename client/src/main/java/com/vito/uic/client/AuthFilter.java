@@ -45,7 +45,8 @@ public class AuthFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpReq = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResp = (HttpServletResponse) servletResponse;
-        if (httpReq.getMethod() == "OPTIONS") {
+        // options方法不拦截
+        if ("OPTIONS".equals(httpReq.getMethod())) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }

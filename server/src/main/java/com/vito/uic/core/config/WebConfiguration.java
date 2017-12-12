@@ -10,6 +10,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 public class WebConfiguration {
 
@@ -26,6 +29,9 @@ public class WebConfiguration {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new UICAuthFilter());
         registrationBean.setOrder(5);
+        List<String> match = new ArrayList<>();
+        match.add("/*");
+        registrationBean.setUrlPatterns(match);
         return registrationBean;
     }
 
