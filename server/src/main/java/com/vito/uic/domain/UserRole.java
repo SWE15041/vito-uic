@@ -21,6 +21,11 @@ public class UserRole extends BaseBusinessEntity {
     public UserRole() {
     }
 
+    public UserRole(Long userId, Long roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
+
     public Long getRoleId() {
         return roleId;
     }

@@ -14,4 +14,6 @@ public interface UserRoleService extends EntityCRUDService<UserRole, Long> {
 
     List<Long> findUserRoles(Long userId);
 
+    void deleteByUserId(Long userId);
+
 }

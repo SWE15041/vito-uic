@@ -1,12 +1,17 @@
 package com.vito.uic.service.impl;
 
+import com.vito.common.util.validate.Validator;
 import com.vito.storage.service.EntityCRUDServiceImpl;
 import com.vito.uic.domain.Role;
 import com.vito.uic.domain.RoleRepository;
+import com.vito.uic.domain.RoleResource;
+import com.vito.uic.service.RoleResourceService;
 import com.vito.uic.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 /**
  * 作者: zhaixm
@@ -17,6 +22,9 @@ import org.springframework.stereotype.Service;
 public class RoleServiceImpl extends EntityCRUDServiceImpl<Role, Long> implements RoleService {
 
     @Autowired
+    private RoleResourceService roleResourceService;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Override
@@ -24,4 +32,15 @@ public class RoleServiceImpl extends EntityCRUDServiceImpl<Role, Long> implement
         return roleRepository;
     }
 
+    @Override
+    public Role save(Role role) {
+        Set<Long> resourceIds = role.getResourceIds();
+        if (Validator.isNotNull(role.getId()) && Validator.isNotNull(resourceIds)) {
+            roleResourceService.deleteByRoleId(role.getId());
+            resourceIds.forEach((resourceId) -> {
+                roleResourceService.save(new RoleResource(role.getId(), resourceId));
+            });
+        }
+        return super.save(role);
+    }
 }

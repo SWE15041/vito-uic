@@ -40,13 +40,13 @@ public class RoleController extends BaseGridController<Role> {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Role save(@RequestBody Role user) {
-        return roleService.save(user);
+    public Role save(@RequestBody Role role) {
+        return roleService.save(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Role update(@PathVariable("id") Long id, @RequestBody Role user) {
-        return roleService.save(user);
+    public Role update(@PathVariable("id") Long id, @RequestBody Role role) {
+        return roleService.save(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -36,4 +36,9 @@ public class RoleResourceServiceImpl extends EntityCRUDServiceImpl<RoleResource,
         });
         return resourceIds;
     }
+
+    @Override
+    public void deleteByRoleId(Long roleId) {
+        roleResourceRepository.deleteByRoleId(roleId);
+    }
 }

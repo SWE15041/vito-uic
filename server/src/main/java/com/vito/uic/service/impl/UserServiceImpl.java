@@ -1,9 +1,11 @@
 package com.vito.uic.service.impl;
 
+import com.vito.common.util.validate.Validator;
 import com.vito.storage.service.EntityCRUDServiceImpl;
 import com.vito.uic.domain.User;
 import com.vito.uic.domain.UserMapper;
 import com.vito.uic.domain.UserRepository;
+import com.vito.uic.domain.UserRole;
 import com.vito.uic.service.UserRoleService;
 import com.vito.uic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +59,16 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
         List<Long> userRoles = userRoleService.findUserRoles(id);
         user.setRoleIds(new HashSet<>(userRoles));
         return user;
+    }
+
+    @Override
+    public User save(User user) {
+        if (Validator.isNotNull(user.getId()) && Validator.isNotNull(user.getRoleIds())) {
+            userRoleService.deleteByUserId(user.getId());
+            user.getRoleIds().forEach(roleId -> {
+                userRoleService.save(new UserRole(user.getId(), roleId));
+            });
+        }
+        return super.save(user);
     }
 }

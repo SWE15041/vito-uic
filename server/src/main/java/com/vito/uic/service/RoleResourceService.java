@@ -14,4 +14,6 @@ public interface RoleResourceService extends EntityCRUDService<RoleResource, Lon
 
     List<Long> findRoleResources(Long roleId);
 
+    void deleteByRoleId(Long roleId);
+
 }

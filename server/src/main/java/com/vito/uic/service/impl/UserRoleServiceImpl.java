@@ -37,4 +37,8 @@ public class UserRoleServiceImpl extends EntityCRUDServiceImpl<UserRole, Long> i
         return roleIds;
     }
 
+    @Override
+    public void deleteByUserId(Long userId) {
+        userRoleRepository.deleteByUserId(userId);
+    }
 }
