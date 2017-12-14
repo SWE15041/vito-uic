@@ -24,7 +24,10 @@
         from sys_user u
         <include refid="WhereClause"/>
         <if test="orderBy != null and orderBy != ''">
-            order by u.create_time DESC, ${orderBy}
+            order by ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            order by u.create_time DESC
         </if>
     </select>
 

@@ -14,7 +14,7 @@
             1 = 1
             <if test="name != null and name != ''">
                 <bind name="name_pattern" value="'%' + name + '%'"/>
-                AND (r.name LIKE #{name_pattern})
+                AND (r.name LIKE #{name_pattern} or r.code LIKE #{name_pattern})
             </if>
         </where>
     </sql>
@@ -25,7 +25,10 @@
         from sys_role r
         <include refid="WhereClause"/>
         <if test="orderBy != null and orderBy != ''">
-            order by r.create_time DESC, ${orderBy}
+            order by ${orderBy}
+        </if>
+        <if test="orderBy == null or orderBy == ''">
+            order by r.create_time DESC
         </if>
     </select>
 
