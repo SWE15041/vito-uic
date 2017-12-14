@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.transaction.Transactional;
 import java.io.Serializable;
 
 /**
@@ -23,21 +24,25 @@ public abstract class EntityCRUDServiceImpl<T extends BaseEntity, ID extends Ser
         return getRepository().findOne(id);
     }
 
+    @Transactional
     @Override
     public T save(T entity) {
         return getRepository().save(entity);
     }
 
+    @Transactional
     @Override
     public T update(T entity) {
         return getRepository().save(entity);
     }
 
+    @Transactional
     @Override
     public void delete(T entity) {
         getRepository().delete(entity);
     }
 
+    @Transactional
     @Override
     public void delete(ID entityId) {
         getRepository().delete(entityId);

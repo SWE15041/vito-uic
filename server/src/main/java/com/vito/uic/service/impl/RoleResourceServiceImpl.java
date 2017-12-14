@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class RoleResourceServiceImpl extends EntityCRUDServiceImpl<RoleResource,
         return resourceIds;
     }
 
+    @Transactional
     @Override
     public void deleteByRoleId(Long roleId) {
         roleResourceRepository.deleteByRoleId(roleId);
