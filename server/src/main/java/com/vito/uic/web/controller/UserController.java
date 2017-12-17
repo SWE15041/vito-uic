@@ -46,8 +46,9 @@ public class UserController extends BaseGridController<User> {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Long id) {
+    public Boolean delete(@PathVariable("id") Long id) {
         userService.delete(id);
+        return true;
     }
 
 }

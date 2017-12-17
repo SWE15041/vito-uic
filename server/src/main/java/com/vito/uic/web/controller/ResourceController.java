@@ -83,8 +83,9 @@ public class ResourceController extends BaseGridController<Resource> {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Long id) {
+    public Boolean delete(@PathVariable("id") Long id) {
         resourceService.delete(id);
+        return true;
     }
 
 }
