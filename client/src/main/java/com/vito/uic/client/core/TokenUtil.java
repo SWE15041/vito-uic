@@ -75,7 +75,7 @@ public class TokenUtil {
             JWTVerifier verifier = JWT.require(algorithm)
                                       .withIssuer(uicDomain)
 //                                      .withAudience(appDomain) // 由于token生成时未加入用户所拥有的app
-                                      .acceptLeeway(1) // 1 sec for nbf, iat and exp
+                                      .acceptLeeway(30) // 30 sec for nbf, iat and exp
                                       .build();
             DecodedJWT jwt = verifier.verify(jwtToken);
             Claim uidClaim = jwt.getClaim(USER_ID_KEY);
