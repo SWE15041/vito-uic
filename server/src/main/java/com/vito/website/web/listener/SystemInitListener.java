@@ -41,6 +41,10 @@ public class SystemInitListener implements ServletContextListener {
         JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
         // 关闭fastjson对循环引用的支持。 如果开启该功能fastjson会使用$ref来链接同一对象，导致其他地方无法正常获取需要的值 -->
         JSON.DEFAULT_GENERATE_FEATURE |= SerializerFeature.DisableCircularReferenceDetect.getMask();
+        // 如果实体属性为enum类型，转换为json时使用enum ordinal而不使用enum name
+        JSON.DEFAULT_GENERATE_FEATURE = SerializerFeature.config(JSON.DEFAULT_GENERATE_FEATURE, SerializerFeature.WriteEnumUsingName, false);
+        // 转换为json时将对象中null值也正常输出
+        JSON.DEFAULT_GENERATE_FEATURE = SerializerFeature.config(JSON.DEFAULT_GENERATE_FEATURE, SerializerFeature.WriteMapNullValue, true);
     }
 
 }
