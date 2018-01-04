@@ -6,7 +6,10 @@
         u.create_time,
         u.update_key,
         u.name,
-        u.nick_name
+        u.nick_name,
+        u.mobile,
+        u.sex,
+        u.enable
     </sql>
     <sql id="WhereClause">
         <where>
