@@ -11,5 +11,4 @@ import com.vito.uic.domain.Role;
 public interface RoleService extends EntityCRUDService<Role, Long> {
 
 
-
 }

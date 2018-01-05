@@ -1,6 +1,7 @@
 package com.vito.uic.web.controller;
 
 import com.vito.storage.model.Page;
+import com.vito.storage.service.EntityCRUDService;
 import com.vito.uic.domain.User;
 import com.vito.uic.service.UserService;
 import com.vito.website.web.controller.BaseGridController;
@@ -14,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/users")
-public class UserController extends BaseGridController<User> {
+public class UserController extends BaseGridController<User, Long> {
 
     @Autowired
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<User> query() {
-        return pageQuery();
+        return super.query();
 //        Map<String, Object> params = new HashMap<>();
 //        params.put("name", "zx");
 //        Page page = new Page();
@@ -31,24 +32,26 @@ public class UserController extends BaseGridController<User> {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User get(@PathVariable("id") Long id) {
-        User user = userService.get(id);
-        return user;
+        return super.get(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public User save(@RequestBody User user) {
-        return userService.save(user);
+        return super.save(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public User update(@PathVariable("id") Long id, @RequestBody User user) {
-        return userService.save(user);
+        return super.update(id, user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Boolean delete(@PathVariable("id") Long id) {
-        userService.delete(id);
-        return true;
+        return super.delete(id);
     }
 
+    @Override
+    protected EntityCRUDService<User, Long> getEntityService() {
+        return userService;
+    }
 }

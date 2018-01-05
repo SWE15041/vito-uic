@@ -18,7 +18,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "sys_role")
-public class Role extends BaseBusinessEntity {
+public class Role extends BaseBusinessEntity<Long> {
 
     private String code;
 

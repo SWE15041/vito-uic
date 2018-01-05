@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_resource")
-public class Resource extends BaseBusinessEntity {
+public class Resource extends BaseBusinessEntity<Long> {
 
     /**
      * 应用ID

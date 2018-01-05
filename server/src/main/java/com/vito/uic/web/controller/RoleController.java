@@ -1,6 +1,7 @@
 package com.vito.uic.web.controller;
 
 import com.vito.storage.model.Page;
+import com.vito.storage.service.EntityCRUDService;
 import com.vito.uic.domain.Role;
 import com.vito.uic.service.RoleResourceService;
 import com.vito.uic.service.RoleService;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/roles")
-public class RoleController extends BaseGridController<Role> {
+public class RoleController extends BaseGridController<Role, Long> {
 
     @Autowired
     private RoleService roleService;
@@ -28,12 +29,16 @@ public class RoleController extends BaseGridController<Role> {
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<Role> query() {
-        return pageQuery();
+        return super.query();
+    }
+
+    public List<Role> getAll() {
+        return super.getAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Role get(@PathVariable("id") Long id) {
-        Role role = roleService.get(id);
+        Role role = super.get(id);
         List<Long> roleResources = roleResourceService.findRoleResources(id);
         role.setResourceIds(new HashSet<>(roleResources));
         return role;
@@ -41,18 +46,21 @@ public class RoleController extends BaseGridController<Role> {
 
     @RequestMapping(method = RequestMethod.POST)
     public Role save(@RequestBody Role role) {
-        return roleService.save(role);
+        return super.save(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Role update(@PathVariable("id") Long id, @RequestBody Role role) {
-        return roleService.save(role);
+        return super.save(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Boolean delete(@PathVariable("id") Long id) {
-        roleService.delete(id);
-        return true;
+        return super.delete(id);
     }
 
+    @Override
+    protected EntityCRUDService<Role, Long> getEntityService() {
+        return roleService;
+    }
 }

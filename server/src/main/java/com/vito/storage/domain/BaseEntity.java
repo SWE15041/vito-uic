@@ -3,12 +3,13 @@ package com.vito.storage.domain;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-public class BaseEntity {
+public class BaseEntity<ID extends Serializable> {
 
-    protected Long id;
+    protected ID id;
 
     private Date createTime;
 
@@ -22,7 +23,7 @@ public class BaseEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
+    public ID getId() {
         return id;
     }
 
@@ -52,7 +53,7 @@ public class BaseEntity {
         return this.updateKey;
     }
 
-    public void setId(Long id) {
+    public void setId(ID id) {
         this.id = id;
     }
 

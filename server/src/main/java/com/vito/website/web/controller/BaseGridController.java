@@ -5,12 +5,14 @@ import com.vito.storage.domain.BaseEntity;
 import com.vito.storage.model.Condition;
 import com.vito.storage.model.Order;
 import com.vito.storage.model.Page;
+import com.vito.storage.service.EntityCRUDService;
 import com.vito.storage.service.QueryService;
 import com.vito.website.util.GridModelParser;
 import com.vito.website.util.GridModelUtil;
 import com.vito.website.util.WebGridModelParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +21,7 @@ import java.util.Map;
  * CreateUser: zhaixm
  * CreateTime: 2016/3/3 15:30
  */
-public abstract class BaseGridController<T extends BaseEntity> extends BaseController {
+public abstract class BaseGridController<T extends BaseEntity, ID extends Serializable> extends BaseController {
 
     @Autowired
     private QueryService queryService;
@@ -52,6 +54,34 @@ public abstract class BaseGridController<T extends BaseEntity> extends BaseContr
     protected Order getOrder() {
         return orderLocal.get();
     }
+
+    public Page<T> query() {
+        return pageQuery();
+    }
+
+    public List<T> getAll() {
+        return getEntityService().getAll();
+    }
+
+    public T get(ID id) {
+        return getEntityService().get(id);
+    }
+
+    public T save(T entity) {
+        return getEntityService().save(entity);
+    }
+
+    public T update(ID id, T entity) {
+        entity.setId(id);
+        return getEntityService().update(entity);
+    }
+
+    public Boolean delete(ID id) {
+        getEntityService().delete(id);
+        return true;
+    }
+
+    protected abstract EntityCRUDService<T, ID> getEntityService();
 
     /**
      * 解析request获取查询条件、排序条件等

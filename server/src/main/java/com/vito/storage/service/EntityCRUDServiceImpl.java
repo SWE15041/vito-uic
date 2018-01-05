@@ -7,17 +7,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 作者: zhaixm
  * 日期: 2017/11/24 16:34
  * 描述:
  */
-public abstract class EntityCRUDServiceImpl<T extends BaseEntity, ID extends Serializable> implements EntityCRUDService<T, ID> {
+public abstract class EntityCRUDServiceImpl<T extends BaseEntity<ID>, ID extends Serializable> implements EntityCRUDService<T, ID> {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected abstract JpaRepository<T, ID> getRepository();
+
+    @Override
+    public List<T> getAll() {
+        return getRepository().findAll();
+    }
 
     @Override
     public T get(ID id) {

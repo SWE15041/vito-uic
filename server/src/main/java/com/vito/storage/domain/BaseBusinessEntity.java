@@ -2,6 +2,7 @@ package com.vito.storage.domain;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
 /**
  * 作者: zhaixm
@@ -10,7 +11,7 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 //@Access(AccessType.PROPERTY)
-public class BaseBusinessEntity extends BaseEntity {
+public class BaseBusinessEntity<ID extends Serializable> extends BaseEntity<ID> {
 
     private Long createUser;
 

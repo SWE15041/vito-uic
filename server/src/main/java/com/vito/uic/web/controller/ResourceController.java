@@ -2,6 +2,7 @@ package com.vito.uic.web.controller;
 
 import com.vito.common.util.validate.Validator;
 import com.vito.storage.model.Page;
+import com.vito.storage.service.EntityCRUDService;
 import com.vito.uic.domain.Resource;
 import com.vito.uic.service.ResourceService;
 import com.vito.uic.web.vo.ResourceNode;
@@ -17,23 +18,23 @@ import java.util.Map;
 /**
  * 作者: zhaixm
  * 日期: 2017/12/7 11:08
- * 描述:
+ * 描述: 资源控制器
  */
 @RestController
 @RequestMapping("/api/resources")
-public class ResourceController extends BaseGridController<Resource> {
+public class ResourceController extends BaseGridController<Resource, Long> {
 
     @Autowired
     private ResourceService resourceService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<Resource> query() {
-        return pageQuery();
+        return super.query();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Resource get(@PathVariable Long id) {
-        return resourceService.get(id);
+        return super.get(id);
     }
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
@@ -74,18 +75,21 @@ public class ResourceController extends BaseGridController<Resource> {
 
     @RequestMapping(method = RequestMethod.POST)
     public Resource save(@RequestBody Resource resource) {
-        return resourceService.save(resource);
+        return super.save(resource);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Resource update(@PathVariable("id") Long id, @RequestBody Resource resource) {
-        return resourceService.save(resource);
+        return super.update(id, resource);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Boolean delete(@PathVariable("id") Long id) {
-        resourceService.delete(id);
-        return true;
+        return super.delete(id);
     }
 
+    @Override
+    protected EntityCRUDService<Resource, Long> getEntityService() {
+        return resourceService;
+    }
 }

@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "sys_role_resource")
-public class RoleResource extends BaseBusinessEntity {
+public class RoleResource extends BaseBusinessEntity<Long> {
 
     private Long roleId;
 

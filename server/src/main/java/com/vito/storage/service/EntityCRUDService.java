@@ -1,6 +1,7 @@
 package com.vito.storage.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 作者: zhaixm
@@ -8,6 +9,8 @@ import java.io.Serializable;
  * 描述:
  */
 public interface EntityCRUDService<T, ID extends Serializable> {
+
+    List<T> getAll();
 
     T get(ID id);
 

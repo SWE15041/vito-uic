@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "sys_reg_app")
-public class RegApp extends BaseBusinessEntity {
+public class RegApp extends BaseBusinessEntity<Long> {
 
     private String appKey;
     private String appSecret;
