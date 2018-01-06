@@ -36,8 +36,8 @@ public class RoleServiceImpl extends EntityCRUDServiceImpl<Role, Long> implement
     @Transactional
     @Override
     public Role save(Role role) {
-        role = super.save(role);
         Set<Long> resourceIds = role.getResourceIds();
+        role = super.save(role);
         if (Validator.isNotNull(role.getId()) && Validator.isNotNull(resourceIds)) {
             roleResourceService.deleteByRoleId(role.getId());
             for (Long resourceId : resourceIds) {
