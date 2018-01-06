@@ -32,6 +32,7 @@ public class RoleController extends BaseGridController<Role, Long> {
         return super.query();
     }
 
+    @RequestMapping(method = RequestMethod.GET)
     public List<Role> getAll() {
         return super.getAll();
     }
