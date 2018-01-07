@@ -40,7 +40,7 @@ public class HttpException extends RuntimeException {
             case FORBIDDEN:
                 return new HttpForbiddenException(message, code);
             case BAD_REQUEST:
-                return new HttpRequestException(message, code);
+                return new HttpBadRequestException(message, code);
             case INTERNAL_SERVER_ERROR:
                 return new HttpServerException(message, code);
             case UNAUTHORIZED:

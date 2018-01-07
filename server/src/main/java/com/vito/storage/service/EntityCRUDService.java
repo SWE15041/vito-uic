@@ -18,6 +18,8 @@ public interface EntityCRUDService<T, ID extends Serializable> {
 
     T update(T entity);
 
+    T updateNotNull(T entity);
+
     void delete(T entity);
 
     void delete(ID entityId);

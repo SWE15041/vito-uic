@@ -4,6 +4,7 @@
 package com.vito.uic.domain;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.vito.common.model.enums.YesNoEnum;
 import com.vito.storage.domain.BaseBusinessEntity;
 import com.vito.uic.constant.UserSex;
@@ -26,10 +27,12 @@ public class User extends BaseBusinessEntity<Long> {
     public static final Long ADMIN_USER_ID = 1L;
 
     private String loginName;
+    @JSONField(serialize = false)
     private String password;
     private String name;
     private String nickName;
     private String weixinName;
+    @JSONField(serialize = false)
     private String weixinOpenId;
     private String email;
     private String mobile;

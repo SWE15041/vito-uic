@@ -20,6 +20,31 @@ public enum ErrorCodes implements IErrorCode {
             return "token验证失败，无权访问该数据";
         }
     },
+
+    POWERLESS_MODIFY {
+        @Override
+        public HttpStatus getHttpStatus() {
+            return HttpStatus.FORBIDDEN;
+        }
+
+        @Override
+        public String getMessage() {
+            return "无权修改该数据";
+        }
+    },
+
+    INVALID_PASSWORD {
+        @Override
+        public HttpStatus getHttpStatus() {
+            return HttpStatus.BAD_REQUEST;
+        }
+
+        @Override
+        public String getMessage() {
+            return "密码错误";
+        }
+    },
+
     INVALID_USERNAME_PASSWORD {
         @Override
         public HttpStatus getHttpStatus() {

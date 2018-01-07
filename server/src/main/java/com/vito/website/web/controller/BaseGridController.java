@@ -73,7 +73,7 @@ public abstract class BaseGridController<T extends BaseEntity, ID extends Serial
 
     public T update(ID id, T entity) {
         entity.setId(id);
-        return getEntityService().update(entity);
+        return getEntityService().updateNotNull(entity);
     }
 
     public Boolean delete(ID id) {

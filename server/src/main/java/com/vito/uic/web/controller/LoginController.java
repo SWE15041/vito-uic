@@ -1,5 +1,6 @@
 package com.vito.uic.web.controller;
 
+import com.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.vito.common.util.validate.Validator;
 import com.vito.uic.client.core.TokenData;
 import com.vito.uic.client.core.TokenUtil;
@@ -45,7 +46,7 @@ public class LoginController {
         if (Validator.isNull(loginUser)) {
             throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
         } else {
-            if (loginUser.getPassword().equals(user.getPassword())) {
+            if (MD5EncryptUtil.encrypt(loginUser.getPassword()).equals(user.getPassword())) {
                 //todo 获取用户分配的应用及相关资源
                 TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
                 tokenData.setManager(loginUser.manager());

@@ -5,9 +5,9 @@ package com.vito.website.core.exception;
  * 日期: 2017/12/2 23:30
  * 描述: 403 forbidden status
  */
-public class HttpRequestException extends HttpException {
+public class HttpBadRequestException extends HttpException {
 
-    public HttpRequestException(String message, String code) {
+    public HttpBadRequestException(String message, String code) {
         super(message, code);
     }
 

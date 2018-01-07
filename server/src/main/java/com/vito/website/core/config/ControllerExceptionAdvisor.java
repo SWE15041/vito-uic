@@ -1,6 +1,7 @@
 package com.vito.website.core.config;
 
 import com.vito.uic.web.vo.ApiErrorResponse;
+import com.vito.website.core.exception.HttpBadRequestException;
 import com.vito.website.core.exception.HttpException;
 import com.vito.website.core.exception.HttpForbiddenException;
 import com.vito.website.core.exception.HttpUnauthorizedException;
@@ -17,6 +18,15 @@ public class ControllerExceptionAdvisor {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerExceptionAdvisor.class);
 
+    @ExceptionHandler(value = {HttpBadRequestException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrorResponse httpBadRequestException(HttpBadRequestException ex, WebRequest req) {
+        ApiErrorResponse errorResponse = new ApiErrorResponse();
+        errorResponse.setErrCode(ex.getCode());
+        errorResponse.setMsg(ex.getMessage());
+        logger.error("参数错误", ex);
+        return errorResponse;
+    }
     @ExceptionHandler(value = {HttpForbiddenException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ApiErrorResponse httpForbiddenException(HttpForbiddenException ex, WebRequest req) {

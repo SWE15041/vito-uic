@@ -1,5 +1,6 @@
 package com.vito.storage.service;
 
+import com.vito.common.util.bean.BeanUtil;
 import com.vito.storage.domain.BaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,14 @@ public abstract class EntityCRUDServiceImpl<T extends BaseEntity<ID>, ID extends
     @Override
     public T update(T entity) {
         return getRepository().save(entity);
+    }
+
+    @Transactional
+    @Override
+    public T updateNotNull(T entity) {
+        T dbEntity = get(entity.getId());
+        BeanUtil.copyNotNullProperties(dbEntity, entity);
+        return update(dbEntity);
     }
 
     @Transactional
