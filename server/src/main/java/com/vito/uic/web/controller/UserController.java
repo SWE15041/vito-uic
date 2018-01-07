@@ -1,7 +1,6 @@
 package com.vito.uic.web.controller;
 
 import com.vito.common.util.string.encrypt.MD5EncryptUtil;
-import com.vito.common.util.validate.Validator;
 import com.vito.storage.model.Page;
 import com.vito.storage.service.EntityCRUDService;
 import com.vito.uic.client.core.UserContextHolder;
@@ -43,9 +42,6 @@ public class UserController extends BaseGridController<User, Long> {
 
     @RequestMapping(method = RequestMethod.POST)
     public User save(@RequestBody User user) {
-        if (Validator.isNull(user.getPassword())) {
-            user.setPassword(MD5EncryptUtil.encrypt(user.getMobile()));
-        }
         return super.save(user);
     }
 

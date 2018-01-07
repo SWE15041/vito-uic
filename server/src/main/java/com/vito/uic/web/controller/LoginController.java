@@ -46,7 +46,7 @@ public class LoginController {
         if (Validator.isNull(loginUser)) {
             throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
         } else {
-            if (MD5EncryptUtil.encrypt(loginUser.getPassword()).equals(user.getPassword())) {
+            if (MD5EncryptUtil.encrypt(user.getPassword()).equals(loginUser.getPassword())) {
                 //todo 获取用户分配的应用及相关资源
                 TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
                 tokenData.setManager(loginUser.manager());
@@ -64,6 +64,10 @@ public class LoginController {
                 throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(MD5EncryptUtil.encrypt("123456"));
     }
 
 }

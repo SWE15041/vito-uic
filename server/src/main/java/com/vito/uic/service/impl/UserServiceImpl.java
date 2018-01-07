@@ -1,5 +1,6 @@
 package com.vito.uic.service.impl;
 
+import com.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.vito.common.util.validate.Validator;
 import com.vito.storage.service.EntityCRUDServiceImpl;
 import com.vito.uic.domain.User;
@@ -65,12 +66,27 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
     @Transactional
     @Override
     public User save(User user) {
+        handleUserRoles(user);
+        if (Validator.isNull(user.getPassword())) {
+            user.setPassword(MD5EncryptUtil.encrypt(user.getMobile()));
+        }
+        //todo 判断用户登录名是否已存在
+        return super.save(user);
+    }
+
+    private void handleUserRoles(User user) {
         if (Validator.isNotNull(user.getId()) && Validator.isNotNull(user.getRoleIds())) {
             userRoleService.deleteByUserId(user.getId());
             user.getRoleIds().forEach(roleId -> {
                 userRoleService.save(new UserRole(user.getId(), roleId));
             });
         }
-        return super.save(user);
+    }
+
+    @Transactional
+    @Override
+    public User update(User user) {
+        handleUserRoles(user);
+        return super.update(user);
     }
 }
