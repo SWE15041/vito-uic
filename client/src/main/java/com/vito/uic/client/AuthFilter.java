@@ -68,21 +68,21 @@ public class AuthFilter implements Filter {
                     UserContextHolder.setUserContext(tokenData);
                 } catch (Exception e) {
                     logger.error("token解析失败", e);
-                    authFail(httpResp);
+                    authFail(httpReq, httpResp);
                     return;
                 }
             } else {
-                authFail(httpResp);
+                authFail(httpReq, httpResp);
                 return;
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    protected void authFail(HttpServletResponse httpResp) throws IOException {
+    protected void authFail(HttpServletRequest httpReq, HttpServletResponse httpResp) throws IOException {
         httpResp.setContentType("application/json");
         httpResp.setCharacterEncoding("UTF-8");
-        httpResp.setStatus(HttpStatus.SC_FORBIDDEN);
+        httpResp.setStatus(HttpStatus.SC_UNAUTHORIZED);
         ApiErrorResponse errorResponse = new ApiErrorResponse();
         errorResponse.setMsg("token验证失败，无权访问该数据");
         errorResponse.setErrCode("INVALID_AUTH_TOKEN");
