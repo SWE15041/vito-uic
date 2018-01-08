@@ -79,7 +79,7 @@ public class AuthFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private void authFail(HttpServletResponse httpResp) throws IOException {
+    protected void authFail(HttpServletResponse httpResp) throws IOException {
         httpResp.setContentType("application/json");
         httpResp.setCharacterEncoding("UTF-8");
         httpResp.setStatus(HttpStatus.SC_FORBIDDEN);
