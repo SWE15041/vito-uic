@@ -2,7 +2,7 @@ package com.vito.uic.client.core;
 
 
 import com.vito.common.util.bean.BeanUtil;
-import com.vito.uic.client.model.User;
+import com.vito.uic.client.vo.User;
 
 /**
  * 作者: zhaixm

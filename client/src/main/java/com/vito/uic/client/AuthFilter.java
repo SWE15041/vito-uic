@@ -5,7 +5,7 @@ import com.vito.common.util.validate.Validator;
 import com.vito.uic.client.core.TokenData;
 import com.vito.uic.client.core.TokenUtil;
 import com.vito.uic.client.core.UserContextHolder;
-import com.vito.uic.client.model.ApiErrorResponse;
+import com.vito.uic.client.vo.ApiErrorResponse;
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

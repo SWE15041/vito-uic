@@ -1,4 +1,4 @@
-package com.vito.uic.web.vo;
+package com.vito.uic.client.vo;
 
 import java.util.Set;
 

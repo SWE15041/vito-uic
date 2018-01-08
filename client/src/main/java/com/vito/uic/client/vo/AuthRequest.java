@@ -1,4 +1,4 @@
-package com.vito.uic.web.vo;
+package com.vito.uic.client.vo;
 
 /**
  * 作者: zhaixm

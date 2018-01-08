@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.vito.common.util.json.JsonParser;
 import com.vito.common.util.string.EncodeUtil;
 import com.vito.common.util.validate.Validator;
-import com.vito.uic.client.model.AuthResponse;
+import com.vito.uic.client.vo.AuthResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;

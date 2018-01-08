@@ -1,6 +1,6 @@
 package com.vito.website.core.config;
 
-import com.vito.uic.web.vo.ApiErrorResponse;
+import com.vito.uic.client.vo.ApiErrorResponse;
 import com.vito.website.core.exception.HttpBadRequestException;
 import com.vito.website.core.exception.HttpException;
 import com.vito.website.core.exception.HttpForbiddenException;

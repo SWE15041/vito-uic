@@ -5,7 +5,7 @@
  * 日期: 2014-6-29
  * 描述:
  */
-package com.vito.uic.client.model;
+package com.vito.uic.client.vo;
 
 import com.vito.common.util.json.JsonParser;
 

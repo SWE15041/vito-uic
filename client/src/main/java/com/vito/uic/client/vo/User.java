@@ -1,7 +1,7 @@
 /**
  * Created by lenovo on 2016/2/14.
  */
-package com.vito.uic.client.model;
+package com.vito.uic.client.vo;
 
 
 import java.util.Date;
