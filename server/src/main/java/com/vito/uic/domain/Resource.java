@@ -64,7 +64,7 @@ public class Resource extends BaseBusinessEntity<Long> {
      * 是否启用 1-启用 0-禁用
      */
     @Enumerated(EnumType.ORDINAL)
-    private YesNoEnum enable;
+    private YesNoEnum enable = YesNoEnum.YES;
 
     private Long parentId;
 
