@@ -60,9 +60,8 @@ public class AuthFilter implements Filter {
             }
         }
         if (!exclude) {
-            String authorization = httpReq.getHeader("Authorization");
-            if (Validator.isNotNull(authorization)) {
-                String token = authorization.split(" ")[1];
+            String token = getToken(httpReq);
+            if (Validator.isNotNull(token)) {
                 try {
                     TokenData tokenData = TokenUtil.parseToken(token, uicDomain, appDomain);
                     UserContextHolder.setUserContext(tokenData);
@@ -77,6 +76,20 @@ public class AuthFilter implements Filter {
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    /**
+     * 获取认证token
+     * @param httpReq
+     * @return
+     */
+    protected String getToken(HttpServletRequest httpReq) {
+        String authorization = httpReq.getHeader("Authorization");
+        if (Validator.isNotNull(authorization)) {
+            String token = authorization.split(" ")[1];
+            return token;
+        }
+        return null;
     }
 
     protected void authFail(HttpServletRequest httpReq, HttpServletResponse httpResp) throws IOException {
