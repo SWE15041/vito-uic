@@ -3,6 +3,7 @@ package com.vito.uic.web.controller;
 import com.vito.common.util.validate.Validator;
 import com.vito.storage.model.Page;
 import com.vito.storage.service.EntityCRUDService;
+import com.vito.uic.constant.ResourceType;
 import com.vito.uic.domain.Resource;
 import com.vito.uic.service.ResourceService;
 import com.vito.uic.web.vo.ResourceNode;
@@ -48,7 +49,8 @@ public class ResourceController extends BaseGridController<Resource, Long> {
             node.setName(resource.getName());
             node.setSortNo(resource.getSortNo());
             String icon = "glyphicon glyphicon-th-large";
-            switch (resource.getResourceType()) {
+            ResourceType resourceType = Validator.isNotNull(resource.getResourceType()) ? resource.getResourceType() : ResourceType.FUNC;
+            switch (resourceType) {
                 case MODULE:
                     icon = "glyphicon glyphicon-book";
                     break;
