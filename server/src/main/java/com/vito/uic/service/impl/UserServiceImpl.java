@@ -75,11 +75,13 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
     }
 
     private void handleUserRoles(User user) {
-        if (Validator.isNotNull(user.getId()) && Validator.isNotNull(user.getRoleIds())) {
+        if (Validator.isNotNull(user.getId())) {
             userRoleService.deleteByUserId(user.getId());
-            user.getRoleIds().forEach(roleId -> {
-                userRoleService.save(new UserRole(user.getId(), roleId));
-            });
+            if (Validator.isNotNull(user.getRoleIds())) {
+                user.getRoleIds().forEach(roleId -> {
+                    userRoleService.save(new UserRole(user.getId(), roleId));
+                });
+            }
         }
     }
 
