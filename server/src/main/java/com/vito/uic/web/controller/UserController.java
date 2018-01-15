@@ -47,6 +47,7 @@ public class UserController extends BaseGridController<User, Long> {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public User update(@PathVariable("id") Long id, @RequestBody User user) {
+        user.setPassword(null);
         return super.update(id, user);
     }
 
@@ -70,6 +71,7 @@ public class UserController extends BaseGridController<User, Long> {
         if (!UserContextHolder.getCurrentUserId().equals(user.getId())) {
             throw HttpException.of(ErrorCodes.POWERLESS_MODIFY);
         }
+        user.setPassword(null);
         return super.update(UserContextHolder.getCurrentUserId(), user);
     }
 
