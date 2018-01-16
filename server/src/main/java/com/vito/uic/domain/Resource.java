@@ -8,8 +8,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.vito.common.model.enums.YesNoEnum;
 import com.vito.storage.domain.BaseBusinessEntity;
 import com.vito.uic.constant.ResourceType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -94,9 +92,10 @@ public class Resource extends BaseBusinessEntity<Long> {
         getChildren().remove(sysResource);
     }
 
-    @OneToMany(mappedBy = "parent", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
-    @OrderBy("sortNo asc")
-    @Fetch(FetchMode.SELECT)
+    //    @OneToMany(mappedBy = "parent", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
+//    @OrderBy("sortNo asc")
+//    @Fetch(FetchMode.SELECT)
+    @Transient
     public List<Resource> getChildren() {
         if (children == null) {
             children = new ArrayList<Resource>();
