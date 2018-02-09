@@ -52,7 +52,7 @@ public class TokenUtil {
                               .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
 //                              .withClaim(USER_NAME_KEY, tokenData.getUserName())
                               .withClaim(MANAGER_KEY, tokenData.isManager())
-                              .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60))
+                              .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60 * 3))
                               .sign(algorithm);
             long end = System.currentTimeMillis();
             logger.debug("生成token花费时间：{}", (end - begin));
