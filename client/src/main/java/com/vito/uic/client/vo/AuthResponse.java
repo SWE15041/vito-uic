@@ -12,6 +12,7 @@ public class AuthResponse {
     private String token;
     private Long userId;
     private String userName;
+    private Boolean manager;
     private Set<String> resources;
 
     public String getToken() {
@@ -44,5 +45,13 @@ public class AuthResponse {
 
     public void setResources(Set<String> resources) {
         this.resources = resources;
+    }
+
+    public Boolean getManager() {
+        return manager;
+    }
+
+    public void setManager(Boolean manager) {
+        this.manager = manager;
     }
 }

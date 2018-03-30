@@ -54,6 +54,7 @@ public class LoginController {
                 authResp.setToken(token);
                 authResp.setUserId(loginUser.getId());
                 authResp.setUserName(loginUser.getName());
+                authResp.setManager(loginUser.manager());
                 Set<String> resources = userService.findUserResources(loginUser.getId());
                 authResp.setResources(resources);
                 return authResp;
@@ -69,7 +70,7 @@ public class LoginController {
     }
 
     public static void main(String[] args) {
-        System.out.println(MD5EncryptUtil.encrypt("123456"));
+        System.out.println(MD5EncryptUtil.encrypt("admin@qzsdk2018"));
     }
 
 }

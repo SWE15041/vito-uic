@@ -91,4 +91,8 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
         handleUserRoles(user);
         return super.update(user);
     }
+
+    public static void main(String[] args) {
+        System.out.println(MD5EncryptUtil.encrypt("abc"));
+    }
 }
