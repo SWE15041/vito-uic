@@ -10,9 +10,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableWebMvc
-@EnableJpaRepositories(basePackages = {"com.vito"}, repositoryBaseClass = MyJpaRepositoryImpl.class, repositoryFactoryBeanClass = MyRepositoryFactoryBean.class)
+@EnableJpaRepositories(basePackages = {"com.jay.vito"}, repositoryBaseClass = MyJpaRepositoryImpl.class, repositoryFactoryBeanClass = MyRepositoryFactoryBean.class)
 //@MapperScan(basePackages = "com.vito", markerInterface = MybatisMapper.class)  mapper对应的class使用@Mapper注解即可，这是默认方式
-@ComponentScan("com.vito")
+@ComponentScan("com.jay.vito")
 public class ApplicationMain {
 
     public static void main(String[] args) {

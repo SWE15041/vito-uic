@@ -1,10 +1,10 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
-import com.vito.common.model.enums.YesNoEnum;
-import com.vito.uic.domain.Resource;
-import com.vito.uic.domain.ResourceRepository;
-import com.vito.uic.service.ResourceService;
+import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.uic.domain.Resource;
+import com.jay.vito.uic.domain.ResourceRepository;
+import com.jay.vito.uic.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

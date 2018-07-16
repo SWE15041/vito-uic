@@ -1,14 +1,14 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
-import com.vito.common.util.string.encrypt.MD5EncryptUtil;
-import com.vito.common.util.validate.Validator;
-import com.vito.uic.domain.User;
-import com.vito.uic.domain.UserMapper;
-import com.vito.uic.domain.UserRepository;
-import com.vito.uic.domain.UserRole;
-import com.vito.uic.service.UserRoleService;
-import com.vito.uic.service.UserService;
+import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
+import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.uic.domain.User;
+import com.jay.vito.uic.domain.UserMapper;
+import com.jay.vito.uic.domain.UserRepository;
+import com.jay.vito.uic.domain.UserRole;
+import com.jay.vito.uic.service.UserRoleService;
+import com.jay.vito.uic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

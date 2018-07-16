@@ -1,9 +1,9 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
-import com.vito.uic.domain.RoleResource;
-import com.vito.uic.domain.RoleResourceRepository;
-import com.vito.uic.service.RoleResourceService;
+import com.jay.vito.uic.domain.RoleResource;
+import com.jay.vito.uic.domain.RoleResourceRepository;
+import com.jay.vito.uic.service.RoleResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

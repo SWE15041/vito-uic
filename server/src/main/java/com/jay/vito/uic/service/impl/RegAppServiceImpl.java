@@ -1,9 +1,9 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
-import com.vito.uic.domain.RegApp;
-import com.vito.uic.domain.RegAppRepository;
-import com.vito.uic.service.RegAppService;
+import com.jay.vito.uic.domain.RegApp;
+import com.jay.vito.uic.domain.RegAppRepository;
+import com.jay.vito.uic.service.RegAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;

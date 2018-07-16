@@ -8,8 +8,8 @@ import com.jay.vito.uic.service.UserService;
 import com.jay.vito.website.core.exception.ErrorCodes;
 import com.jay.vito.website.core.exception.HttpException;
 import com.jay.vito.website.web.controller.BaseGridController;
-import com.vito.common.util.string.encrypt.MD5EncryptUtil;
-import com.vito.uic.web.vo.PwdModifyVo;
+import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
+import com.jay.vito.uic.web.vo.PwdModifyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

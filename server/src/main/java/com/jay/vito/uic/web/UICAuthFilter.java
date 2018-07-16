@@ -2,8 +2,8 @@ package com.jay.vito.uic.web;
 
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
-import com.vito.common.util.validate.Validator;
-import com.vito.uic.client.AuthFilter;
+import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.uic.client.AuthFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

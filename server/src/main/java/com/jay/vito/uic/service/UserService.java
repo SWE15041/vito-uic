@@ -1,7 +1,7 @@
 package com.jay.vito.uic.service;
 
 import com.jay.vito.storage.service.EntityCRUDService;
-import com.vito.uic.domain.User;
+import com.jay.vito.uic.domain.User;
 
 import java.util.Set;
 
