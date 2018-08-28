@@ -1,15 +1,15 @@
 package com.jay.vito.uic.web.controller;
 
+import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.domain.User;
 import com.jay.vito.uic.service.UserService;
+import com.jay.vito.uic.web.vo.PwdModifyVo;
 import com.jay.vito.website.core.exception.ErrorCodes;
 import com.jay.vito.website.core.exception.HttpException;
 import com.jay.vito.website.web.controller.BaseGridController;
-import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
-import com.jay.vito.uic.web.vo.PwdModifyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,11 +28,6 @@ public class UserController extends BaseGridController<User, Long> {
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<User> query() {
         return super.query();
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("name", "zx");
-//        Page page = new Page();
-//        page.setItems(userService.query(params));
-//        return page;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -86,4 +81,5 @@ public class UserController extends BaseGridController<User, Long> {
         userService.update(user);
         return true;
     }
+
 }
