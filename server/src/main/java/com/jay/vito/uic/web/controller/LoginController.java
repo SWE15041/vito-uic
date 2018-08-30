@@ -1,7 +1,12 @@
 package com.jay.vito.uic.web.controller;
 
+import com.google.common.collect.ImmutableMap;
+import com.jay.vito.common.util.string.CodeGenerateUtil;
+import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
+import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.core.TokenData;
 import com.jay.vito.uic.client.core.TokenUtil;
+import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.client.vo.AuthResponse;
 import com.jay.vito.uic.domain.User;
 import com.jay.vito.uic.service.UserService;
@@ -9,13 +14,14 @@ import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
 import com.jay.vito.website.core.exception.ErrorCodes;
 import com.jay.vito.website.core.exception.HttpException;
-import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
-import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.website.core.exception.HttpUnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -27,7 +33,8 @@ import java.util.Set;
 @RestController
 public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+    private Map<String, Long> userCache = new HashMap<>();
 
     @Autowired
     private UserService userService;
@@ -67,6 +74,23 @@ public class LoginController {
     @RequestMapping(value = "/api/wechatAuth", method = RequestMethod.POST)
     public void wechatAuth(@RequestParam String authCode) {
 
+    }
+
+    @RequestMapping(value = "/api/onceToken", method = RequestMethod.GET)
+    public Map<String, Object> getToken() {
+        String token = CodeGenerateUtil.generateUUID();
+        userCache.put(token, UserContextHolder.getCurrentUserId());
+        return ImmutableMap.of("token", token);
+    }
+
+    @RequestMapping(value = "/api/userInfo", method = RequestMethod.GET)
+    public User info(@RequestParam String token) {
+        Long userId = userCache.get(token);
+        if (Validator.isNull(userId)) {
+            throw new HttpUnauthorizedException("token无效", "NOT_VALID_TOKEN");
+        }
+        userCache.remove(token);
+        return userService.get(userId);
     }
 
     public static void main(String[] args) {
