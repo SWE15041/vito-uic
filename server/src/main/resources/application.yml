@@ -7,53 +7,51 @@ server:
 
 spring:
   datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://120.76.192.37:3306/ship_dev?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    username: ship
+    password: sp@bzxx2018
     druid:
-      driver: com.mysql.jdbc.Driver
-      url: jdbc:mysql://110.80.31.170:3307/ship?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
-      username: root
-      password: hz123456
+      # 初始化大小，最小，最大
+      initial-size: 5
+      max-active: 50
+      min-idle: 5
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
+  mvc:
+    throw-exception-if-no-handler-found: true
+#  freemarker:
+#    cache: false
+#    charset: UTF-8
+#    check-template-location: true
+#    content-type: text/html
+#    expose-request-attributes: true
+#    expose-session-attributes: true
+#    request-context-attribute: request
 mybatis:
-
-# mybatis相关配置
-mybatis.type-aliases-package=com.vito.**.domain
-mybatis.configuration.map-underscore-to-camel-case=true
-mybatis.config-locations=classpath:mybatis/mybatis-config.xml
-mybatis.mapper-locations=classpath:mybatis/mapper/*.xml
-
-# 下面为连接池的补充设置，应用到上面所有数据源中
-# 初始化大小，最小，最大
-spring.datasource.druid.initial-size=5
-spring.datasource.druid.max-active=50
-spring.datasource.druid.min-idle=5
-# 配置获取连接等待超时的时间
-spring.datasource.druid.max-wait=60000
-# 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-spring.datasource.druid.time-between-eviction-runs-millis=60000
-# 配置一个连接在池中最小生存的时间，单位是毫秒
-spring.datasource.druid.min-evictable-idle-time-millis=300000
-# Oracle请使用select 1 from dual
-spring.datasource.druid.validation-query=SELECT 'x'
-spring.datasource.druid.test-while-idle=true
-spring.datasource.druid.test-on-borrow=false
-spring.datasource.druid.test-on-return=false
-# 打开PSCache，并且指定每个连接上PSCache的大小
-spring.datasource.druid.pool-prepared-statements=true
-spring.datasource.druid.max-pool-prepared-statement-per-connection-size=20
-# 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-spring.datasource.druid.filters=stat,wall,slf4j
-spring.datasource.druid.filter.stat.log-slow-sql=true
-spring.datasource.druid.filter.stat.slow-sql-millis=2000
-
-spring.mvc.throw-exception-if-no-handler-found=true
-spring.freemarker.cache=false
-spring.freemarker.charset=UTF-8
-spring.freemarker.check-template-location=true
-spring.freemarker.content-type=text/html
-spring.freemarker.expose-request-attributes=true
-spring.freemarker.expose-session-attributes=true
-spring.freemarker.request-context-attribute=request
+  type-aliases-package: com.jay.**.domain
+#  configuration:
+#    map-underscore-to-camel-case: true
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
