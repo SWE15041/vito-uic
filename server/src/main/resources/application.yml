@@ -1,11 +1,13 @@
 server:
-  port: 8090
+  port: 9082
   tomcat:
     accesslog:
       enabled: true
     basedir: target/tomcat
 
 spring:
+  application:
+    name: vito-uic
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://120.76.192.37:3306/ship_dev?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
@@ -58,8 +60,8 @@ mybatis:
 
 eureka:
   client:
-    service-url:
-      default-zone: http://127.0.0.1:8761/eureka/
+    serviceUrl:
+      defaultZone: http://127.0.0.1:9081/eureka/
 
 #请求和响应GZIP压缩支持
 feign:
