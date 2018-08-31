@@ -31,9 +31,9 @@ public class User extends BaseBusinessEntity<Long> {
     private String password;
     private String name;
     private String nickName;
-    private String weixinName;
+    private String wechatName;
     @JSONField(serialize = false)
-    private String weixinOpenId;
+    private String wechatOpenId;
     private String email;
     private String mobile;
     private String headImg;
@@ -132,20 +132,20 @@ public class User extends BaseBusinessEntity<Long> {
         this.mobile = mobile;
     }
 
-    public String getWeixinName() {
-        return weixinName;
+    public String getWechatName() {
+        return wechatName;
     }
 
-    public void setWeixinName(String weixinName) {
-        this.weixinName = weixinName;
+    public void setWechatName(String wechatName) {
+        this.wechatName = wechatName;
     }
 
-    public String getWeixinOpenId() {
-        return weixinOpenId;
+    public String getWechatOpenId() {
+        return wechatOpenId;
     }
 
-    public void setWeixinOpenId(String weixinOpenId) {
-        this.weixinOpenId = weixinOpenId;
+    public void setWechatOpenId(String wechatOpenId) {
+        this.wechatOpenId = wechatOpenId;
     }
 
     public YesNoEnum getEnable() {
