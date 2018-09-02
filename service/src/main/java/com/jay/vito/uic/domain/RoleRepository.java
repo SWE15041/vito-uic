@@ -4,6 +4,6 @@ import com.jay.vito.storage.core.MyJpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends MyJpaRepository<Role, Long> {
+public interface RoleRepository extends MyJpaRepository<SysRole, Long> {
 
 }

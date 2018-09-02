@@ -3,7 +3,7 @@ package com.jay.vito.uic.service.impl;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
-import com.jay.vito.uic.domain.User;
+import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.domain.UserMapper;
 import com.jay.vito.uic.domain.UserRepository;
 import com.jay.vito.uic.domain.UserRole;
@@ -25,7 +25,7 @@ import java.util.Set;
  * 描述:
  */
 @Service
-public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implements UserService {
+public class UserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> implements UserService {
 
     @Autowired
     private UserRoleService userRoleService;
@@ -38,12 +38,12 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
     private UserMapper userMapper;
 
     @Override
-    protected JpaRepository<User, Long> getRepository() {
+    protected JpaRepository<SysUser, Long> getRepository() {
         return userRepository;
     }
 
     @Override
-    public User findByLoginName(String loginName) {
+    public SysUser findByLoginName(String loginName) {
         return userRepository.findByLoginName(loginName);
     }
 
@@ -57,8 +57,8 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
     }
 
     @Override
-    public User get(Long id) {
-        User user = super.get(id);
+    public SysUser get(Long id) {
+        SysUser user = super.get(id);
         List<Long> userRoles = userRoleService.findUserRoles(id);
         user.setRoleIds(new HashSet<>(userRoles));
         return user;
@@ -66,7 +66,7 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
 
     @Transactional
     @Override
-    public User save(User user) {
+    public SysUser save(SysUser user) {
         handleUserRoles(user);
         if (Validator.isNull(user.getPassword())) {
             user.setPassword(MD5EncryptUtil.encrypt(user.getMobile()));
@@ -75,7 +75,7 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
         return super.save(user);
     }
 
-    private void handleUserRoles(User user) {
+    private void handleUserRoles(SysUser user) {
         if (Validator.isNotNull(user.getId())) {
             userRoleService.deleteByUserId(user.getId());
             if (Validator.isNotNull(user.getRoleIds())) {
@@ -88,7 +88,7 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
 
     @Transactional
     @Override
-    public User update(User user) {
+    public SysUser update(SysUser user) {
         handleUserRoles(user);
         return super.update(user);
     }

@@ -4,6 +4,9 @@ package com.jay.vito.uic.client.core;
 import com.jay.vito.common.util.bean.BeanUtil;
 import com.jay.vito.uic.client.vo.User;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 作者: zhaixm
  * 日期: 2017/12/3 23:30
@@ -12,6 +15,8 @@ import com.jay.vito.uic.client.vo.User;
 public class UserContext extends TokenData {
 
     private User user;
+
+    private Map<String, Object> data = new HashMap<>();
 
     public UserContext(TokenData tokenData) {
         BeanUtil.copyProperties(this, tokenData);
@@ -26,6 +31,10 @@ public class UserContext extends TokenData {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Map<String, Object> getData() {
+        return data;
     }
 
 }

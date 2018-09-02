@@ -4,7 +4,7 @@ import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.constant.ResourceType;
-import com.jay.vito.uic.domain.Resource;
+import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.service.ResourceService;
 import com.jay.vito.uic.web.vo.ResourceNode;
 import com.jay.vito.website.web.controller.BaseGridController;
@@ -23,24 +23,24 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/resources")
-public class ResourceController extends BaseGridController<Resource, Long> {
+public class ResourceController extends BaseGridController<SysResource, Long> {
 
     @Autowired
     private ResourceService resourceService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
-    public Page<Resource> query() {
+    public Page<SysResource> query() {
         return super.query();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Resource get(@PathVariable Long id) {
+    public SysResource get(@PathVariable Long id) {
         return super.get(id);
     }
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     public List<ResourceNode> getResourceTree() {
-        List<Resource> resources = resourceService.findEnableResources();
+        List<SysResource> resources = resourceService.findEnableResources();
         Map<Long, ResourceNode> resourceNodeMap = new HashMap<>();
         resources.forEach(resource -> {
             ResourceNode node = new ResourceNode();
@@ -76,12 +76,12 @@ public class ResourceController extends BaseGridController<Resource, Long> {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Resource save(@RequestBody Resource resource) {
+    public SysResource save(@RequestBody SysResource resource) {
         return super.save(resource);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Resource update(@PathVariable("id") Long id, @RequestBody Resource resource) {
+    public SysResource update(@PathVariable("id") Long id, @RequestBody SysResource resource) {
         return super.update(id, resource);
     }
 
@@ -91,7 +91,7 @@ public class ResourceController extends BaseGridController<Resource, Long> {
     }
 
     @Override
-    protected EntityCRUDService<Resource, Long> getEntityService() {
+    protected EntityCRUDService<SysResource, Long> getEntityService() {
         return resourceService;
     }
 }

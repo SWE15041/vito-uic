@@ -4,7 +4,7 @@ import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.client.core.UserContextHolder;
-import com.jay.vito.uic.domain.User;
+import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.service.UserService;
 import com.jay.vito.uic.web.vo.PwdModifyVo;
 import com.jay.vito.website.core.exception.ErrorCodes;
@@ -20,28 +20,28 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/users")
-public class UserController extends BaseGridController<User, Long> {
+public class UserController extends BaseGridController<SysUser, Long> {
 
     @Autowired
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
-    public Page<User> query() {
+    public Page<SysUser> query() {
         return super.query();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User get(@PathVariable("id") Long id) {
+    public SysUser get(@PathVariable("id") Long id) {
         return super.get(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public User save(@RequestBody User user) {
+    public SysUser save(@RequestBody SysUser user) {
         return super.save(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public User update(@PathVariable("id") Long id, @RequestBody User user) {
+    public SysUser update(@PathVariable("id") Long id, @RequestBody SysUser user) {
         user.setPassword(null);
         return super.update(id, user);
     }
@@ -52,17 +52,17 @@ public class UserController extends BaseGridController<User, Long> {
     }
 
     @Override
-    protected EntityCRUDService<User, Long> getEntityService() {
+    protected EntityCRUDService<SysUser, Long> getEntityService() {
         return userService;
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public User info() {
+    public SysUser info() {
         return userService.get(UserContextHolder.getCurrentUserId());
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.PUT)
-    public User update(@RequestBody User user) {
+    public SysUser update(@RequestBody SysUser user) {
         if (!UserContextHolder.getCurrentUserId().equals(user.getId())) {
             throw HttpException.of(ErrorCodes.POWERLESS_MODIFY);
         }
@@ -73,7 +73,7 @@ public class UserController extends BaseGridController<User, Long> {
     @RequestMapping(value = "/modifyPwd", method = RequestMethod.PUT)
     public Boolean modifyPwd(@RequestBody PwdModifyVo pwdModifyVo) {
         String origPwd = pwdModifyVo.getOrigPwd();
-        User user = userService.get(UserContextHolder.getCurrentUserId());
+        SysUser user = userService.get(UserContextHolder.getCurrentUserId());
         if (!user.getPassword().equals(MD5EncryptUtil.encrypt(origPwd))) {
             throw HttpException.of(ErrorCodes.INVALID_PASSWORD);
         }

@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_resource")
-public class Resource extends BaseBusinessEntity<Long> {
+public class SysResource extends BaseBusinessEntity<Long> {
 
     /**
      * 应用ID
@@ -69,26 +69,26 @@ public class Resource extends BaseBusinessEntity<Long> {
     /**
      * 父菜单
      */
-    private Resource parent;
+    private SysResource parent;
 
     /**
      * 子菜单
      */
-    private List<Resource> children = null;
+    private List<SysResource> children = null;
 
-    public Resource() {
+    public SysResource() {
     }
 
-    public Resource(String code, String name) {
+    public SysResource(String code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    public void addChild(Resource sysResource) {
+    public void addChild(SysResource sysResource) {
         getChildren().add(sysResource);
     }
 
-    public void removeChild(Resource sysResource) {
+    public void removeChild(SysResource sysResource) {
         getChildren().remove(sysResource);
     }
 
@@ -96,14 +96,14 @@ public class Resource extends BaseBusinessEntity<Long> {
 //    @OrderBy("sortNo asc")
 //    @Fetch(FetchMode.SELECT)
     @Transient
-    public List<Resource> getChildren() {
+    public List<SysResource> getChildren() {
         if (children == null) {
-            children = new ArrayList<Resource>();
+            children = new ArrayList<SysResource>();
         }
         return children;
     }
 
-    public void setChildren(List<Resource> children) {
+    public void setChildren(List<SysResource> children) {
         this.children = children;
     }
 
@@ -143,7 +143,7 @@ public class Resource extends BaseBusinessEntity<Long> {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Resource other = (Resource) obj;
+        SysResource other = (SysResource) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -219,11 +219,11 @@ public class Resource extends BaseBusinessEntity<Long> {
 
     @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId", insertable = false, updatable = false)
-    public Resource getParent() {
+    public SysResource getParent() {
         return parent;
     }
 
-    public void setParent(Resource parent) {
+    public void setParent(SysResource parent) {
         this.parent = parent;
     }
 

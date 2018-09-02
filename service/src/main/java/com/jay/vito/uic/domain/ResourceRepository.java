@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ResourceRepository extends MyJpaRepository<Resource, Long> {
+public interface ResourceRepository extends MyJpaRepository<SysResource, Long> {
 
-    List<Resource> findByEnable(YesNoEnum enable);
+    List<SysResource> findByEnable(YesNoEnum enable);
 
 }
