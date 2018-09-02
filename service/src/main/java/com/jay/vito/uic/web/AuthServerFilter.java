@@ -15,9 +15,9 @@ import javax.servlet.ServletException;
  * 日期: 2017/11/28 17:07
  * 描述: 认证过滤器
  */
-public class UICAuthFilter extends AuthFilter {
+public class AuthServerFilter extends AuthFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(UICAuthFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthServerFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
