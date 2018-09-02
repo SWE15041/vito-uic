@@ -84,13 +84,17 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/api/userInfo", method = RequestMethod.GET)
-    public User info(@RequestParam String token) {
+    public Map<String, Object> info(@RequestParam String token) {
         Long userId = userCache.get(token);
         if (Validator.isNull(userId)) {
             throw new HttpUnauthorizedException("token无效", "NOT_VALID_TOKEN");
         }
-        userCache.remove(token);
-        return userService.get(userId);
+//        userCache.remove(token);
+        User user = userService.get(userId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("datas", user);
+        data.put("msg", "登录成功");
+        return data;
     }
 
     public static void main(String[] args) {
