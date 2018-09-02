@@ -1,8 +1,8 @@
 package com.jay.vito.uic.service.impl;
 
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.User;
 import com.jay.vito.uic.domain.UserMapper;
 import com.jay.vito.uic.domain.UserRepository;
@@ -33,6 +33,7 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<User, Long> implement
     @Autowired
     private UserRepository userRepository;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private UserMapper userMapper;
 
