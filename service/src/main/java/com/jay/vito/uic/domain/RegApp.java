@@ -1,7 +1,7 @@
 package com.jay.vito.uic.domain;
 
-import com.jay.vito.storage.domain.BaseBusinessEntity;
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.storage.domain.BaseBusinessEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

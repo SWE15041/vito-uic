@@ -5,9 +5,9 @@ package com.jay.vito.uic.domain;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.storage.domain.BaseBusinessEntity;
 import com.jay.vito.uic.constant.UserSex;
-import com.jay.vito.common.model.enums.YesNoEnum;
 
 import javax.persistence.*;
 import java.util.HashSet;

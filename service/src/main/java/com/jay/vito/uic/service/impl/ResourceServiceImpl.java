@@ -1,7 +1,7 @@
 package com.jay.vito.uic.service.impl;
 
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.Resource;
 import com.jay.vito.uic.domain.ResourceRepository;
 import com.jay.vito.uic.service.ResourceService;
