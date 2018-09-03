@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 @Configuration
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     DataSource dataSource;
 

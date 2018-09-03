@@ -1,7 +1,7 @@
 package com.jay.vito.uic.service;
 
 import com.jay.vito.uic.ApplicationTests;
-import com.jay.vito.uic.domain.User;
+import com.jay.vito.uic.domain.SysUser;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +20,21 @@ public class UserServiceTests extends ApplicationTests {
 
     @Test
     public void testFindByLoginName() {
-        User user = userService.findByLoginName("zxm2");
+        SysUser user = userService.findByLoginName("zxm2");
         Assert.assertNotNull(user);
         Assert.assertEquals(user.getId().longValue(), 1L);
     }
 
     @Test
     public void testFindUserResources() {
-        User user = userService.findByLoginName("zxm");
+        SysUser user = userService.findByLoginName("zxm");
         Set<String> resourceCodes = userService.findUserResources(user.getId());
         System.out.println(resourceCodes);
     }
 
     @Test
     public void testGetUser() {
-        User user = userService.get(1L);
+        SysUser user = userService.get(1L);
         System.out.println(user.getRoleIds());
         Assert.assertNotNull(user.getRoleIds());
     }

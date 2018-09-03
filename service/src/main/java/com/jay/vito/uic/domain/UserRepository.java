@@ -4,6 +4,8 @@ import com.jay.vito.storage.core.MyJpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends MyJpaRepository<Role, Long> {
+public interface UserRepository extends MyJpaRepository<SysUser, Long> {
+
+    SysUser findByLoginName(String loginName);
 
 }

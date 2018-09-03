@@ -17,20 +17,20 @@ public class UserContextHolder {
      *
      * @return
      */
-    public static UserContext getUserContext() {
+    public static UserContext getContext() {
         return userContextLocal.get();
     }
 
     public static Long getCurrentUserId() {
-        if (Validator.isNotNull(getUserContext())) {
-            return getUserContext().getUserId();
+        if (Validator.isNotNull(getContext())) {
+            return getContext().getUserId();
         }
         return null;
     }
 
     public static Long getCurrentGroupId() {
-        if (Validator.isNotNull(getUserContext())) {
-            return getUserContext().getGroupId();
+        if (Validator.isNotNull(getContext())) {
+            return getContext().getGroupId();
         }
         return null;
     }

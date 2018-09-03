@@ -8,7 +8,7 @@ import com.jay.vito.uic.client.core.TokenData;
 import com.jay.vito.uic.client.core.TokenUtil;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.client.vo.AuthResponse;
-import com.jay.vito.uic.domain.User;
+import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.service.UserService;
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
@@ -45,8 +45,8 @@ public class LoginController {
      * @param user
      */
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public AuthResponse login(@RequestBody User user) {
-        User loginUser = userService.findByLoginName(user.getLoginName());
+    public AuthResponse login(@RequestBody SysUser user) {
+        SysUser loginUser = userService.findByLoginName(user.getLoginName());
         if (Validator.isNull(loginUser)) {
             throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
         } else {
@@ -84,13 +84,17 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/api/userInfo", method = RequestMethod.GET)
-    public User info(@RequestParam String token) {
+    public Map<String, Object> info(@RequestParam String token) {
         Long userId = userCache.get(token);
         if (Validator.isNull(userId)) {
             throw new HttpUnauthorizedException("token无效", "NOT_VALID_TOKEN");
         }
-        userCache.remove(token);
-        return userService.get(userId);
+//        userCache.remove(token);
+        SysUser user = userService.get(userId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("datas", user);
+        data.put("msg", "登录成功");
+        return data;
     }
 
     public static void main(String[] args) {

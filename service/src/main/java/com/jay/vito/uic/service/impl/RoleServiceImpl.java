@@ -1,10 +1,10 @@
 package com.jay.vito.uic.service.impl;
 
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.uic.domain.Role;
+import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.RoleRepository;
 import com.jay.vito.uic.domain.RoleResource;
+import com.jay.vito.uic.domain.SysRole;
 import com.jay.vito.uic.service.RoleResourceService;
 import com.jay.vito.uic.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.Set;
  * 描述:
  */
 @Service
-public class RoleServiceImpl extends EntityCRUDServiceImpl<Role, Long> implements RoleService {
+public class RoleServiceImpl extends EntityCRUDServiceImpl<SysRole, Long> implements RoleService {
 
     @Autowired
     private RoleResourceService roleResourceService;
@@ -29,13 +29,13 @@ public class RoleServiceImpl extends EntityCRUDServiceImpl<Role, Long> implement
     private RoleRepository roleRepository;
 
     @Override
-    protected JpaRepository<Role, Long> getRepository() {
+    protected JpaRepository<SysRole, Long> getRepository() {
         return roleRepository;
     }
 
     @Transactional
     @Override
-    public Role save(Role role) {
+    public SysRole save(SysRole role) {
         Set<Long> resourceIds = role.getResourceIds();
         role = super.save(role);
         if (Validator.isNotNull(role.getId()) && Validator.isNotNull(resourceIds)) {

@@ -5,9 +5,9 @@ package com.jay.vito.uic.domain;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.storage.domain.BaseBusinessEntity;
 import com.jay.vito.uic.constant.UserSex;
-import com.jay.vito.common.model.enums.YesNoEnum;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ import java.util.Set;
 @Table(name = "sys_user")
 //暂时将userId映射到id字段 解决无法忽略该字段的问题
 //@AttributeOverride(name = "userId", column = @Column(name = "id", insertable = false, updatable = false))
-public class User extends BaseBusinessEntity<Long> {
+public class SysUser extends BaseBusinessEntity<Long> {
 
     public static final Long ADMIN_USER_ID = 1L;
 

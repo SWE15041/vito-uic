@@ -4,8 +4,8 @@
 package com.jay.vito.uic.domain;
 
 
-import com.jay.vito.storage.domain.BaseBusinessEntity;
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.storage.domain.BaseBusinessEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,7 +18,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "sys_role")
-public class Role extends BaseBusinessEntity<Long> {
+public class SysRole extends BaseBusinessEntity<Long> {
 
     private String code;
 

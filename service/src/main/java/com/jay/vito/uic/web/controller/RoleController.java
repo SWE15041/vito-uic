@@ -2,7 +2,7 @@ package com.jay.vito.uic.web.controller;
 
 import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
-import com.jay.vito.uic.domain.Role;
+import com.jay.vito.uic.domain.SysRole;
 import com.jay.vito.uic.service.RoleResourceService;
 import com.jay.vito.uic.service.RoleService;
 import com.jay.vito.website.web.controller.BaseGridController;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/roles")
-public class RoleController extends BaseGridController<Role, Long> {
+public class RoleController extends BaseGridController<SysRole, Long> {
 
     @Autowired
     private RoleService roleService;
@@ -28,30 +28,30 @@ public class RoleController extends BaseGridController<Role, Long> {
     private RoleResourceService roleResourceService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
-    public Page<Role> query() {
+    public Page<SysRole> query() {
         return super.query();
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Role> getAll() {
+    public List<SysRole> getAll() {
         return super.getAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Role get(@PathVariable("id") Long id) {
-        Role role = super.get(id);
+    public SysRole get(@PathVariable("id") Long id) {
+        SysRole role = super.get(id);
         List<Long> roleResources = roleResourceService.findRoleResources(id);
         role.setResourceIds(new HashSet<>(roleResources));
         return role;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Role save(@RequestBody Role role) {
+    public SysRole save(@RequestBody SysRole role) {
         return super.save(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Role update(@PathVariable("id") Long id, @RequestBody Role role) {
+    public SysRole update(@PathVariable("id") Long id, @RequestBody SysRole role) {
         return super.save(role);
     }
 
@@ -61,7 +61,7 @@ public class RoleController extends BaseGridController<Role, Long> {
     }
 
     @Override
-    protected EntityCRUDService<Role, Long> getEntityService() {
+    protected EntityCRUDService<SysRole, Long> getEntityService() {
         return roleService;
     }
 }

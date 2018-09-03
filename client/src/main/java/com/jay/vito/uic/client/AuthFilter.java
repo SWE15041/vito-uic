@@ -14,6 +14,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 作者: zhaixm
@@ -24,7 +27,7 @@ public class AuthFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
-    protected String[] excludePaths;
+    protected List<String> excludePaths = new ArrayList<>();
 
     protected String uicDomain;
     protected String appDomain;
@@ -35,7 +38,7 @@ public class AuthFilter implements Filter {
         this.appDomain = filterConfig.getInitParameter("appDomain");
         String excludePathsStr = filterConfig.getInitParameter("excludePaths");
         if (Validator.isNotNull(excludePathsStr)) {
-            this.excludePaths = excludePathsStr.split(",");
+            Collections.addAll(excludePaths, excludePathsStr.split(","));
         }
     }
 
@@ -105,6 +108,10 @@ public class AuthFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    protected void addExcludePaths(String... paths) {
+        Collections.addAll(this.excludePaths, paths);
     }
 
     public String getUicDomain() {
