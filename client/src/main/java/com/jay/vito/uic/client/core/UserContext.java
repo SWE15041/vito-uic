@@ -10,13 +10,13 @@ import java.util.Map;
 /**
  * 作者: zhaixm
  * 日期: 2017/12/3 23:30
- * 描述:
+ * 描述: 用户上下文
  */
 public class UserContext extends TokenData {
 
     private User user;
 
-    private Map<String, Object> data = new HashMap<>();
+    private Map<String, Object> datas = new HashMap<>();
 
     public UserContext(TokenData tokenData) {
         BeanUtil.copyProperties(this, tokenData);
@@ -33,8 +33,26 @@ public class UserContext extends TokenData {
         this.user = user;
     }
 
-    public Map<String, Object> getData() {
-        return data;
+    public Map<String, Object> getDatas() {
+        return datas;
+    }
+
+    /**
+     * 获取用户上下文中的缓存数据
+     * @param key
+     * @return
+     */
+    public Object getData(String key) {
+        return this.datas.get(key);
+    }
+
+    /**
+     * 在用户上下文添加缓存
+     * @param key
+     * @param data
+     */
+    public void addData(String key, Object data) {
+        this.datas.put(key, data);
     }
 
 }
