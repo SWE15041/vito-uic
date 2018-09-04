@@ -70,6 +70,8 @@ public class UserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> implem
         handleUserRoles(user);
         if (Validator.isNull(user.getPassword())) {
             user.setPassword(MD5EncryptUtil.encrypt(user.getMobile()));
+        } else {
+            user.setPassword(MD5EncryptUtil.encrypt(user.getPassword()));
         }
         //todo 判断用户登录名是否已存在
         return super.save(user);

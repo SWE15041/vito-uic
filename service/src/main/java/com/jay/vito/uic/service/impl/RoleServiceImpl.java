@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import javax.transaction.Transactional;
 import java.util.Set;
 
@@ -45,5 +46,15 @@ public class RoleServiceImpl extends EntityCRUDServiceImpl<SysRole, Long> implem
             }
         }
         return role;
+    }
+
+    @Override
+    public Long getRoleIdByCode(String code) {
+        SysRole sysRole = roleRepository.findFirstByCode(code);
+        if(sysRole==null){
+            throw new RuntimeException("角色类型不存在");
+        }
+
+        return sysRole.getId();
     }
 }
