@@ -11,19 +11,19 @@ import javax.persistence.Table;
  * 描述: 角色资源
  */
 @Entity
-@Table(name = "sys_user_role")
-public class UserRole extends BaseBusinessEntity<Long> {
-
-    private Long userId;
+@Table(name = "sys_role_resource")
+public class SysRoleResource extends BaseBusinessEntity<Long> {
 
     private Long roleId;
 
-    public UserRole() {
+    private Long resourceId;
+
+    public SysRoleResource() {
     }
 
-    public UserRole(Long userId, Long roleId) {
-        this.userId = userId;
+    public SysRoleResource(Long roleId, Long resourceId) {
         this.roleId = roleId;
+        this.resourceId = resourceId;
     }
 
     public Long getRoleId() {
@@ -34,11 +34,11 @@ public class UserRole extends BaseBusinessEntity<Long> {
         this.roleId = roleId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getResourceId() {
+        return resourceId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
     }
 }

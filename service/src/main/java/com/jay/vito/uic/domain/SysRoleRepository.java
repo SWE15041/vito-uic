@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.management.relation.Role;
 
 @Repository
-public interface RoleRepository extends MyJpaRepository<SysRole, Long> {
+public interface SysRoleRepository extends MyJpaRepository<SysRole, Long> {
 
     SysRole findFirstByCode(String code);
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface UserMapper extends MybatisMapper {
+public interface SysUserMapper extends MybatisMapper {
 
     List<Map<String, Object>> selectList(Map<String, Object> params);
 

@@ -3,8 +3,8 @@ package com.jay.vito.uic.web.controller;
 import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.domain.SysRole;
-import com.jay.vito.uic.service.RoleResourceService;
-import com.jay.vito.uic.service.RoleService;
+import com.jay.vito.uic.service.SysRoleResourceService;
+import com.jay.vito.uic.service.SysRoleService;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/roles")
-public class RoleController extends BaseGridController<SysRole, Long> {
+public class SysRoleController extends BaseGridController<SysRole, Long> {
 
     @Autowired
-    private RoleService roleService;
+    private SysRoleService sysRoleService;
 
     @Autowired
-    private RoleResourceService roleResourceService;
+    private SysRoleResourceService sysRoleResourceService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<SysRole> query() {
@@ -40,7 +40,7 @@ public class RoleController extends BaseGridController<SysRole, Long> {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public SysRole get(@PathVariable("id") Long id) {
         SysRole role = super.get(id);
-        List<Long> roleResources = roleResourceService.findRoleResources(id);
+        List<Long> roleResources = sysRoleResourceService.findRoleResources(id);
         role.setResourceIds(new HashSet<>(roleResources));
         return role;
     }
@@ -62,6 +62,6 @@ public class RoleController extends BaseGridController<SysRole, Long> {
 
     @Override
     protected EntityCRUDService<SysRole, Long> getEntityService() {
-        return roleService;
+        return sysRoleService;
     }
 }

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRoleRepository extends MyJpaRepository<UserRole, Long> {
+public interface SysUserRoleRepository extends MyJpaRepository<SysUserRole, Long> {
 
-    List<UserRole> findByUserId(Long userId);
+    List<SysUserRole> findByUserId(Long userId);
 
     void deleteByUserId(Long roleId);
 

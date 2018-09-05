@@ -13,28 +13,28 @@ import java.util.Set;
  * 日期: 2017/11/28 0:01
  * 描述:
  */
-public class UserServiceTests extends ApplicationTests {
+public class SysUserServiceTests extends ApplicationTests {
 
     @Autowired
-    private UserService userService;
+    private SysUserService sysUserService;
 
     @Test
     public void testFindByLoginName() {
-        SysUser user = userService.findByLoginName("zxm2");
+        SysUser user = sysUserService.findByLoginName("zxm2");
         Assert.assertNotNull(user);
         Assert.assertEquals(user.getId().longValue(), 1L);
     }
 
     @Test
     public void testFindUserResources() {
-        SysUser user = userService.findByLoginName("zxm");
-        Set<String> resourceCodes = userService.findUserResources(user.getId());
+        SysUser user = sysUserService.findByLoginName("zxm");
+        Set<String> resourceCodes = sysUserService.findUserResources(user.getId());
         System.out.println(resourceCodes);
     }
 
     @Test
     public void testGetUser() {
-        SysUser user = userService.get(1L);
+        SysUser user = sysUserService.get(1L);
         System.out.println(user.getRoleIds());
         Assert.assertNotNull(user.getRoleIds());
     }

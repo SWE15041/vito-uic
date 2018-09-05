@@ -5,7 +5,7 @@ import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.domain.SysUser;
-import com.jay.vito.uic.service.UserService;
+import com.jay.vito.uic.service.SysUserService;
 import com.jay.vito.uic.web.vo.PwdModifyVo;
 import com.jay.vito.website.core.exception.ErrorCodes;
 import com.jay.vito.website.core.exception.HttpException;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/users")
-public class UserController extends BaseGridController<SysUser, Long> {
+public class SysUserController extends BaseGridController<SysUser, Long> {
 
     @Autowired
-    private UserService userService;
+    private SysUserService sysUserService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<SysUser> query() {
@@ -53,12 +53,13 @@ public class UserController extends BaseGridController<SysUser, Long> {
 
     @Override
     protected EntityCRUDService<SysUser, Long> getEntityService() {
-        return userService;
+        return sysUserService;
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public SysUser info() {
-        return userService.get(UserContextHolder.getCurrentUserId());
+        //todo 在这里返回
+        return sysUserService.get(UserContextHolder.getCurrentUserId());
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.PUT)
@@ -73,12 +74,12 @@ public class UserController extends BaseGridController<SysUser, Long> {
     @RequestMapping(value = "/modifyPwd", method = RequestMethod.PUT)
     public Boolean modifyPwd(@RequestBody PwdModifyVo pwdModifyVo) {
         String origPwd = pwdModifyVo.getOrigPwd();
-        SysUser user = userService.get(UserContextHolder.getCurrentUserId());
+        SysUser user = sysUserService.get(UserContextHolder.getCurrentUserId());
         if (!user.getPassword().equals(MD5EncryptUtil.encrypt(origPwd))) {
             throw HttpException.of(ErrorCodes.INVALID_PASSWORD);
         }
         user.setPassword(MD5EncryptUtil.encrypt(pwdModifyVo.getNewPwd()));
-        userService.update(user);
+        sysUserService.update(user);
         return true;
     }
 

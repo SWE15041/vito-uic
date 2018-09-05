@@ -3,9 +3,10 @@ package com.jay.vito.uic.web.controller;
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
+import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.constant.ResourceType;
 import com.jay.vito.uic.domain.SysResource;
-import com.jay.vito.uic.service.ResourceService;
+import com.jay.vito.uic.service.SysResourceService;
 import com.jay.vito.uic.web.vo.ResourceNode;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,10 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/resources")
-public class ResourceController extends BaseGridController<SysResource, Long> {
+public class SysResourceController extends BaseGridController<SysResource, Long> {
 
     @Autowired
-    private ResourceService resourceService;
+    private SysResourceService sysResourceService;
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<SysResource> query() {
@@ -40,7 +41,8 @@ public class ResourceController extends BaseGridController<SysResource, Long> {
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     public List<ResourceNode> getResourceTree() {
-        List<SysResource> resources = resourceService.findEnableResources();
+        List<SysResource> resources = sysResourceService.findEnableResources();
+
         Map<Long, ResourceNode> resourceNodeMap = new HashMap<>();
         resources.forEach(resource -> {
             ResourceNode node = new ResourceNode();
@@ -92,6 +94,39 @@ public class ResourceController extends BaseGridController<SysResource, Long> {
 
     @Override
     protected EntityCRUDService<SysResource, Long> getEntityService() {
-        return resourceService;
+        return sysResourceService;
     }
+
+    @RequestMapping(value = "/menuTree",method = RequestMethod.GET)
+    public List<ResourceNode> getResourceTreeByRole(){
+
+        Long currentUserId = UserContextHolder.getCurrentUserId();
+        List<SysResource> sysResources = sysResourceService.getUserResources(currentUserId);
+
+        Map<Long, ResourceNode> resourceNodeMap2 = new HashMap<>();
+        sysResources.forEach(resource2 -> {
+            ResourceNode node = new ResourceNode();
+            node.setId(resource2.getId());
+            node.setPid(resource2.getParentId());
+            node.setName(resource2.getName());
+            node.setSortNo(resource2.getSortNo());
+            node.setUrl(resource2.getUrl());
+            node.setCode(resource2.getCode());
+            resourceNodeMap2.put(resource2.getId(), node);
+        });
+
+        List<ResourceNode> rootNode = new ArrayList<>();
+        resourceNodeMap2.entrySet().forEach(entry -> {
+            ResourceNode node = entry.getValue();
+            Long pid = node.getPid();
+            if (Validator.isNotNull(pid)) {
+                ResourceNode pNode = resourceNodeMap2.get(pid);
+                pNode.addChild(node);
+            } else {
+                rootNode.add(node);
+            }
+        });
+        return rootNode;
+    }
+
 }

@@ -10,7 +10,7 @@ import java.util.Set;
  * 日期: 2017/11/23 16:26
  * 描述: 用户服务
  */
-public interface UserService extends EntityCRUDService<SysUser, Long> {
+public interface SysUserService extends EntityCRUDService<SysUser, Long> {
 
     SysUser findByLoginName(String loginName);
 

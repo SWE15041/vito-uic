@@ -9,7 +9,7 @@ import com.jay.vito.uic.client.core.TokenUtil;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.client.vo.AuthResponse;
 import com.jay.vito.uic.domain.SysUser;
-import com.jay.vito.uic.service.UserService;
+import com.jay.vito.uic.service.SysUserService;
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
 import com.jay.vito.website.core.exception.ErrorCodes;
@@ -37,7 +37,7 @@ public class LoginController {
     private Map<String, Long> userCache = new HashMap<>();
 
     @Autowired
-    private UserService userService;
+    private SysUserService sysUserService;
 
     /**
      * 登录验证
@@ -46,7 +46,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public AuthResponse login(@RequestBody SysUser user) {
-        SysUser loginUser = userService.findByLoginName(user.getLoginName());
+        SysUser loginUser = sysUserService.findByLoginName(user.getLoginName());
         if (Validator.isNull(loginUser)) {
             throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
         } else {
@@ -62,7 +62,7 @@ public class LoginController {
                 authResp.setUserId(loginUser.getId());
                 authResp.setUserName(loginUser.getName());
                 authResp.setManager(loginUser.manager());
-                Set<String> resources = userService.findUserResources(loginUser.getId());
+                Set<String> resources = sysUserService.findUserResources(loginUser.getId());
                 authResp.setResources(resources);
                 return authResp;
             } else {
@@ -90,7 +90,7 @@ public class LoginController {
             throw new HttpUnauthorizedException("token无效", "NOT_VALID_TOKEN");
         }
 //        userCache.remove(token);
-        SysUser user = userService.get(userId);
+        SysUser user = sysUserService.get(userId);
         Map<String, Object> data = new HashMap<>();
         data.put("datas", user);
         data.put("msg", "登录成功");

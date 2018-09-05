@@ -1,9 +1,9 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
-import com.jay.vito.uic.domain.UserRole;
-import com.jay.vito.uic.domain.UserRoleRepository;
-import com.jay.vito.uic.service.UserRoleService;
+import com.jay.vito.uic.domain.SysUserRole;
+import com.jay.vito.uic.domain.SysUserRoleRepository;
+import com.jay.vito.uic.service.SysUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -18,22 +18,22 @@ import java.util.List;
  * 描述:
  */
 @Service
-public class UserRoleServiceImpl extends EntityCRUDServiceImpl<UserRole, Long> implements UserRoleService {
+public class SysUserRoleServiceImpl extends EntityCRUDServiceImpl<SysUserRole, Long> implements SysUserRoleService {
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
+    private SysUserRoleRepository sysUserRoleRepository;
 
     @Override
-    protected JpaRepository<UserRole, Long> getRepository() {
-        return userRoleRepository;
+    protected JpaRepository<SysUserRole, Long> getRepository() {
+        return sysUserRoleRepository;
     }
 
     @Override
     public List<Long> findUserRoles(Long userId) {
-        List<UserRole> userRoles = userRoleRepository.findByUserId(userId);
+        List<SysUserRole> sysUserRoles = sysUserRoleRepository.findByUserId(userId);
         List<Long> roleIds = new ArrayList<>();
-        userRoles.forEach(userRole -> {
-            roleIds.add(userRole.getRoleId());
+        sysUserRoles.forEach(sysUserRole -> {
+            roleIds.add(sysUserRole.getRoleId());
         });
         return roleIds;
     }
@@ -41,6 +41,6 @@ public class UserRoleServiceImpl extends EntityCRUDServiceImpl<UserRole, Long> i
     @Transactional
     @Override
     public void deleteByUserId(Long userId) {
-        userRoleRepository.deleteByUserId(userId);
+        sysUserRoleRepository.deleteByUserId(userId);
     }
 }

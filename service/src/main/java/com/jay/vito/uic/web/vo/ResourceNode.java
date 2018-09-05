@@ -17,6 +17,8 @@ public class ResourceNode {
     private String name;
     private String icon;
     private Integer sortNo;
+    private String code;
+    private String url;
     private List<ResourceNode> children = new ArrayList<>();
 
     public void addChild(ResourceNode childNode) {
@@ -70,5 +72,21 @@ public class ResourceNode {
 
     public void setSortNo(Integer sortNo) {
         this.sortNo = sortNo;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

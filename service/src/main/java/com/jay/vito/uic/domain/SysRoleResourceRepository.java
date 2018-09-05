@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RoleResourceRepository extends MyJpaRepository<RoleResource, Long> {
+public interface SysRoleResourceRepository extends MyJpaRepository<SysRoleResource, Long> {
 
-    List<RoleResource> findByRoleId(Long roleId);
+    List<SysRoleResource> findByRoleId(Long roleId);
 
     void deleteByRoleId(Long roleId);
 
