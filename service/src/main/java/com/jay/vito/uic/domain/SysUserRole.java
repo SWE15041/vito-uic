@@ -14,8 +14,14 @@ import javax.persistence.Table;
 @Table(name = "sys_user_role")
 public class SysUserRole extends BaseBusinessEntity<Long> {
 
+    /**
+     *用户id
+     */
     private Long userId;
 
+    /**
+     *角色id
+     */
     private Long roleId;
 
     public SysUserRole() {

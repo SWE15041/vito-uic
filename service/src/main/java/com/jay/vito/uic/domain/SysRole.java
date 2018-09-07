@@ -20,8 +20,14 @@ import java.util.Set;
 @Table(name = "sys_role")
 public class SysRole extends BaseBusinessEntity<Long> {
 
+    /**
+     * 角色编码
+     */
     private String code;
 
+    /**
+     * 角色名称
+     */
     private String name;
 
     @Enumerated(EnumType.ORDINAL)

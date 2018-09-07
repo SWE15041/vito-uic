@@ -14,8 +14,14 @@ import javax.persistence.Table;
 @Table(name = "sys_role_resource")
 public class SysRoleResource extends BaseBusinessEntity<Long> {
 
+    /**
+     * 角色id
+     */
     private Long roleId;
 
+    /**
+     *资源id
+     */
     private Long resourceId;
 
     public SysRoleResource() {

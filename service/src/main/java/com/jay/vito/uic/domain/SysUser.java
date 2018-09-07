@@ -26,24 +26,66 @@ public class SysUser extends BaseBusinessEntity<Long> {
 
     public static final Long ADMIN_USER_ID = 1L;
 
+    /**
+     * 登录名
+     */
     private String loginName;
+
+    /**
+     * 密码
+     */
     @JSONField(serialize = false)
     private String password;
+
+    /**
+     * 姓名
+     */
     private String name;
+
+    /**
+     * 昵称
+     */
     private String nickName;
+
+    /**
+     * 微信名称
+     */
     private String wechatName;
+    /**
+     * 微信号
+     */
     @JSONField(serialize = false)
     private String wechatOpenId;
+
+    /**
+     * 邮箱
+     */
     private String email;
+    /**
+     * 手机号
+     */
     private String mobile;
+
+    /**
+     * 头像
+     */
     private String headImg;
 
+    /**
+     * 性别
+     */
     @Enumerated(EnumType.ORDINAL)
     private UserSex sex;
 
+    /**
+     * 是否启用  0-未启用 1-启用
+     */
     @Enumerated(EnumType.ORDINAL)
     private YesNoEnum enable;
 
+    /**
+     * 是否可登录 0-不可登录 1-可登录
+     */
     @Enumerated(EnumType.ORDINAL)
     private YesNoEnum loginable;
 

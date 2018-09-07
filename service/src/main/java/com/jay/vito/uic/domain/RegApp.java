@@ -20,7 +20,6 @@ public class RegApp extends BaseBusinessEntity<Long> {
     private String appKey;
     private String appSecret;
     private String domain;
-
     /**
      * IP白名单
      */

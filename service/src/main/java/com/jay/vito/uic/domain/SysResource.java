@@ -64,6 +64,9 @@ public class SysResource extends BaseBusinessEntity<Long> {
     @Enumerated(EnumType.ORDINAL)
     private YesNoEnum enable = YesNoEnum.YES;
 
+    /**
+     * 父id
+     */
     private Long parentId;
 
     /**
