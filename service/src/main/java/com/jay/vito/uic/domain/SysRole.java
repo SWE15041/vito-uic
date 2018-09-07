@@ -6,6 +6,7 @@ package com.jay.vito.uic.domain;
 
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.storage.domain.BaseBusinessEntity;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -23,11 +24,13 @@ public class SysRole extends BaseBusinessEntity<Long> {
     /**
      * 角色编码
      */
+    @NotEmpty(message = "角色编码不能为空")
     private String code;
 
     /**
      * 角色名称
      */
+    @NotEmpty(message = "角色名称不能为空")
     private String name;
 
     @Enumerated(EnumType.ORDINAL)

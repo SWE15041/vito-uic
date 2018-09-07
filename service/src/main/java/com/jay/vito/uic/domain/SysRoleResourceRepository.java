@@ -11,5 +11,4 @@ public interface SysRoleResourceRepository extends MyJpaRepository<SysRoleResour
     List<SysRoleResource> findByRoleId(Long roleId);
 
     void deleteByRoleId(Long roleId);
-
 }
