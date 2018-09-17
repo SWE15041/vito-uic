@@ -7,8 +7,10 @@ import com.jay.vito.uic.service.SysRoleResourceService;
 import com.jay.vito.uic.service.SysRoleService;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 
@@ -46,12 +48,14 @@ public class SysRoleController extends BaseGridController<SysRole, Long> {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public SysRole save(@RequestBody SysRole role) {
+    public SysRole save(@Valid @RequestBody SysRole role,BindingResult result) {
+        ValidUtil.valid(result);
         return super.save(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public SysRole update(@PathVariable("id") Long id, @RequestBody SysRole role) {
+    public SysRole update(@PathVariable("id") Long id,@Valid @RequestBody SysRole role,BindingResult result) {
+        ValidUtil.valid(result);
         return super.save(role);
     }
 

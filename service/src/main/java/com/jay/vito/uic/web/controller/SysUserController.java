@@ -11,6 +11,7 @@ import com.jay.vito.website.core.exception.ErrorCodes;
 import com.jay.vito.website.core.exception.HttpException;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -82,5 +83,6 @@ public class SysUserController extends BaseGridController<SysUser, Long> {
         sysUserService.update(user);
         return true;
     }
+
 
 }
