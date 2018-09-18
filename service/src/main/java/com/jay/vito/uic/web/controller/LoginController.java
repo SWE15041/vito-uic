@@ -97,6 +97,13 @@ public class LoginController {
         return data;
     }
 
+    @RequestMapping(value = "/api/forgetPwd", method = RequestMethod.POST)
+    public boolean resetPwd(@RequestBody SysUser sysUser) {
+        //todo 验证手机号验证码
+        boolean result = sysUserService.updatePwd(sysUser);
+        return result;
+    }
+
     public static void main(String[] args) {
         System.out.println(MD5EncryptUtil.encrypt("admin@qzsdk2018"));
     }

@@ -16,4 +16,8 @@ public interface SysUserService extends EntityCRUDService<SysUser, Long> {
 
     Set<String> findUserResources(Long userId);
 
+    boolean updatePwd(SysUser sysUser);
+
+    Long getIdByLoginName(String loginName);
+
 }

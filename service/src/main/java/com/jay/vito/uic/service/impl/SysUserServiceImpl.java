@@ -9,6 +9,7 @@ import com.jay.vito.uic.domain.SysUserRepository;
 import com.jay.vito.uic.domain.SysUserRole;
 import com.jay.vito.uic.service.SysUserRoleService;
 import com.jay.vito.uic.service.SysUserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,15 @@ public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> imp
     @Transactional
     @Override
     public SysUser save(SysUser user) {
+        String mobile = user.getMobile();
+        boolean existsByMobile = sysUserRepository.existsByMobile(mobile);
+        if(existsByMobile){
+           throw  new RuntimeException("此手机号已注册过账户");
+        }
+        boolean existsByLoginName = sysUserRepository.existsByLoginName(user.getLoginName());
+        if(existsByLoginName){
+            throw new RuntimeException("已有账户，登录");
+        }
         handleUserRoles(user);
         if (Validator.isNull(user.getPassword())) {
             user.setPassword(MD5EncryptUtil.encrypt(user.getMobile()));
@@ -74,6 +84,7 @@ public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> imp
             user.setPassword(MD5EncryptUtil.encrypt(user.getPassword()));
         }
         //todo 判断用户登录名是否已存在
+
         return super.save(user);
     }
 
@@ -93,6 +104,22 @@ public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> imp
     public SysUser update(SysUser user) {
         handleUserRoles(user);
         return super.update(user);
+    }
+    public boolean updatePwd(SysUser user){
+        SysUser sysUser = sysUserRepository.findByMobile(user.getMobile());
+        if(sysUser==null){
+            throw new RuntimeException("该手机号未注册使用过");
+        }
+        sysUser.setPassword(MD5EncryptUtil.encrypt(user.getPassword()));
+        super.update(sysUser);
+        return true;
+    }
+
+    @Override
+    public Long getIdByLoginName(String loginName) {
+        SysUser sysUser = sysUserRepository.findByLoginName(loginName);
+        Long userId = sysUser.getId();
+        return userId;
     }
 
     public static void main(String[] args) {
