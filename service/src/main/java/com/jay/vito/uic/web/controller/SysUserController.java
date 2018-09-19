@@ -4,6 +4,7 @@ import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.client.core.UserContextHolder;
+import com.jay.vito.uic.core.BusExtendedBean;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.service.SysUserService;
 import com.jay.vito.uic.web.vo.PwdModifyVo;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
  * 日期: 2017/11/23 18:18
  * 描述:
  */
+
+@BusExtendedBean
 @RestController
 @RequestMapping("/api/users")
 public class SysUserController extends BaseGridController<SysUser, Long> {

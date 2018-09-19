@@ -3,6 +3,7 @@ package com.jay.vito.uic.service.impl;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
+import com.jay.vito.uic.core.BusExtendedBean;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.domain.SysUserMapper;
 import com.jay.vito.uic.domain.SysUserRepository;
@@ -25,6 +26,8 @@ import java.util.Set;
  * 日期: 2017/11/23 18:16
  * 描述:
  */
+
+@BusExtendedBean
 @Service
 public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> implements SysUserService {
 
