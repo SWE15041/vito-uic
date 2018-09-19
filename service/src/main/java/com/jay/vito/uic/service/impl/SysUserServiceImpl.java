@@ -3,15 +3,14 @@ package com.jay.vito.uic.service.impl;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
-import com.jay.vito.uic.core.BusExtendedBean;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.domain.SysUserMapper;
 import com.jay.vito.uic.domain.SysUserRepository;
 import com.jay.vito.uic.domain.SysUserRole;
 import com.jay.vito.uic.service.SysUserRoleService;
 import com.jay.vito.uic.service.SysUserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ import java.util.Set;
  * 描述:
  */
 
-@BusExtendedBean
+@ConditionalOnProperty(name = "uic.userService.enabled", matchIfMissing = true)
 @Service
 public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> implements SysUserService {
 
@@ -73,11 +72,11 @@ public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> imp
     public SysUser save(SysUser user) {
         String mobile = user.getMobile();
         boolean existsByMobile = sysUserRepository.existsByMobile(mobile);
-        if(existsByMobile){
-           throw  new RuntimeException("此手机号已注册过账户");
+        if (existsByMobile) {
+            throw new RuntimeException("此手机号已注册过账户");
         }
         boolean existsByLoginName = sysUserRepository.existsByLoginName(user.getLoginName());
-        if(existsByLoginName){
+        if (existsByLoginName) {
             throw new RuntimeException("已有账户，登录");
         }
         handleUserRoles(user);
@@ -108,9 +107,10 @@ public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> imp
         handleUserRoles(user);
         return super.update(user);
     }
-    public boolean updatePwd(SysUser user){
+
+    public boolean updatePwd(SysUser user) {
         SysUser sysUser = sysUserRepository.findByMobile(user.getMobile());
-        if(sysUser==null){
+        if (sysUser == null) {
             throw new RuntimeException("该手机号未注册使用过");
         }
         sysUser.setPassword(MD5EncryptUtil.encrypt(user.getPassword()));
