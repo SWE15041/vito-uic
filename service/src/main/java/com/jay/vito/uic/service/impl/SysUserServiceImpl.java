@@ -90,6 +90,7 @@ public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> imp
         return super.save(user);
     }
 
+
     private void handleUserRoles(SysUser user) {
         if (Validator.isNotNull(user.getId())) {
             sysUserRoleService.deleteByUserId(user.getId());
@@ -108,6 +109,7 @@ public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> imp
         return super.update(user);
     }
 
+    @Transactional
     public boolean updatePwd(SysUser user) {
         SysUser sysUser = sysUserRepository.findByMobile(user.getMobile());
         if (sysUser == null) {

@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -54,5 +55,16 @@ public class SysRoleServiceImpl extends EntityCRUDServiceImpl<SysRole, Long> imp
             throw new RuntimeException("角色类型不存在");
         }
         return sysRole.getId();
+    }
+
+    /**
+     * 通过groupId获取角色记录
+     * @param groupId
+     * @return
+     */
+    @Override
+    public List<SysRole> finds(Long groupId) {
+        List<SysRole> sysRoleList = sysRoleRepository.findAllByGroupId(groupId);
+        return sysRoleList;
     }
 }

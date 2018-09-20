@@ -14,4 +14,5 @@ import java.util.List;
 public interface SysRoleService extends EntityCRUDService<SysRole, Long> {
 
     Long getRoleIdByCode(String code);
+    List<SysRole> finds(Long groupId);
 }

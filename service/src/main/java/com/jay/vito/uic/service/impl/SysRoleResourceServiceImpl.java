@@ -43,4 +43,10 @@ public class SysRoleResourceServiceImpl extends EntityCRUDServiceImpl<SysRoleRes
     public void deleteByRoleId(Long roleId) {
         sysRoleResourceRepository.deleteByRoleId(roleId);
     }
+
+    @Override
+    public List<SysRoleResource> findByRoleId(Long roleId) {
+        List<SysRoleResource> sysRoleResourceList = sysRoleResourceRepository.findByRoleId(roleId);
+        return sysRoleResourceList;
+    }
 }

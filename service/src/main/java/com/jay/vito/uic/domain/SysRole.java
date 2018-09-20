@@ -39,6 +39,11 @@ public class SysRole extends BaseBusinessEntity<Long> {
     private Set<Long> resourceIds = new HashSet<>();
 
     /**
+     * 用户id
+     */
+    private Long userId;
+
+    /**
      * 每个用户对应有多条站内消息
      */
 //    private Set<SysResource> sysResources = null;
@@ -75,4 +80,11 @@ public class SysRole extends BaseBusinessEntity<Long> {
         this.resourceIds = resourceIds;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

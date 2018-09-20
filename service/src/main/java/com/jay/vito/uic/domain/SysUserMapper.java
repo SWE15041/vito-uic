@@ -2,6 +2,7 @@ package com.jay.vito.uic.domain;
 
 import com.jay.vito.storage.domain.MybatisMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ public interface SysUserMapper extends MybatisMapper {
 
     Long countList(Map<String, Object> params);
 
-    List<String> queryUserResources(Long userId);
+    List<String> queryUserResources(@Param("userId") Long userId);
+
+    List<String> queryUserResources(@Param("userId") Long userId, @Param("groupId") Long groupId);
 
 }
