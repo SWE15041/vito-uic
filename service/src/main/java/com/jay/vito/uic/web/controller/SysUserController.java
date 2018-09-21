@@ -11,6 +11,7 @@ import com.jay.vito.website.core.exception.ErrorCodes;
 import com.jay.vito.website.core.exception.HttpException;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
  * 描述:
  */
 
+
+@ConditionalOnProperty(name = "uic.userController.enabled", matchIfMissing = true)
 @RestController
 @RequestMapping("/api/users")
 public class SysUserController extends BaseGridController<SysUser, Long> {

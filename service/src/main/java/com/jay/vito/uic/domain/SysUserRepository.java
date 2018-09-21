@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 public interface SysUserRepository extends MyJpaRepository<SysUser, Long> {
 
     SysUser findByLoginName(String loginName);
+
     boolean existsByMobile(String mobile);
+
     boolean existsByLoginName(String loginName);
+
     SysUser findByMobile(String mobile);
 }

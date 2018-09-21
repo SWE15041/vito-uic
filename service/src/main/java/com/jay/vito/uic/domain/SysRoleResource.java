@@ -20,7 +20,7 @@ public class SysRoleResource extends BaseBusinessEntity<Long> {
     private Long roleId;
 
     /**
-     *资源id
+     * 资源id
      */
     private Long resourceId;
 
