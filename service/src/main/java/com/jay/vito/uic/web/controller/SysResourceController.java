@@ -97,8 +97,8 @@ public class SysResourceController extends BaseGridController<SysResource, Long>
         return sysResourceService;
     }
 
-    @RequestMapping(value = "/menuTree",method = RequestMethod.GET)
-    public List<ResourceNode> getResourceTreeByRole(){
+    @RequestMapping(value = "/menuTree", method = RequestMethod.GET)
+    public List<ResourceNode> getResourceTreeByRole() {
 
         Long currentUserId = UserContextHolder.getCurrentUserId();
         List<SysResource> sysResources = sysResourceService.getUserResources(currentUserId);

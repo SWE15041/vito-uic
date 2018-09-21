@@ -3,7 +3,6 @@ package com.jay.vito.uic.service;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.domain.SysRole;
 
-import javax.management.relation.Role;
 import java.util.List;
 
 /**
@@ -14,5 +13,6 @@ import java.util.List;
 public interface SysRoleService extends EntityCRUDService<SysRole, Long> {
 
     Long getRoleIdByCode(String code);
+
     List<SysRole> finds(Long groupId);
 }

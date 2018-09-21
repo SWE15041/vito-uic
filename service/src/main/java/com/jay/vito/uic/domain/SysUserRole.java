@@ -15,12 +15,12 @@ import javax.persistence.Table;
 public class SysUserRole extends BaseBusinessEntity<Long> {
 
     /**
-     *用户id
+     * 用户id
      */
     private Long userId;
 
     /**
-     *角色id
+     * 角色id
      */
     private Long roleId;
 

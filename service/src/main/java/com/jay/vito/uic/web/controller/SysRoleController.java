@@ -7,6 +7,7 @@ import com.jay.vito.uic.service.SysRoleResourceService;
 import com.jay.vito.uic.service.SysRoleService;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * 日期: 2017/11/23 18:18
  * 描述:
  */
+@ConditionalOnProperty(name = "uic.roleController.enabled", matchIfMissing = true)
 @RestController
 @RequestMapping("/api/roles")
 public class SysRoleController extends BaseGridController<SysRole, Long> {
@@ -48,15 +50,15 @@ public class SysRoleController extends BaseGridController<SysRole, Long> {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public SysRole save(@Valid @RequestBody SysRole role,BindingResult result) {
+    public SysRole save(@Valid @RequestBody SysRole role, BindingResult result) {
         ValidUtil.valid(result);
         return super.save(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public SysRole update(@PathVariable("id") Long id,@Valid @RequestBody SysRole role,BindingResult result) {
+    public SysRole update(@PathVariable("id") Long id, @Valid @RequestBody SysRole role, BindingResult result) {
         ValidUtil.valid(result);
-        return super.save(role);
+        return super.update(id, role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

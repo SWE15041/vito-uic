@@ -2,9 +2,9 @@ package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
+import com.jay.vito.uic.domain.SysRole;
 import com.jay.vito.uic.domain.SysRoleRepository;
 import com.jay.vito.uic.domain.SysRoleResource;
-import com.jay.vito.uic.domain.SysRole;
 import com.jay.vito.uic.service.SysRoleResourceService;
 import com.jay.vito.uic.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class SysRoleServiceImpl extends EntityCRUDServiceImpl<SysRole, Long> imp
     @Override
     public Long getRoleIdByCode(String code) {
         SysRole sysRole = sysRoleRepository.findFirstByCode(code);
-        if(sysRole==null){
+        if (sysRole == null) {
             throw new RuntimeException("角色类型不存在");
         }
         return sysRole.getId();
@@ -59,6 +59,7 @@ public class SysRoleServiceImpl extends EntityCRUDServiceImpl<SysRole, Long> imp
 
     /**
      * 通过groupId获取角色记录
+     *
      * @param groupId
      * @return
      */

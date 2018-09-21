@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValidUtil {
-    public static void valid(BindingResult result){
+    public static void valid(BindingResult result) {
         if (result.hasErrors()) {
             List<ObjectError> allErrors = result.getAllErrors();
             List<String> message = new ArrayList<>();
@@ -16,7 +16,7 @@ public class ValidUtil {
                 String errorMessage = error.getDefaultMessage();
                 message.add(errorMessage);
             }
-            throw new HttpBadRequestException(String.join(",",message),"ERROR_MESSAGE");
+            throw new HttpBadRequestException(String.join(",", message), "ERROR_MESSAGE");
         }
     }
 }
