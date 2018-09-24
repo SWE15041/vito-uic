@@ -6,7 +6,6 @@ package com.jay.vito.uic.domain;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jay.vito.common.model.enums.YesNoEnum;
-import com.jay.vito.storage.domain.BaseBusinessEntity;
 import com.jay.vito.uic.constant.ResourceType;
 
 import javax.persistence.*;

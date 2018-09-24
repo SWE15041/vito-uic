@@ -1,7 +1,5 @@
 package com.jay.vito.uic.domain;
 
-import com.jay.vito.storage.domain.BaseBusinessEntity;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
