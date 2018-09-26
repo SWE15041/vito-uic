@@ -51,6 +51,12 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 
     @Override
     public List<SysResource> getUserResources(Long currentUserId) {
+        boolean manager = sysUserService.isManager(currentUserId);//如果该用户是管理员，则返回所有的菜单资源
+        if(manager){
+            List<SysResource> manMenu = findByResourceType(ResourceType.MENU);
+            return manMenu;
+        }
+
         Set<String> resourceCodes = sysUserService.findUserResources(currentUserId);
         List<SysResource> sysResources = findByResourceType(ResourceType.MENU);
         List<SysResource> menuResources = new ArrayList<>();

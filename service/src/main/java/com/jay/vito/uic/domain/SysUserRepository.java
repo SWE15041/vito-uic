@@ -13,4 +13,5 @@ public interface SysUserRepository extends MyJpaRepository<SysUser, Long> {
     boolean existsByLoginName(String loginName);
 
     SysUser findByMobile(String mobile);
+
 }

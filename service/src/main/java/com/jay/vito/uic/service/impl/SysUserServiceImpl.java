@@ -1,7 +1,9 @@
 package com.jay.vito.uic.service.impl;
 
+import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.domain.SysUserMapper;
 import com.jay.vito.uic.domain.SysUserRepository;
@@ -126,4 +128,16 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
         return userId;
     }
 
+    public boolean isManager(Long userId) {
+        SysUser sysUser = get(userId);
+        YesNoEnum manager = sysUser.getManager();
+        if (manager == YesNoEnum.YES) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(MD5EncryptUtil.encrypt("abc"));
+    }
 }
