@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 作者: zhaixm
  * 日期: 2017/11/23 18:16
@@ -24,5 +26,10 @@ public class SysDictServiceImpl extends EntityCRUDServiceImpl<SysDict, Long> imp
     @Override
     protected JpaRepository<SysDict, Long> getRepository() {
         return sysDictRepository;
+    }
+
+    @Override
+    public List<SysDict> findByName(String name) {
+        return sysDictRepository.findByName(name);
     }
 }

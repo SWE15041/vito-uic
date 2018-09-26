@@ -1,5 +1,6 @@
 package com.jay.vito.uic.web.controller;
 
+import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.model.Page;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.domain.SysDict;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/sysDicts")
+@RequestMapping(value = "/api/dicts")
 public class SysDictController extends BaseGridController<SysDict, Long> {
 
 
@@ -29,8 +30,12 @@ public class SysDictController extends BaseGridController<SysDict, Long> {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<SysDict> getAll() {
-        return super.getAll();
+    public List<SysDict> getAll(@RequestParam String name) {
+        if (Validator.isNotNull(name)) {
+            return sysDictService.findByName(name);
+        } else {
+            return super.getAll();
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST)

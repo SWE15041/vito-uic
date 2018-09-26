@@ -3,14 +3,14 @@
 <mapper namespace="com.jay.vito.uic.domain.SysDictMapper">
     <sql id="ColumnList">
       s.id,
+      s.name,
       s.code,
-      s.value,
       s.label
     </sql>
     <sql id="WhereClause">
         <where>
-            <if test="code != null and code != ''">
-              and s.code = #{code}
+            <if test="name != null and name != ''">
+              and s.name = #{name}
             </if>
         </where>
     </sql>
