@@ -126,7 +126,4 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
         return userId;
     }
 
-    public static void main(String[] args) {
-        System.out.println(MD5EncryptUtil.encrypt("abc"));
-    }
 }
