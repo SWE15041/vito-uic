@@ -1,11 +1,9 @@
 package com.jay.vito.uic.service.impl;
 
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.SysDict;
 import com.jay.vito.uic.domain.SysDictRepository;
 import com.jay.vito.uic.service.SysDictService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,7 @@ import java.util.List;
  */
 
 @Service
-public class SysDictServiceImpl extends EntityCRUDServiceImpl<SysDict, Long> implements SysDictService {
+public class SysDictServiceImpl extends BusinessEntityCRUDServiceImpl<SysDict, Long> implements SysDictService {
 
     @Autowired
     private SysDictRepository sysDictRepository;

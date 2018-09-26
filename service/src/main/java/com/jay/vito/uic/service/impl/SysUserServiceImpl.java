@@ -2,7 +2,6 @@ package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.domain.SysUserMapper;
 import com.jay.vito.uic.domain.SysUserRepository;
@@ -28,7 +27,7 @@ import java.util.Set;
 
 @ConditionalOnProperty(name = "uic.userService.enabled", matchIfMissing = true)
 @Service
-public class SysUserServiceImpl extends EntityCRUDServiceImpl<SysUser, Long> implements SysUserService {
+public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, Long> implements SysUserService {
 
     @Autowired
     private SysUserRoleService sysUserRoleService;

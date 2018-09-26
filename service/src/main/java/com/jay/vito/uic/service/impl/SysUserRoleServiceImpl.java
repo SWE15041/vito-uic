@@ -1,6 +1,5 @@
 package com.jay.vito.uic.service.impl;
 
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.SysUserRole;
 import com.jay.vito.uic.domain.SysUserRoleRepository;
 import com.jay.vito.uic.service.SysUserRoleService;
@@ -18,7 +17,7 @@ import java.util.List;
  * 描述:
  */
 @Service
-public class SysUserRoleServiceImpl extends EntityCRUDServiceImpl<SysUserRole, Long> implements SysUserRoleService {
+public class SysUserRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysUserRole, Long> implements SysUserRoleService {
 
     @Autowired
     private SysUserRoleRepository sysUserRoleRepository;

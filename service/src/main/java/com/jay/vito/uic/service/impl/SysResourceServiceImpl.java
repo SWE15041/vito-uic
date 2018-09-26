@@ -1,7 +1,6 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.common.model.enums.YesNoEnum;
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.constant.ResourceType;
 import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.domain.SysResourceRepository;
@@ -20,7 +19,7 @@ import java.util.Set;
  * 描述:
  */
 @Service
-public class SysResourceServiceImpl extends EntityCRUDServiceImpl<SysResource, Long> implements SysResourceService {
+public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysResource, Long> implements SysResourceService {
 
     @Autowired
     private SysResourceRepository sysResourceRepository;

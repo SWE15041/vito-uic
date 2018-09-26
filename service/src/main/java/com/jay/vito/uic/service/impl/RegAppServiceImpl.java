@@ -1,6 +1,5 @@
 package com.jay.vito.uic.service.impl;
 
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.RegApp;
 import com.jay.vito.uic.domain.RegAppRepository;
 import com.jay.vito.uic.service.RegAppService;
@@ -16,7 +15,7 @@ import java.util.List;
  * 描述:
  */
 @Service
-public class RegAppServiceImpl extends EntityCRUDServiceImpl<RegApp, Long> implements RegAppService {
+public class RegAppServiceImpl extends BusinessEntityCRUDServiceImpl<RegApp, Long> implements RegAppService {
 
     @Autowired
     private RegAppRepository regAppRepository;

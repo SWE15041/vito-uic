@@ -1,7 +1,6 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.SysRole;
 import com.jay.vito.uic.domain.SysRoleRepository;
 import com.jay.vito.uic.domain.SysRoleResource;
@@ -21,7 +20,7 @@ import java.util.Set;
  * 描述:
  */
 @Service
-public class SysRoleServiceImpl extends EntityCRUDServiceImpl<SysRole, Long> implements SysRoleService {
+public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, Long> implements SysRoleService {
 
     @Autowired
     private SysRoleResourceService sysRoleResourceService;
