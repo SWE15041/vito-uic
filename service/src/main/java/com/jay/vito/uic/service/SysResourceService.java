@@ -17,6 +17,9 @@ public interface SysResourceService extends EntityCRUDService<SysResource, Long>
 
     List<SysResource> findByResourceType(ResourceType resourceType);
 
+    List<SysResource> getUserMenu(Long currentUserId);
+
     List<SysResource> getUserResources(Long currentUserId);
+
 
 }

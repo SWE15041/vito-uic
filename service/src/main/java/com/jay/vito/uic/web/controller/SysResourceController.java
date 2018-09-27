@@ -41,7 +41,12 @@ public class SysResourceController extends BaseGridController<SysResource, Long>
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     public List<ResourceNode> getResourceTree() {
-        List<SysResource> resources = sysResourceService.findEnableResources();
+        //给当前用户分配相应权限范围的资源
+        Long currentUserId = UserContextHolder.getCurrentUserId();
+        List<SysResource> resources = sysResourceService.getUserResources(currentUserId);
+
+//        //获取可用资源
+//        List<SysResource> resources = sysResourceService.findEnableResources();
 
         Map<Long, ResourceNode> resourceNodeMap = new HashMap<>();
         resources.forEach(resource -> {
@@ -101,7 +106,7 @@ public class SysResourceController extends BaseGridController<SysResource, Long>
     public List<ResourceNode> getResourceTreeByRole() {
 
         Long currentUserId = UserContextHolder.getCurrentUserId();
-        List<SysResource> sysResources = sysResourceService.getUserResources(currentUserId);
+        List<SysResource> sysResources = sysResourceService.getUserMenu(currentUserId);
 
         Map<Long, ResourceNode> resourceNodeMap2 = new HashMap<>();
         sysResources.forEach(resource2 -> {

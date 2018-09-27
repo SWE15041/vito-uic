@@ -16,4 +16,5 @@ public interface SysResourceRepository extends MyJpaRepository<SysResource, Long
 
     List<SysResource> findByEnableAndResourceType(YesNoEnum enable, ResourceType resourceType);
 
+
 }
