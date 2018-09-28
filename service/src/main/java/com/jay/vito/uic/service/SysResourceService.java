@@ -21,5 +21,5 @@ public interface SysResourceService extends EntityCRUDService<SysResource, Long>
 
     List<SysResource> getUserResources(Long currentUserId);
 
-
+    List<Long> getResourceIds(Long userId);
 }

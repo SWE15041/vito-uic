@@ -6,11 +6,13 @@ import com.jay.vito.uic.domain.SysRoleRepository;
 import com.jay.vito.uic.domain.SysRoleResource;
 import com.jay.vito.uic.service.SysRoleResourceService;
 import com.jay.vito.uic.service.SysRoleService;
+import com.jay.vito.uic.service.SysUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +29,9 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
 
     @Autowired
     private SysRoleRepository sysRoleRepository;
+
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
 
     @Override
     protected JpaRepository<SysRole, Long> getRepository() {
@@ -66,5 +71,19 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
     public List<SysRole> finds(Long groupId) {
         List<SysRole> sysRoleList = sysRoleRepository.findAllByGroupId(groupId);
         return sysRoleList;
+    }
+
+    /*
+    * 通过userId获取该用户的所有角色记录数据
+    * */
+    @Override
+    public List<SysRole> findAll(Long userId) {
+        List<Long> roleIds = sysUserRoleService.findUserRoles(userId);
+        List<SysRole> sysRoles=new ArrayList<>();
+        for (Long roleId : roleIds) {
+            SysRole sysRole = get(roleId);
+            sysRoles.add(sysRole);
+        }
+        return sysRoles;
     }
 }
