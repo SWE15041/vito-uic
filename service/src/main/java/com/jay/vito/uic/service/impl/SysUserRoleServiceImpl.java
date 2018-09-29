@@ -42,4 +42,5 @@ public class SysUserRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysUse
     public void deleteByUserId(Long userId) {
         sysUserRoleRepository.deleteByUserId(userId);
     }
+
 }

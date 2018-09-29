@@ -1,6 +1,7 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.domain.SysRole;
 import com.jay.vito.uic.domain.SysRoleRepository;
 import com.jay.vito.uic.domain.SysRoleResource;
@@ -85,5 +86,11 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
             sysRoles.add(sysRole);
         }
         return sysRoles;
+    }
+
+    @Override
+    public List<Long> getResources(Long roleId) {
+        List<Long> resourceIds = sysRoleResourceService.findRoleResources(roleId);
+        return resourceIds;
     }
 }

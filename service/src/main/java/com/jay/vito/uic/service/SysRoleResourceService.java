@@ -17,4 +17,5 @@ public interface SysRoleResourceService extends EntityCRUDService<SysRoleResourc
     void deleteByRoleId(Long roleId);
 
     List<SysRoleResource> findByRoleId(Long roleId);
+
 }

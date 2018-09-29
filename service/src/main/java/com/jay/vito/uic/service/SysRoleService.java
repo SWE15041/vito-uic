@@ -1,6 +1,7 @@
 package com.jay.vito.uic.service;
 
 import com.jay.vito.storage.service.EntityCRUDService;
+import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.domain.SysRole;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface SysRoleService extends EntityCRUDService<SysRole, Long> {
     List<SysRole> finds(Long groupId);
 
     List<SysRole> findAll(Long userId);
+
+    List<Long> getResources(Long roleId);
 }
