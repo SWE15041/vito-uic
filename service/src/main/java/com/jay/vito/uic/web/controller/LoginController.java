@@ -1,6 +1,7 @@
 package com.jay.vito.uic.web.controller;
 
 import com.google.common.collect.ImmutableMap;
+import com.jay.vito.common.util.bean.BeanUtil;
 import com.jay.vito.common.util.string.CodeGenerateUtil;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
@@ -10,17 +11,22 @@ import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.client.vo.AuthResponse;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.service.SysUserService;
+import com.jay.vito.uic.web.vo.SysUserVo;
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
 import com.jay.vito.website.core.exception.ErrorCodes;
+import com.jay.vito.website.core.exception.HttpBadRequestException;
 import com.jay.vito.website.core.exception.HttpException;
 import com.jay.vito.website.core.exception.HttpUnauthorizedException;
+import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -100,8 +106,15 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/api/forgetPwd", method = RequestMethod.POST)
-    public boolean resetPwd(@RequestBody SysUser sysUser) {
-        //todo 验证手机号验证码
+    public boolean resetPwd(@RequestBody SysUserVo sysUserVo, HttpSession session) {
+        //todo 验证手机号验证码 messageValidCode
+        String validMessage = String.valueOf(session.getAttribute("validMessage"));
+        String messageValidCode = sysUserVo.getMessageValidCode();
+        if(validMessage.equals(messageValidCode)){
+            throw new HttpBadRequestException("验证码错误","INVALID_MESSAGE_VALIDCODE");
+        }
+        SysUser sysUser=new SysUser();
+        BeanUtil.copyProperties(sysUser,sysUserVo);
         boolean result = sysUserService.updatePwd(sysUser);
         return result;
     }

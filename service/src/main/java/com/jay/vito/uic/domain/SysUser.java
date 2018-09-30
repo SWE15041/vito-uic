@@ -98,6 +98,12 @@ public class SysUser extends BaseBusinessEntity<Long> {
     private Set<Long> roleIds = new HashSet<>();
     private Set<String> resourceCodes = new HashSet<>();
 
+//    /**
+//     * 短信验证码
+//     */
+//    @Transient
+//    private String messageValidCode;
+
     public boolean authorizeResource(String resourceCode) {
         if (getResourceCodes() == null) {
             return false;
@@ -266,4 +272,12 @@ public class SysUser extends BaseBusinessEntity<Long> {
             this.roleIds.add(roleId);
         }
     }
+
+//    public String getMessageValidCode() {
+//        return messageValidCode;
+//    }
+//    @Transient
+//    public void setMessageValidCode(String messageValidCode) {
+//        this.messageValidCode = messageValidCode;
+//    }
 }
