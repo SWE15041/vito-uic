@@ -130,10 +130,33 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 
     public boolean isManager(Long userId) {
         SysUser sysUser = get(userId);
+        if(sysUser==null){
+            throw new RuntimeException("此用户不存在");
+        }
         YesNoEnum manager = sysUser.getManager();
         if (manager == YesNoEnum.YES) {
             return true;
         }
+        return false;
+    }
+
+    /**
+     * 如果用户编号为userId的用户包含codeType类型的角色编码；则返回true;
+     * @param userId
+     * @param codeType
+     * @return
+     */
+    @Override
+    public boolean isRoleCode(Long userId, String codeType) {
+        List<String> roleCodes = sysUserMapper.queryUserRoles(userId);
+        if(roleCodes.contains(codeType)){
+            return true;
+        }
+//        for (String roleCode : roleCodes) {
+//            if(roleCode.equals(codeType)){
+//                return true;
+//            }
+//        }
         return false;
     }
 

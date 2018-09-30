@@ -40,8 +40,7 @@
     </select>
 
     <select id="queryUserResources" resultType="java.lang.String" parameterType="java.lang.Long">
-        select
-        r.code
+        select  r.code
         from sys_user_role ur, sys_role_resource rr, sys_resource r
         where ur.role_id=rr.role_id and rr.resource_id=r.id
         and ur.user_id=#{userId}
@@ -49,6 +48,7 @@
             and rr.group_id=#{groupId}
         </if>
     </select>
+
 
 </mapper>
 

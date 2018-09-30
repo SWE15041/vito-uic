@@ -21,4 +21,6 @@ public interface SysUserService extends EntityCRUDService<SysUser, Long> {
     Long getIdByLoginName(String loginName);
 
     boolean isManager(Long userId);
+
+    boolean isRoleCode(Long userId,String codeType);
 }
