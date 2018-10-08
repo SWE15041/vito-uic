@@ -59,7 +59,6 @@ public class LoginController {
             throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
         } else {
             if (MD5EncryptUtil.encrypt(user.getPassword()).equals(loginUser.getPassword())) {
-                //todo 获取用户分配的应用及相关资源
                 TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
                 tokenData.setManager(loginUser.manager());
                 tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
@@ -70,6 +69,7 @@ public class LoginController {
                 authResp.setUserId(loginUser.getId());
                 authResp.setUserName(loginUser.getName());
                 authResp.setManager(loginUser.manager());
+                // 获取用户分配的应用及相关资源
                 Set<String> resources = sysUserService.findUserResources(loginUser.getId());
                 authResp.setResources(resources);
                 return authResp;
@@ -79,11 +79,22 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/api/wechatAuth", method = RequestMethod.POST)
-    public void wechatAuth(@RequestParam String authCode) {
-
+    @RequestMapping(value = "/api/wechat/login", method = RequestMethod.POST)
+    public AuthResponse wechatLogin(@RequestParam String authCode) {
+        // todo 通过authCode换取openid，并查询user表是否有相关记录 如果有生成token并返回
+        return new AuthResponse();
     }
 
+    @RequestMapping(value = "/api/wechat/bind", method = RequestMethod.POST)
+    public AuthResponse wechatBind(@RequestParam String authCode) {
+        // todo 传入手机号、openid、短信验证码   将openid与手机对应的用户关联起来
+        return new AuthResponse();
+    }
+
+    /**
+     * 获取一次性访问token  用于对接第三方系统登录
+     * @return
+     */
     @RequestMapping(value = "/api/onceToken", method = RequestMethod.GET)
     public Map<String, Object> getToken() {
         String token = CodeGenerateUtil.generateUUID();
@@ -107,7 +118,7 @@ public class LoginController {
 
     @RequestMapping(value = "/api/forgetPwd", method = RequestMethod.POST)
     public boolean resetPwd(@RequestBody SysUserVo sysUserVo, HttpSession session) {
-        //todo 验证手机号验证码 messageValidCode
+        // 验证手机号验证码 messageValidCode
         String validMessage = String.valueOf(session.getAttribute("validMessage"));
         String messageValidCode = sysUserVo.getMessageValidCode();
         if(validMessage.equals(messageValidCode)){
