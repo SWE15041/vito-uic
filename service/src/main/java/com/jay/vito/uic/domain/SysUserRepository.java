@@ -3,8 +3,6 @@ package com.jay.vito.uic.domain;
 import com.jay.vito.storage.core.MyJpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface SysUserRepository extends MyJpaRepository<SysUser, Long> {
 
@@ -16,4 +14,9 @@ public interface SysUserRepository extends MyJpaRepository<SysUser, Long> {
 
     SysUser findByMobile(String mobile);
 
+    SysUser findByWechatOpenId(String wechatOpenId);
+
+    boolean existsByWechatOpenId(String wechatOpenId);
+
+    boolean existsByWechatOpenIdAndMobile(String wechatOpenId, String mobile);
 }

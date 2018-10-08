@@ -12,19 +12,20 @@ import com.jay.vito.uic.client.vo.AuthResponse;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.service.SysUserService;
 import com.jay.vito.uic.web.vo.SysUserVo;
+import com.jay.vito.uic.web.vo.WechatVo;
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
 import com.jay.vito.website.core.exception.ErrorCodes;
 import com.jay.vito.website.core.exception.HttpBadRequestException;
 import com.jay.vito.website.core.exception.HttpException;
 import com.jay.vito.website.core.exception.HttpUnauthorizedException;
-import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
+import weixin.popular.api.SnsAPI;
+import weixin.popular.bean.sns.SnsToken;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -80,19 +81,61 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/api/wechat/login", method = RequestMethod.POST)
-    public AuthResponse wechatLogin(@RequestParam String authCode) {
+    public AuthResponse wechatLogin(@RequestBody String authCode) {
         // todo 通过authCode换取openid，并查询user表是否有相关记录 如果有生成token并返回
-        return new AuthResponse();
+        String appid = "";
+        String secret = "";
+//        SnsToken snsToken = SnsAPI.oauth2AccessToken(appid, secret, authCode);
+//        String openid = snsToken.getOpenid();
+        String openid="123456789";
+        SysUser user = sysUserService.existsOpenId(openid);
+        if (user != null) {
+            TokenData tokenData = new TokenData(user.getId(), user.getGroupId());
+            tokenData.setManager(user.manager());
+            tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
+            String token = TokenUtil.genToken(tokenData);
+            AuthResponse authResp = new AuthResponse();
+            authResp.setToken(token);
+            authResp.setUserId(user.getId());
+            authResp.setUserName(user.getName());
+            authResp.setManager(user.manager());
+            return authResp;
+        } else {
+            throw new HttpBadRequestException("非本平台用户，无权限", "INVALID_OPENID");
+        }
     }
 
     @RequestMapping(value = "/api/wechat/bind", method = RequestMethod.POST)
-    public AuthResponse wechatBind(@RequestParam String authCode) {
+    public AuthResponse wechatBind(@RequestBody WechatVo wechatVo, HttpSession session) {
         // todo 传入手机号、openid、短信验证码   将openid与手机对应的用户关联起来
-        return new AuthResponse();
+        String messageCode = String.valueOf(session.getAttribute("MessageCode"));
+        String messageCode1 = wechatVo.getMessageCode();
+        if(!messageCode.equals(messageCode1)){
+            throw new HttpBadRequestException("短信验证码填写错误","INVALID_MESSAGE_CODE");
+        }
+        String mobile = wechatVo.getMobile();
+        String openId = wechatVo.getOpenId();
+        try {
+            SysUser user = sysUserService.bind(mobile, openId);
+            TokenData tokenData = new TokenData(user.getId(), user.getGroupId());
+            tokenData.setManager(user.manager());
+            tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
+            String token = TokenUtil.genToken(tokenData);
+            AuthResponse authResp = new AuthResponse();
+            authResp.setToken(token);
+            authResp.setUserId(user.getId());
+            authResp.setUserName(user.getName());
+            authResp.setManager(user.manager());
+            return authResp;
+        } catch (Exception e) {
+            throw  new HttpBadRequestException(e.getMessage(),"FALID_BING_OPENID");
+        }
+
     }
 
     /**
      * 获取一次性访问token  用于对接第三方系统登录
+     *
      * @return
      */
     @RequestMapping(value = "/api/onceToken", method = RequestMethod.GET)
@@ -119,13 +162,13 @@ public class LoginController {
     @RequestMapping(value = "/api/forgetPwd", method = RequestMethod.POST)
     public boolean resetPwd(@RequestBody SysUserVo sysUserVo, HttpSession session) {
         // 验证手机号验证码 messageValidCode
-        String validMessage = String.valueOf(session.getAttribute("validMessage"));
+        String validMessage = String.valueOf(session.getAttribute("MessageCode"));
         String messageValidCode = sysUserVo.getMessageValidCode();
-        if(validMessage.equals(messageValidCode)){
-            throw new HttpBadRequestException("验证码错误","INVALID_MESSAGE_VALIDCODE");
+        if (validMessage.equals(messageValidCode)) {
+            throw new HttpBadRequestException("验证码错误", "INVALID_MESSAGE_VALIDCODE");
         }
-        SysUser sysUser=new SysUser();
-        BeanUtil.copyProperties(sysUser,sysUserVo);
+        SysUser sysUser = new SysUser();
+        BeanUtil.copyProperties(sysUser, sysUserVo);
         boolean result = sysUserService.updatePwd(sysUser);
         return result;
     }

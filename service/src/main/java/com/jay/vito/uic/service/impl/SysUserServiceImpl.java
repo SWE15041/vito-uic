@@ -3,7 +3,6 @@ package com.jay.vito.uic.service.impl;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.domain.SysUserMapper;
 import com.jay.vito.uic.domain.SysUserRepository;
@@ -130,7 +129,7 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 
     public boolean isManager(Long userId) {
         SysUser sysUser = get(userId);
-        if(sysUser==null){
+        if (sysUser == null) {
             throw new RuntimeException("此用户不存在");
         }
         YesNoEnum manager = sysUser.getManager();
@@ -142,6 +141,7 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 
     /**
      * 如果用户编号为userId的用户包含codeType类型的角色编码；则返回true;
+     *
      * @param userId
      * @param codeType
      * @return
@@ -149,7 +149,7 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
     @Override
     public boolean isRoleCode(Long userId, String codeType) {
         List<String> roleCodes = sysUserMapper.queryUserRoles(userId);
-        if(roleCodes.contains(codeType)){
+        if (roleCodes.contains(codeType)) {
             return true;
         }
 //        for (String roleCode : roleCodes) {
@@ -158,6 +158,33 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 //            }
 //        }
         return false;
+    }
+
+    @Override
+    public SysUser existsOpenId(String openId) {
+        boolean existsOpenId = sysUserRepository.existsByWechatOpenId(openId);
+        if (existsOpenId) {
+            SysUser sysUser = sysUserRepository.findByWechatOpenId(openId);
+            return sysUser;
+        }
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public SysUser bind(String mobile, String openId) {
+        //判断用户的openId是否绑定手机号
+        boolean exists = sysUserRepository.existsByWechatOpenIdAndMobile(openId, mobile);
+        if (exists) {
+            throw new RuntimeException("用户已绑定");
+        }
+        SysUser user = sysUserRepository.findByMobile(mobile);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        user.setWechatOpenId(openId);
+        update(user);
+        return user;
     }
 
     public static void main(String[] args) {
