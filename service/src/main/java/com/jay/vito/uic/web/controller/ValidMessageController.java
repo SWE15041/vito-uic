@@ -3,10 +3,7 @@ package com.jay.vito.uic.web.controller;
 import com.yunpian.sdk.YunpianClient;
 import com.yunpian.sdk.model.Result;
 import com.yunpian.sdk.model.SmsSingleSend;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -24,9 +21,10 @@ public class ValidMessageController {
     /**
      * 生成短信验证码
      */
-    @RequestMapping(value = "/{mobile}/validMessage", method = RequestMethod.GET)
-    public boolean buildMessage(@PathVariable("mobile") String mobile, HttpSession session) {
+    @RequestMapping(value = "/mobile/validMessage", method = RequestMethod.POST)
+    public boolean buildMessage(@RequestBody Map<String,String> map, HttpSession session) {
         //初始化client,apikey作为所有请求的默认值(可以为空)
+        String mobile = map.get("mobile");
         YunpianClient client = new YunpianClient().init();
         Map<String, String> message = client.newParam(2);
         message.put(YunpianClient.APIKEY, apikey);
@@ -43,7 +41,8 @@ public class ValidMessageController {
         SmsSingleSend data = sendResult.getData();
         System.out.println("返回结果：" + data);
         client.close();
-        session.setAttribute("MessageCode", randomNum);
+// todo       session.setAttribute("MessageCode", randomNum);
+        session.setAttribute("MessageCode", "1234");
         session.setMaxInactiveInterval(60);//单位：秒
 
         return true;
@@ -53,7 +52,7 @@ public class ValidMessageController {
     public static void main(String[] args) {
         ValidMessageController test = new ValidMessageController();
         HttpSession session = null;
-        boolean b = test.buildMessage("18960168738", session);
+//        boolean b = test.buildMessage("18960168738", session);
 
     }
 }

@@ -164,7 +164,7 @@ public class LoginController {
         // 验证手机号验证码 messageValidCode
         String validMessage = String.valueOf(session.getAttribute("MessageCode"));
         String messageValidCode = sysUserVo.getMessageValidCode();
-        if (validMessage.equals(messageValidCode)) {
+        if (!validMessage.equals(messageValidCode)) {
             throw new HttpBadRequestException("验证码错误", "INVALID_MESSAGE_VALIDCODE");
         }
         SysUser sysUser = new SysUser();
