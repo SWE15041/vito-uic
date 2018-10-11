@@ -54,8 +54,8 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
     }
 
     @Override
-    public Long getRoleIdByCode(String code) {
-        SysRole sysRole = sysRoleRepository.findFirstByCode(code);
+    public Long getRoleIdByCode(String code,Long groupId) {
+        SysRole sysRole = sysRoleRepository.findFirstByCodeAndGroupId(code,groupId);
         if (sysRole == null) {
             throw new RuntimeException("角色类型不存在");
         }

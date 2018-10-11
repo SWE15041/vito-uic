@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface SysRoleRepository extends MyJpaRepository<SysRole, Long> {
 
-    SysRole findFirstByCode(String code);
+    SysRole findFirstByCodeAndGroupId(String code,Long groupId);
 
     List<SysRole> findAllByGroupId(Long groupId);
 }
