@@ -66,6 +66,10 @@ public class TokenData {
         return manager;
     }
 
+    public Boolean getManager() {
+        return manager;
+    }
+
     public void setManager(Boolean manager) {
         this.manager = manager;
     }

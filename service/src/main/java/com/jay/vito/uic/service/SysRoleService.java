@@ -1,7 +1,7 @@
 package com.jay.vito.uic.service;
 
+import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.storage.service.EntityCRUDService;
-import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.domain.SysRole;
 
 import java.util.List;
@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface SysRoleService extends EntityCRUDService<SysRole, Long> {
 
-    Long getRoleIdByCode(String code,Long groupId);
+    Long getRoleIdByCode(String code, Long groupId);
 
-    List<SysRole> finds(Long groupId);
+    List<SysRole> findByGroupId(Long groupId, YesNoEnum isDefault);
 
     List<SysRole> findAll(Long userId);
 

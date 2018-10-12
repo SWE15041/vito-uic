@@ -1,7 +1,7 @@
 package com.jay.vito.uic.service.impl;
 
+import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.domain.SysRole;
 import com.jay.vito.uic.domain.SysRoleRepository;
 import com.jay.vito.uic.domain.SysRoleResource;
@@ -54,8 +54,8 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
     }
 
     @Override
-    public Long getRoleIdByCode(String code,Long groupId) {
-        SysRole sysRole = sysRoleRepository.findFirstByCodeAndGroupId(code,groupId);
+    public Long getRoleIdByCode(String code, Long groupId) {
+        SysRole sysRole = sysRoleRepository.findFirstByCodeAndGroupId(code, groupId);
         if (sysRole == null) {
             throw new RuntimeException("角色类型不存在");
         }
@@ -69,18 +69,18 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
      * @return
      */
     @Override
-    public List<SysRole> finds(Long groupId) {
-        List<SysRole> sysRoleList = sysRoleRepository.findAllByGroupId(groupId);
+    public List<SysRole> findByGroupId(Long groupId, YesNoEnum isDefault) {
+        List<SysRole> sysRoleList = sysRoleRepository.findAllByGroupIdAndIsDefault(groupId, isDefault);
         return sysRoleList;
     }
 
     /*
-    * 通过userId获取该用户的所有角色记录数据
-    * */
+     * 通过userId获取该用户的所有角色记录数据
+     * */
     @Override
     public List<SysRole> findAll(Long userId) {
         List<Long> roleIds = sysUserRoleService.findUserRoles(userId);
-        List<SysRole> sysRoles=new ArrayList<>();
+        List<SysRole> sysRoles = new ArrayList<>();
         for (Long roleId : roleIds) {
             SysRole sysRole = get(roleId);
             sysRoles.add(sysRole);
