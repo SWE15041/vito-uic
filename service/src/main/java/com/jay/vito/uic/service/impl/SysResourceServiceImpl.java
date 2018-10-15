@@ -90,15 +90,15 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 
     @Override
     public List<Long> getResourceIds(Long usreId) {
-        boolean manager = sysUserService.isManager(usreId);//如果该用户是管理员，则返回所有的资源id
-        if (manager) {
-            List<SysResource> sysResources = findEnableResources();//已激活的所有资源
-            List<Long> resourceIds=new ArrayList<>();
-            for (SysResource sysResource : sysResources) {
-                resourceIds.add(sysResource.getId());
-            }
-            return resourceIds;
-        }
+//        boolean manager = sysUserService.isManager(usreId);//如果该用户是管理员，则返回所有的资源id
+//        if (manager) {
+//            List<SysResource> sysResources = findEnableResources();//已激活的所有资源
+//            List<Long> resourceIds=new ArrayList<>();
+//            for (SysResource sysResource : sysResources) {
+//                resourceIds.add(sysResource.getId());
+//            }
+//            return resourceIds;
+//        }
 
         List<SysResource> sysResources = findEnableResources();//已激活的所有资源
         Set<String> resourceCodes= sysUserService.findUserResources(usreId);//用户所拥有的资源code
