@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface SysRoleRepository extends MyJpaRepository<SysRole, Long> {
 
-    SysRole findFirstByCodeAndGroupId(String code,Long groupId);
+    SysRole findFirstByCodeAndGroupId(String code, Long groupId);
 
     List<SysRole> findAllByGroupIdAndIsDefault(Long groupId, YesNoEnum isDefault);
 }

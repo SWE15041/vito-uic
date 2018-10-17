@@ -24,8 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
-import weixin.popular.api.SnsAPI;
-import weixin.popular.bean.sns.SnsToken;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -87,7 +85,7 @@ public class LoginController {
         String secret = "";
 //        SnsToken snsToken = SnsAPI.oauth2AccessToken(appid, secret, authCode);
 //        String openid = snsToken.getOpenid();
-        String openid="123456789";
+        String openid = "123456789";
         SysUser user = sysUserService.existsOpenId(openid);
         if (user != null) {
             TokenData tokenData = new TokenData(user.getId(), user.getGroupId());
@@ -110,8 +108,8 @@ public class LoginController {
         // todo 传入手机号、openid、短信验证码   将openid与手机对应的用户关联起来
         String messageCode = String.valueOf(session.getAttribute("MessageCode"));
         String messageCode1 = wechatVo.getMessageCode();
-        if(!messageCode.equals(messageCode1)){
-            throw new HttpBadRequestException("短信验证码填写错误","INVALID_MESSAGE_CODE");
+        if (!messageCode.equals(messageCode1)) {
+            throw new HttpBadRequestException("短信验证码填写错误", "INVALID_MESSAGE_CODE");
         }
         String mobile = wechatVo.getMobile();
         String openId = wechatVo.getOpenId();
@@ -128,7 +126,7 @@ public class LoginController {
             authResp.setManager(user.manager());
             return authResp;
         } catch (Exception e) {
-            throw  new HttpBadRequestException(e.getMessage(),"FALID_BING_OPENID");
+            throw new HttpBadRequestException(e.getMessage(), "FALID_BING_OPENID");
         }
 
     }

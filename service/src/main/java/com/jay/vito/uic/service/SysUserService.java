@@ -22,9 +22,9 @@ public interface SysUserService extends EntityCRUDService<SysUser, Long> {
 
     boolean isManager(Long userId);
 
-    boolean isRoleCode(Long userId,String codeType);
+    boolean isRoleCode(Long userId, String codeType);
 
     SysUser existsOpenId(String openId);
 
-    SysUser bind(String mobile,String openId);
+    SysUser bind(String mobile, String openId);
 }

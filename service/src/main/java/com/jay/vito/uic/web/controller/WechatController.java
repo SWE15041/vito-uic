@@ -1,14 +1,10 @@
 package com.jay.vito.uic.web.controller;
 
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import weixin.popular.api.BaseAPI;
-import weixin.popular.bean.sns.SnsToken;
-import weixin.popular.client.LocalHttpClient;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -17,7 +13,7 @@ import java.net.URLEncoder;
 @RequestMapping(value = "/api/wechat")
 public class WechatController extends BaseAPI {
     private static Logger logger = LoggerFactory.getLogger(WechatController.class);
-//    private String OPEN_URI = "https://open.weixin.qq.com/connect/oauth2/authorize?";
+    //    private String OPEN_URI = "https://open.weixin.qq.com/connect/oauth2/authorize?";
     private String APPID = "";
     private String REDIRECT_URI = "http://shipweb.aixsj.com/";
     private String response_type = "code";
@@ -32,7 +28,6 @@ public class WechatController extends BaseAPI {
 //            "scope=" + SCOPE + "&" +
 //            "state=" + STATE +
 //            "#wechat_redirect";
-
 
 
     /**

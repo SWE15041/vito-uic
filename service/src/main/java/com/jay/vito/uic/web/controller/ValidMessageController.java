@@ -3,7 +3,10 @@ package com.jay.vito.uic.web.controller;
 import com.yunpian.sdk.YunpianClient;
 import com.yunpian.sdk.model.Result;
 import com.yunpian.sdk.model.SmsSingleSend;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -22,7 +25,7 @@ public class ValidMessageController {
      * 生成短信验证码
      */
     @RequestMapping(value = "/mobile/validMessage", method = RequestMethod.POST)
-    public boolean buildMessage(@RequestBody Map<String,String> map, HttpSession session) {
+    public boolean buildMessage(@RequestBody Map<String, String> map, HttpSession session) {
         //初始化client,apikey作为所有请求的默认值(可以为空)
         String mobile = map.get("mobile");
         YunpianClient client = new YunpianClient().init();
@@ -31,7 +34,7 @@ public class ValidMessageController {
         message.put(YunpianClient.MOBILE, mobile);
         int[] random = randomNum.ints(4, 0, 9).toArray();//生成6个i0-9范围内的整数；
         String text = textConstant;
-        String randomNum ="";
+        String randomNum = "";
         for (int i : random) {
             randomNum += i;
         }

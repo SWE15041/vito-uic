@@ -134,8 +134,8 @@ public class SysResourceController extends BaseGridController<SysResource, Long>
         return rootNode;
     }
 
-    @RequestMapping(value = "/resourceIds",method = RequestMethod.GET)
-    public List<Long> getResourceIds(@RequestParam Long userId){
+    @RequestMapping(value = "/resourceIds", method = RequestMethod.GET)
+    public List<Long> getResourceIds(@RequestParam Long userId) {
         List<Long> resourceIds = sysResourceService.getResourceIds(userId);
         return resourceIds;
     }

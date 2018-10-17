@@ -2,7 +2,7 @@ package com.jay.vito.uic.web.vo;
 
 public class WechatVo {
     private String openId;
-    private  String mobile;
+    private String mobile;
     private String MessageCode;
 
     public String getOpenId() {

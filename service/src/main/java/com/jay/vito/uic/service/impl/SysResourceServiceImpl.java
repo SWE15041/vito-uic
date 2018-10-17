@@ -4,7 +4,8 @@ import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.uic.constant.ResourceType;
 import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.domain.SysResourceRepository;
-import com.jay.vito.uic.service.*;
+import com.jay.vito.uic.service.SysResourceService;
+import com.jay.vito.uic.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,6 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 
     @Autowired
     private SysResourceRepository sysResourceRepository;
-    @Autowired
-    private SysRoleService sysRoleService;
-    @Autowired
-    private SysRoleResourceService sysRoleResourceService;
-    @Autowired
-    private SysUserRoleService sysUserRoleService;
     @Autowired
     private SysUserService sysUserService;
 
@@ -101,12 +96,12 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 //        }
 
         List<SysResource> sysResources = findEnableResources();//已激活的所有资源
-        Set<String> resourceCodes= sysUserService.findUserResources(usreId);//用户所拥有的资源code
-        List<Long> resourceIds=new ArrayList<>();
+        Set<String> resourceCodes = sysUserService.findUserResources(usreId);//用户所拥有的资源code
+        List<Long> resourceIds = new ArrayList<>();
         for (SysResource sysResource : sysResources) {
-           if(resourceCodes.contains(sysResource.getCode())){
-               resourceIds.add(sysResource.getId());
-           }
+            if (resourceCodes.contains(sysResource.getCode())) {
+                resourceIds.add(sysResource.getId());
+            }
         }
         return resourceIds;
     }
