@@ -46,12 +46,11 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 
     @Override
     public List<SysResource> getUserMenu(Long currentUserId) {
-        boolean manager = sysUserService.isManager(currentUserId);//如果该用户是管理员，则返回所有的菜单资源
-        if (manager) {
-            List<SysResource> manMenu = findByResourceType(ResourceType.MENU);
-            return manMenu;
-        }
-
+//        boolean manager = sysUserService.isManager(currentUserId);//如果该用户是管理员，则返回所有的菜单资源
+//        if (manager) {
+//            List<SysResource> manMenu = findByResourceType(ResourceType.MENU);
+//            return manMenu;
+//        }
         Set<String> resourceCodes = sysUserService.findUserResources(currentUserId);
         List<SysResource> sysResources = findByResourceType(ResourceType.MENU);
         List<SysResource> menuResources = new ArrayList<>();
@@ -67,11 +66,11 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 
     @Override
     public List<SysResource> getUserResources(Long currentUserId) {
-        boolean manager = sysUserService.isManager(currentUserId);//如果该用户是管理员，则返回所有的资源
-        if (manager) {
-            List<SysResource> manResources = sysResourceRepository.findByEnable(YesNoEnum.YES);
-            return manResources;
-        }
+//        boolean manager = sysUserService.isManager(currentUserId);//如果该用户是管理员，则返回所有的资源
+//        if (manager) {
+//            List<SysResource> manResources = sysResourceRepository.findByEnable(YesNoEnum.YES);
+//            return manResources;
+//        }
         Set<String> resourceCodes = sysUserService.findUserResources(currentUserId);//获取该用户所有的资源的code；
         List<SysResource> sysResources = sysResourceRepository.findByEnable(YesNoEnum.YES);
         List<SysResource> resources = new ArrayList<>();
