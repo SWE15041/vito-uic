@@ -32,16 +32,16 @@
     </properties>
 
     <dependencies>
-        <!--<dependency>
+        <dependency>
             <groupId>com.jay.vito</groupId>
             <artifactId>vito-website</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>-->
-        <dependency>
+        </dependency>
+        <!--<dependency>
             <groupId>com.github.zxmsdyz</groupId>
             <artifactId>vito-website</artifactId>
             <version>1.0.0.20181025</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.jay.vito</groupId>
             <artifactId>vito-uic-client</artifactId>
