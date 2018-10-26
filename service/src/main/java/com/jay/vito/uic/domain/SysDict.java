@@ -3,6 +3,8 @@
  */
 package com.jay.vito.uic.domain;
 
+import com.jay.vito.storage.domain.BaseEntity;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "sys_dict")
 //暂时将userId映射到id字段 解决无法忽略该字段的问题
 //@AttributeOverride(name = "userId", column = @Column(name = "id", insertable = false, updatable = false))
-public class SysDict extends BaseBusinessEntity<Long> {
+public class SysDict extends BaseEntity<Long> {
 
     public static final Long ADMIN_USER_ID = 1L;
 

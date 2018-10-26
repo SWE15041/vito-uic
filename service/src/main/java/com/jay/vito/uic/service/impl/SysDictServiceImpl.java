@@ -1,5 +1,6 @@
 package com.jay.vito.uic.service.impl;
 
+import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.domain.SysDict;
 import com.jay.vito.uic.domain.SysDictRepository;
 import com.jay.vito.uic.service.SysDictService;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 
 @Service
-public class SysDictServiceImpl extends BusinessEntityCRUDServiceImpl<SysDict, Long> implements SysDictService {
+public class SysDictServiceImpl extends EntityCRUDServiceImpl<SysDict, Long> implements SysDictService {
 
     @Autowired
     private SysDictRepository sysDictRepository;
