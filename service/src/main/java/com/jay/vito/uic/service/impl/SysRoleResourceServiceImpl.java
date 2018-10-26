@@ -48,4 +48,5 @@ public class SysRoleResourceServiceImpl extends BusinessEntityCRUDServiceImpl<Sy
         List<SysRoleResource> sysRoleResourceList = sysRoleResourceRepository.findByRoleId(roleId);
         return sysRoleResourceList;
     }
+
 }

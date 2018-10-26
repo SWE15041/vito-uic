@@ -44,6 +44,7 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
     public SysRole save(SysRole role) {
         Set<Long> resourceIds = role.getResourceIds();
         role = super.save(role);
+        //先删除角色资源表里原先的关联；再新增关联
         if (Validator.isNotNull(role.getId()) && Validator.isNotNull(resourceIds)) {
             sysRoleResourceService.deleteByRoleId(role.getId());
             for (Long resourceId : resourceIds) {
@@ -52,6 +53,26 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
         }
         return role;
     }
+
+    @Override
+    public SysRole update(SysRole sysRole) {
+        Set<Long> resourceIds = sysRole.getResourceIds();
+        sysRole = super.update(sysRole);
+        if (Validator.isNotNull(sysRole.getId()) && Validator.isNotNull(resourceIds)) {
+            sysRoleResourceService.deleteByRoleId(sysRole.getId());
+            for (Long resourceId : resourceIds) {
+                sysRoleResourceService.save(new SysRoleResource(sysRole.getId(), resourceId));
+            }
+        }
+        return sysRole;
+    }
+
+    @Override
+    public void delete(Long id) {
+        super.delete(id);
+        sysRoleResourceService.deleteByRoleId(id);
+    }
+
 
     @Override
     public Long getRoleIdByCode(String code, Long groupId) {
@@ -75,11 +96,12 @@ public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, L
     }
 
     /*
-     * 通过userId获取该用户的所有角色记录数据
+     * 通过userId和groupId获取该用户的所在公司的所有角色记录数据
      * */
     @Override
-    public List<SysRole> findAll(Long userId) {
-        List<Long> roleIds = sysUserRoleService.findUserRoles(userId);
+    public List<SysRole> findAll(Long userId,Long groupId) {
+        List<Long> roleIds = sysUserRoleService.findUserRoles(userId,groupId);
+
         List<SysRole> sysRoles = new ArrayList<>();
         for (Long roleId : roleIds) {
             SysRole sysRole = get(roleId);
