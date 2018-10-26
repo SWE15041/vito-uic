@@ -33,7 +33,7 @@ public class SysRole extends BaseBusinessEntity<Long> {
     private String name;
 
     @Enumerated(EnumType.ORDINAL)
-    private YesNoEnum isDefault;
+    private YesNoEnum isDefault = YesNoEnum.NO;
 
     private Set<Long> resourceIds = new HashSet<>();
 

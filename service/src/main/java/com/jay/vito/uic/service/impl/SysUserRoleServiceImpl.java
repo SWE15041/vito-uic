@@ -43,4 +43,14 @@ public class SysUserRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysUse
         sysUserRoleRepository.deleteByUserId(userId);
     }
 
+    @Override
+    public List<Long> findUserRoles(Long userId, Long groupId) {
+
+        List<SysUserRole> sysUserRoles = sysUserRoleRepository.findByUserIdAndGroupId(userId,groupId);
+        List<Long> roleIds = new ArrayList<>();
+        sysUserRoles.forEach(sysUserRole -> {
+            roleIds.add(sysUserRole.getRoleId());
+        });
+        return roleIds;
+    }
 }

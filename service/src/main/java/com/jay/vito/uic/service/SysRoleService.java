@@ -17,7 +17,7 @@ public interface SysRoleService extends EntityCRUDService<SysRole, Long> {
 
     List<SysRole> findByGroupId(Long groupId, YesNoEnum isDefault);
 
-    List<SysRole> findAll(Long userId);
+    List<SysRole> findAll(Long userId,Long groupId);
 
     List<Long> getResources(Long roleId);
 }
