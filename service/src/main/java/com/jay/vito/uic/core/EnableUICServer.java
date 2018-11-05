@@ -21,9 +21,9 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * Annotation to enable a DiscoveryClient implementation.
+ * uic服务端启用注解
  *
- * @author Spencer Gibb
+ * @author zhaixm
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
