@@ -1,12 +1,9 @@
-package com.jay.vito.uic.client;
+package com.jay.vito.uic.client.interceptor;
 
-import com.jay.vito.common.util.json.JsonParser;
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.core.TokenData;
 import com.jay.vito.uic.client.core.TokenUtil;
 import com.jay.vito.uic.client.core.UserContextHolder;
-import com.jay.vito.uic.client.vo.ApiErrorResponse;
-import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.jay.vito.uic.client.core.TokenUtil.authFail;
+import static com.jay.vito.uic.client.core.TokenUtil.getToken;
 
 /**
  * 作者: zhaixm
@@ -79,30 +79,6 @@ public class AuthFilter implements Filter {
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);
-    }
-
-    /**
-     * 获取认证token
-     * @param httpReq
-     * @return
-     */
-    protected String getToken(HttpServletRequest httpReq) {
-        String authorization = httpReq.getHeader("Authorization");
-        if (Validator.isNotNull(authorization)) {
-            String token = authorization.split(" ")[1];
-            return token;
-        }
-        return null;
-    }
-
-    protected void authFail(HttpServletRequest httpReq, HttpServletResponse httpResp) throws IOException {
-        httpResp.setContentType("application/json");
-        httpResp.setCharacterEncoding("UTF-8");
-        httpResp.setStatus(HttpStatus.SC_UNAUTHORIZED);
-        ApiErrorResponse errorResponse = new ApiErrorResponse();
-        errorResponse.setMsg("token验证失败，无权访问该数据");
-        errorResponse.setErrCode("INVALID_AUTH_TOKEN");
-        httpResp.getWriter().write(JsonParser.convertObjectToJson(errorResponse));
     }
 
     @Override

@@ -2,9 +2,7 @@ package com.jay.vito.uic.core.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.jay.vito.uic.web.AppInitListener;
-import com.jay.vito.uic.web.AuthServerFilter;
 import com.jay.vito.website.core.config.MyFastJsonHttpMessageConverter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -27,7 +24,7 @@ public class WebConfig {
         return registrationBean;
     }
 
-    @Bean
+/*    @Bean
     public FilterRegistrationBean getAuthFilter() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new AuthServerFilter());
@@ -36,7 +33,7 @@ public class WebConfig {
         match.add("/*");
         registrationBean.setUrlPatterns(match);
         return registrationBean;
-    }
+    }*/
 
     @Bean
     public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {

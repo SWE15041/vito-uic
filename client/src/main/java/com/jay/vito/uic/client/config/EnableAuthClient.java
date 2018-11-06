@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.jay.vito.uic.core;
+package com.jay.vito.uic.client.config;
 
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
 /**
- * uic服务端启用注解
+ * uic客户端启用注解
  *
  * @author zhaixm
  */
@@ -30,6 +30,6 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @Import(AutoConfiguration.class)
-public @interface EnableUICServer {
+public @interface EnableAuthClient {
 
 }

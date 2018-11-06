@@ -1,7 +1,7 @@
 package com.jay.vito.uic.web;
 
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.uic.client.AuthFilter;
+import com.jay.vito.uic.client.interceptor.AuthFilter;
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
 import org.slf4j.Logger;

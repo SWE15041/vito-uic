@@ -8,10 +8,16 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.Verification;
 import com.jay.vito.common.util.date.DateUtil;
+import com.jay.vito.common.util.json.JsonParser;
 import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.uic.client.vo.ApiErrorResponse;
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashSet;
@@ -44,16 +50,16 @@ public class TokenUtil {
             long begin = System.currentTimeMillis();
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
-                              .withIssuer(tokenData.getUicDomain())
-                              .withIssuedAt(tokenData.getLoginTime())
-                              .withAudience(tokenData.getAppDomains()
-                                                     .toArray(new String[tokenData.getAppDomains().size()]))
-                              .withClaim(USER_ID_KEY, tokenData.getUserId())
-                              .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
+                    .withIssuer(tokenData.getUicDomain())
+                    .withIssuedAt(tokenData.getLoginTime())
+                    .withAudience(tokenData.getAppDomains()
+                            .toArray(new String[tokenData.getAppDomains().size()]))
+                    .withClaim(USER_ID_KEY, tokenData.getUserId())
+                    .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
 //                              .withClaim(USER_NAME_KEY, tokenData.getUserName())
-                              .withClaim(MANAGER_KEY, tokenData.isManager())
-                              .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60 * 3))
-                              .sign(algorithm);
+                    .withClaim(MANAGER_KEY, tokenData.isManager())
+                    .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60 * 3))
+                    .sign(algorithm);
             long end = System.currentTimeMillis();
             logger.debug("生成token花费时间：{}", (end - begin));
             return token;
@@ -78,7 +84,7 @@ public class TokenUtil {
                 verification.withIssuer(uicDomain);
             }
             JWTVerifier verifier = verification.acceptLeeway(30) // 30 sec for nbf, iat and exp
-                                               .build();
+                    .build();
 
             DecodedJWT jwt = verifier.verify(jwtToken);
             Claim uidClaim = jwt.getClaim(USER_ID_KEY);
@@ -108,13 +114,29 @@ public class TokenUtil {
         }
     }
 
-    public static void main(String[] args) {
-        long begin = System.currentTimeMillis();
-        for (int i = 0; i < 100; i++) {
-            parseToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsIm1hbmFnZXIiOmZhbHNlLCJpc3MiOiJsb2NhbGhvc3QiLCJleHAiOjE1MTI2MTg0ODcsImlhdCI6MTUxMjYxNDg4N30.5xX4XqG_8Pn--7Jpr_8882Liy_0D9QejvnlNe3h_Rl0", "localhost", "");
+    /**
+     * 获取认证token
+     *
+     * @param httpReq
+     * @return
+     */
+    public static String getToken(HttpServletRequest httpReq) {
+        String authorization = httpReq.getHeader("Authorization");
+        if (Validator.isNotNull(authorization)) {
+            String token = authorization.split(" ")[1];
+            return token;
         }
-        long end = System.currentTimeMillis();
-        System.out.println(end - begin);
+        return null;
+    }
+
+    public static void authFail(HttpServletRequest httpReq, HttpServletResponse httpResp) throws IOException {
+        httpResp.setContentType("application/json");
+        httpResp.setCharacterEncoding("UTF-8");
+        httpResp.setStatus(HttpStatus.SC_UNAUTHORIZED);
+        ApiErrorResponse errorResponse = new ApiErrorResponse();
+        errorResponse.setMsg("token验证失败，无权访问该数据");
+        errorResponse.setErrCode("INVALID_AUTH_TOKEN");
+        httpResp.getWriter().write(JsonParser.convertObjectToJson(errorResponse));
     }
 
 }
