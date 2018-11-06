@@ -39,7 +39,7 @@ spring:
           slow-sql-millis: 2000
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
   mvc:
     throw-exception-if-no-handler-found: true
