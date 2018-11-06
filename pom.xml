@@ -4,9 +4,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.zxmsdyz</groupId>
-        <artifactId>vito-frame</artifactId>
-        <version>1.0.0.20181101</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.8.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jay.vito</groupId>
     <artifactId>vito-uic</artifactId>
