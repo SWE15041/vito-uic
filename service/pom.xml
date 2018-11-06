@@ -17,25 +17,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-
-        <commons.io.version>2.4</commons.io.version>
-        <commons.lang.version>2.6</commons.lang.version>
-        <commons.lang3.version>3.3</commons.lang3.version>
-        <commons.beanutils.version>1.8.3</commons.beanutils.version>
-        <commons.codec.version>1.9</commons.codec.version>
-        <commons.httpclient.version>3.1</commons.httpclient.version>
-        <guava.version>18.0</guava.version>
-        <ehcache.version>1.2.3</ehcache.version>
-        <jedis.version>2.6.1</jedis.version>
-        <kafka.clients.version>0.9.0.0</kafka.clients.version>
-        <freemarker.version>2.3.21</freemarker.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.jay.vito</groupId>
+            <groupId>com.github.zxmsdyz</groupId>
             <artifactId>vito-website</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${vito.version}</version>
         </dependency>
         <!--<dependency>
             <groupId>com.github.zxmsdyz</groupId>
