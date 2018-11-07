@@ -64,7 +64,7 @@ public class LoginController {
 //                tokenData.setAppDomains("");
                 String token = TokenUtil.genToken(tokenData);
                 AuthResponse authResp = new AuthResponse();
-                authResp.setToken(token);
+                authResp.setToken("bearer " + token);
                 authResp.setUserId(loginUser.getId());
                 authResp.setUserName(loginUser.getName());
                 authResp.setManager(loginUser.manager());
