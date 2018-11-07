@@ -25,11 +25,6 @@
             <artifactId>vito-website</artifactId>
             <version>${vito.version}</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.github.zxmsdyz</groupId>
-            <artifactId>vito-website</artifactId>
-            <version>1.0.0.20181025</version>
-        </dependency>-->
         <dependency>
             <groupId>com.jay.vito</groupId>
             <artifactId>vito-uic-client</artifactId>

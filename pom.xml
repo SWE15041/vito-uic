@@ -24,7 +24,7 @@
     </parent>-->
 
     <properties>
-        <vito.version>1.0.0.20181101</vito.version>
+        <vito.version>1.0.0.20181106</vito.version>
     </properties>
 
     <build>
