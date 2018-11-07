@@ -3,6 +3,7 @@ package com.jay.vito.uic.service.impl;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.domain.SysUserMapper;
 import com.jay.vito.uic.domain.SysUserRepository;
@@ -52,7 +53,8 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 
     @Override
     public Set<String> findUserResources(Long userId) {
-        return new HashSet<>(sysUserMapper.queryUserResources(userId));
+        Long groupId = UserContextHolder.getCurrentGroupId();
+        return new HashSet<>(sysUserMapper.queryUserResources(userId, groupId));
     }
 
     public List<Map<String, Object>> query(Map<String, Object> params) {

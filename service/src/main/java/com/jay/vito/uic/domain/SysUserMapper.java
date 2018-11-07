@@ -14,8 +14,6 @@ public interface SysUserMapper extends MybatisMapper {
 
     Long countList(Map<String, Object> params);
 
-    List<String> queryUserResources(@Param("userId") Long userId);
-
     List<String> queryUserResources(@Param("userId") Long userId, @Param("groupId") Long groupId);
 
     List<String> queryUserRoles(@Param("userId") Long userId);
