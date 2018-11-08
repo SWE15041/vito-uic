@@ -94,8 +94,9 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 
 
     private void handleUserRoles(SysUser user) {
+        Long currentGroupId = UserContextHolder.getCurrentGroupId();
         if (Validator.isNotNull(user.getId())) {
-            sysUserRoleService.deleteByUserId(user.getId());
+            sysUserRoleService.deleteByUserIdAndGroupId(user.getId(),currentGroupId);
             if (Validator.isNotNull(user.getRoleIds())) {
                 user.getRoleIds().forEach(roleId -> {
                     sysUserRoleService.save(new SysUserRole(user.getId(), roleId));

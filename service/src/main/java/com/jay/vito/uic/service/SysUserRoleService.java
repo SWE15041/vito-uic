@@ -14,7 +14,7 @@ public interface SysUserRoleService extends EntityCRUDService<SysUserRole, Long>
 
     List<Long> findUserRoles(Long userId);
 
-    void deleteByUserId(Long userId);
+    void deleteByUserIdAndGroupId(Long userId,Long groupId);
 
     List<Long> findUserRoles(Long userId,Long groupId);
 }
