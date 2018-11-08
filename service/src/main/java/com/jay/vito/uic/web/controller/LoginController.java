@@ -22,7 +22,6 @@ import com.jay.vito.website.core.exception.HttpUnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -36,7 +35,6 @@ import java.util.Set;
  * 日期: 2017/11/25 23:18
  * 描述: 认证控制器
  */
-@ConditionalOnProperty(name = "uic.loginController.enabled", matchIfMissing = true)
 @RestController
 public class LoginController {
 

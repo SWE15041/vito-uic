@@ -11,9 +11,7 @@ import com.jay.vito.uic.domain.SysUserRole;
 import com.jay.vito.uic.service.SysUserRoleService;
 import com.jay.vito.uic.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
@@ -26,9 +24,6 @@ import java.util.Set;
  * 日期: 2017/11/23 18:16
  * 描述:
  */
-
-@ConditionalOnProperty(name = "uic.userService.enabled", matchIfMissing = true)
-@Service
 public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, Long> implements SysUserService {
 
     @Autowired
@@ -96,7 +91,7 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
     private void handleUserRoles(SysUser user) {
         Long currentGroupId = UserContextHolder.getCurrentGroupId();
         if (Validator.isNotNull(user.getId())) {
-            sysUserRoleService.deleteByUserIdAndGroupId(user.getId(),currentGroupId);
+            sysUserRoleService.deleteByUserIdAndGroupId(user.getId(), currentGroupId);
             if (Validator.isNotNull(user.getRoleIds())) {
                 user.getRoleIds().forEach(roleId -> {
                     sysUserRoleService.save(new SysUserRole(user.getId(), roleId));

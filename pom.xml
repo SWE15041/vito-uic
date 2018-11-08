@@ -69,12 +69,22 @@
     <distributionManagement>
         <snapshotRepository>
             <id>private-oss</id>
+            <url>http://121.196.196.128:50903/nexus/content/repositories/nexus-snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>private-oss</id>
+            <url>http://121.196.196.128:50903/nexus/content/repositories/nexus-releases</url>
+        </repository>
+    </distributionManagement>
+    <!--<distributionManagement>
+        <snapshotRepository>
+            <id>private-oss</id>
             <url>http://192.168.10.118:8081/nexus/content/repositories/nexus-snapshots</url>
         </snapshotRepository>
         <repository>
             <id>private-oss</id>
             <url>http://192.168.10.118:8081/nexus/content/repositories/nexus-releases</url>
         </repository>
-    </distributionManagement>
+    </distributionManagement>-->
 
 </project>
