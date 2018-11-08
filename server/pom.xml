@@ -5,7 +5,7 @@
     <parent>
         <artifactId>vito-uic</artifactId>
         <groupId>com.jay.vito</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.20181108-SNAPSHOT</version>
     </parent>
     <artifactId>vito-uic-server</artifactId>
     <packaging>jar</packaging>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.jay.vito</groupId>
             <artifactId>vito-uic-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${uic.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

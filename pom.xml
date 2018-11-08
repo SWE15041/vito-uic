@@ -2,17 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.8.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <modelVersion>4.0.0</modelVersion>
     <groupId>com.jay.vito</groupId>
     <artifactId>vito-uic</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.0.20181108-SNAPSHOT</version>
     <packaging>pom</packaging>
+
+    <properties>
+        <uic.version>1.0.20181108-SNAPSHOT</uic.version>
+        <vito.version>1.0.20181108-SNAPSHOT</vito.version>
+    </properties>
+
     <modules>
         <module>client</module>
         <module>service</module>
@@ -25,10 +31,6 @@
         <version>1.0.0.20181101</version>
         <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;
     </parent>-->
-
-    <properties>
-        <vito.version>1.0.0.20181106</vito.version>
-    </properties>
 
     <build>
         <plugins>
@@ -62,5 +64,17 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- 提交到maven私服 -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>private-oss</id>
+            <url>http://192.168.10.118:8081/nexus/content/repositories/nexus-snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>private-oss</id>
+            <url>http://192.168.10.118:8081/nexus/content/repositories/nexus-releases</url>
+        </repository>
+    </distributionManagement>
 
 </project>
