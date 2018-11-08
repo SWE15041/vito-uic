@@ -11,7 +11,9 @@ import com.jay.vito.uic.domain.SysUserRole;
 import com.jay.vito.uic.service.SysUserRoleService;
 import com.jay.vito.uic.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
@@ -24,6 +26,8 @@ import java.util.Set;
  * 日期: 2017/11/23 18:16
  * 描述:
  */
+@ConditionalOnMissingBean
+@Service
 public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, Long> implements SysUserService {
 
     @Autowired

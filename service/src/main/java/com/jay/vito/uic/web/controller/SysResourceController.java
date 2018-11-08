@@ -10,6 +10,7 @@ import com.jay.vito.uic.service.SysResourceService;
 import com.jay.vito.uic.web.vo.ResourceNode;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Map;
  * 日期: 2017/12/7 11:08
  * 描述: 资源控制器
  */
+@ConditionalOnMissingBean
 @RestController
 @RequestMapping("/api/resources")
 public class SysResourceController extends BaseGridController<SysResource, Long> {

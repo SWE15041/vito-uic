@@ -15,7 +15,6 @@ import java.util.List;
  * 日期: 2017/11/23 18:16
  * 描述:
  */
-
 @Service
 public class SysDictServiceImpl extends EntityCRUDServiceImpl<SysDict, Long> implements SysDictService {
 

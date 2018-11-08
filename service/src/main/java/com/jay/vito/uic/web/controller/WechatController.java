@@ -2,6 +2,7 @@ package com.jay.vito.uic.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import weixin.popular.api.BaseAPI;
@@ -9,6 +10,7 @@ import weixin.popular.api.BaseAPI;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+@ConditionalOnMissingBean
 @RestController
 @RequestMapping(value = "/api/wechat")
 public class WechatController extends BaseAPI {
