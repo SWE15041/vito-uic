@@ -52,6 +52,7 @@ public class BaseLoginController {
      *
      * @param user
      */
+    @IgnoreUserAuth
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public AuthResponse login(@RequestBody SysUser user) {
         SysUser loginUser = sysUserService.findByLoginName(user.getLoginName());
