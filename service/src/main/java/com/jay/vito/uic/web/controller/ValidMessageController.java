@@ -1,5 +1,6 @@
 package com.jay.vito.uic.web.controller;
 
+import com.jay.vito.uic.client.interceptor.IgnoreUserAuth;
 import com.yunpian.sdk.YunpianClient;
 import com.yunpian.sdk.model.Result;
 import com.yunpian.sdk.model.SmsSingleSend;
@@ -24,6 +25,7 @@ public class ValidMessageController {
     /**
      * 生成短信验证码
      */
+    @IgnoreUserAuth
     @RequestMapping(value = "/mobile/validMessage", method = RequestMethod.POST)
     public boolean buildMessage(@RequestBody Map<String, String> map, HttpSession session) {
         //初始化client,apikey作为所有请求的默认值(可以为空)

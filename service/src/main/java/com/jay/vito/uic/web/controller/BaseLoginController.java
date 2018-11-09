@@ -8,6 +8,7 @@ import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.core.TokenData;
 import com.jay.vito.uic.client.core.TokenUtil;
 import com.jay.vito.uic.client.core.UserContextHolder;
+import com.jay.vito.uic.client.interceptor.IgnoreUserAuth;
 import com.jay.vito.uic.client.vo.AuthResponse;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.service.SysUserService;
@@ -78,6 +79,7 @@ public class BaseLoginController {
         }
     }
 
+    @IgnoreUserAuth
     @RequestMapping(value = "/api/wechat/login", method = RequestMethod.POST)
     public AuthResponse wechatLogin(@RequestBody String authCode) {
         // todo 通过authCode换取openid，并查询user表是否有相关记录 如果有生成token并返回
@@ -103,6 +105,7 @@ public class BaseLoginController {
         }
     }
 
+    @IgnoreUserAuth
     @RequestMapping(value = "/api/wechat/bind", method = RequestMethod.POST)
     public AuthResponse wechatBind(@RequestBody WechatVo wechatVo, HttpSession session) {
         // todo 传入手机号、openid、短信验证码   将openid与手机对应的用户关联起来
@@ -157,6 +160,7 @@ public class BaseLoginController {
         return data;
     }
 
+    @IgnoreUserAuth
     @RequestMapping(value = "/api/forgetPwd", method = RequestMethod.POST)
     public boolean resetPwd(@RequestBody SysUserVo sysUserVo, HttpSession session) {
         // 验证手机号验证码 messageValidCode

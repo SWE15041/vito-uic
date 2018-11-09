@@ -3,6 +3,7 @@ package com.jay.vito.uic.client.interceptor;
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.core.TokenData;
 import com.jay.vito.uic.client.core.UserContextHolder;
+import com.jay.vito.website.core.exception.HttpUnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -32,7 +33,7 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
         if (ignoreAnnotation == null) {
             ignoreAnnotation = handlerMethod.getMethodAnnotation(IgnoreUserAuth.class);
         }
-        if (ignoreAnnotation == null) {
+        if (ignoreAnnotation != null) {
             return super.preHandle(request, response, handler);
         } else {
             String token = getToken(request);
@@ -43,11 +44,10 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
                 } catch (Exception e) {
                     logger.error("token解析失败", e);
                     authFail(request, response);
-                    return false;
+                    throw new HttpUnauthorizedException("token解析失败");
                 }
             } else {
-                authFail(request, response);
-                return false;
+                throw new HttpUnauthorizedException("token解析失败");
             }
             return super.preHandle(request, response, handler);
         }
