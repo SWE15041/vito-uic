@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import static com.jay.vito.uic.client.core.TokenUtil.*;
 
 public class UserAuthInterceptor extends HandlerInterceptorAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserAuthInterceptor.class);
 
     protected String uicDomain;
     protected String appDomain;

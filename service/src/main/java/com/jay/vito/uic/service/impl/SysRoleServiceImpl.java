@@ -10,7 +10,6 @@ import com.jay.vito.uic.service.SysRoleService;
 import com.jay.vito.uic.service.SysUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import java.util.Set;
  * 日期: 2017/11/23 18:16
  * 描述:
  */
-@Service
 public class SysRoleServiceImpl extends BusinessEntityCRUDServiceImpl<SysRole, Long> implements SysRoleService {
 
     @Autowired

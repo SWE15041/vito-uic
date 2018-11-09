@@ -11,17 +11,16 @@ import com.jay.vito.website.core.exception.ErrorCodes;
 import com.jay.vito.website.core.exception.HttpException;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 作者: zhaixm
  * 日期: 2017/11/23 18:18
  * 描述:
  */
-//@RestController
+@ConditionalOnMissingBean
+@RestController
 @RequestMapping("/api/users")
 public class SysUserController extends BaseGridController<SysUser, Long> {
 

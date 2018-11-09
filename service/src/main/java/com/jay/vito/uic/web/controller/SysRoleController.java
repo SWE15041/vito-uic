@@ -7,11 +7,9 @@ import com.jay.vito.uic.service.SysRoleResourceService;
 import com.jay.vito.uic.service.SysRoleService;
 import com.jay.vito.website.web.controller.BaseGridController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -22,7 +20,8 @@ import java.util.List;
  * 日期: 2017/11/23 18:18
  * 描述:
  */
-//@RestController
+@ConditionalOnMissingBean
+@RestController
 @RequestMapping("/api/roles")
 public class SysRoleController extends BaseGridController<SysRole, Long> {
 
