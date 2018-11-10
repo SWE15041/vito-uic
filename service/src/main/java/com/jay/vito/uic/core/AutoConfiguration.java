@@ -9,6 +9,7 @@ import com.jay.vito.uic.service.SysUserService;
 import com.jay.vito.uic.service.impl.SysResourceServiceImpl;
 import com.jay.vito.uic.service.impl.SysRoleServiceImpl;
 import com.jay.vito.uic.service.impl.SysUserServiceImpl;
+import com.jay.vito.uic.web.controller.SysDictController;
 import com.jay.vito.website.core.config.EnableVitoWebServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -23,7 +24,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = {"com.jay.vito.uic.domain"}, repositoryBaseClass = MyJpaRepositoryImpl.class, repositoryFactoryBeanClass = MyRepositoryFactoryBean.class)
 @EntityScan("com.jay.vito.uic.domain")
 @MapperScan(basePackages = "com.jay.vito.uic.domain", markerInterface = MybatisMapper.class)
-@ComponentScan(basePackages = {"com.jay.vito.uic.service"})
+@ComponentScan(basePackages = {"com.jay.vito.uic.service"}, basePackageClasses = {SysDictController.class})
 @EnableVitoWebServer
 public class AutoConfiguration {
 
