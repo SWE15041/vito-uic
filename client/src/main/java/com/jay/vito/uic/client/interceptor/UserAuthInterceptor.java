@@ -12,7 +12,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.jay.vito.uic.client.core.TokenUtil.*;
+import static com.jay.vito.uic.client.core.TokenUtil.getToken;
+import static com.jay.vito.uic.client.core.TokenUtil.parseToken;
 
 public class UserAuthInterceptor extends HandlerInterceptorAdapter {
     private static final Logger logger = LoggerFactory.getLogger(UserAuthInterceptor.class);
@@ -43,7 +44,6 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
                     UserContextHolder.setUserContext(tokenData);
                 } catch (Exception e) {
                     logger.error("token解析失败", e);
-                    authFail(request, response);
                     throw new HttpUnauthorizedException("token解析失败");
                 }
             } else {
