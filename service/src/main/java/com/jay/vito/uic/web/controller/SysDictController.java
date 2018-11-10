@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping(value = "/api/dicts")
 public class SysDictController extends BaseGridController<SysDict, Long> {
 
-
     @Autowired
     private SysDictService sysDictService;
 
