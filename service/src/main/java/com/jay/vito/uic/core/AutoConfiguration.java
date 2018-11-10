@@ -12,6 +12,7 @@ import com.jay.vito.uic.service.impl.SysUserServiceImpl;
 import com.jay.vito.website.core.config.EnableVitoWebServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -42,6 +43,13 @@ public class AutoConfiguration {
     @Bean
     public SysResourceService getResourceService() {
         return new SysResourceServiceImpl();
+    }
+
+    @Configuration
+    @ConditionalOnProperty(name = "uic.controller.enable", havingValue = "true", matchIfMissing = true)
+    @ComponentScan(basePackages = {"com.jay.vito.uic.web"})
+    public static class ControllerConfiguration {
+
     }
 
 }
