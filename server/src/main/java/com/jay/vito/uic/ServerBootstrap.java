@@ -10,11 +10,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @EnableAuthServer
 @EnableAuthClient
-public class ApplicationMain {
+public class ServerBootstrap {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApplicationMain.class, args);
+        SpringApplication.run(ServerBootstrap.class, args);
     }
 
 }
-
