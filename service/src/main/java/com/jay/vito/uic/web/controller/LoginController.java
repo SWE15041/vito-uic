@@ -1,6 +1,10 @@
 package com.jay.vito.uic.web.controller;
 
 import com.google.common.collect.ImmutableMap;
+import com.jay.vito.common.exception.ErrorCodes;
+import com.jay.vito.common.exception.HttpBadRequestException;
+import com.jay.vito.common.exception.HttpException;
+import com.jay.vito.common.exception.HttpUnauthorizedException;
 import com.jay.vito.common.util.bean.BeanUtil;
 import com.jay.vito.common.util.string.CodeGenerateUtil;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
@@ -16,10 +20,6 @@ import com.jay.vito.uic.web.vo.SysUserVo;
 import com.jay.vito.uic.web.vo.WechatVo;
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
-import com.jay.vito.website.core.exception.ErrorCodes;
-import com.jay.vito.website.core.exception.HttpBadRequestException;
-import com.jay.vito.website.core.exception.HttpException;
-import com.jay.vito.website.core.exception.HttpUnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

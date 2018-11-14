@@ -1,6 +1,6 @@
 package com.jay.vito.uic.web.controller;
 
-import com.jay.vito.website.core.exception.HttpBadRequestException;
+import com.jay.vito.common.exception.HttpBadRequestException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
