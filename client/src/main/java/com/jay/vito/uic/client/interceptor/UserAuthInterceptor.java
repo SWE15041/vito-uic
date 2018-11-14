@@ -1,9 +1,9 @@
 package com.jay.vito.uic.client.interceptor;
 
+import com.jay.vito.common.exception.HttpUnauthorizedException;
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.core.TokenData;
 import com.jay.vito.uic.client.core.UserContextHolder;
-import com.jay.vito.website.core.exception.HttpUnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
