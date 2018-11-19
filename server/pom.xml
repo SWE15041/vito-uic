@@ -5,7 +5,7 @@
     <parent>
         <artifactId>vito-uic</artifactId>
         <groupId>com.jay.vito</groupId>
-        <version>1.0.20181108-SNAPSHOT</version>
+        <version>1.0.20181119-SNAPSHOT</version>
     </parent>
     <artifactId>vito-uic-server</artifactId>
     <packaging>jar</packaging>
