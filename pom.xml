@@ -6,17 +6,17 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.8.RELEASE</version>
+        <version>2.1.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jay.vito</groupId>
     <artifactId>vito-uic</artifactId>
-    <version>1.0.20181119-SNAPSHOT</version>
+    <version>2.0.20181120-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
-        <uic.version>1.0.20181119-SNAPSHOT</uic.version>
-        <vito.version>1.0.20181119-SNAPSHOT</vito.version>
+        <uic.version>2.0.20181120-SNAPSHOT</uic.version>
+        <vito.version>2.0.20181120-SNAPSHOT</vito.version>
     </properties>
 
     <modules>

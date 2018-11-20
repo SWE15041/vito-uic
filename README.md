@@ -10,3 +10,7 @@
 ## client
 
 认证客户端，需要添加用户登录认证的服务只需要引入client的jar包，并且使用`@EnableAuthClient`注解启用相关拦截器即可。
+
+版本说明
+> v2.0.20181120-SNAPSHOT
+1. 该版本将springboot升级为2+

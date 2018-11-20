@@ -5,15 +5,12 @@
     <parent>
         <artifactId>vito-uic</artifactId>
         <groupId>com.jay.vito</groupId>
-        <version>1.0.20181119-SNAPSHOT</version>
+        <version>2.0.20181120-SNAPSHOT</version>
     </parent>
     <artifactId>vito-uic-server</artifactId>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
 
-    <properties>
-        <spring-cloud.version>Dalston.SR1</spring-cloud.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>com.jay.vito</groupId>
