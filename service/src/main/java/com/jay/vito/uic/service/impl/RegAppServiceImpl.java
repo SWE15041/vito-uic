@@ -4,7 +4,6 @@ import com.jay.vito.uic.domain.RegApp;
 import com.jay.vito.uic.domain.RegAppRepository;
 import com.jay.vito.uic.service.RegAppService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +18,6 @@ public class RegAppServiceImpl extends BusinessEntityCRUDServiceImpl<RegApp, Lon
 
     @Autowired
     private RegAppRepository regAppRepository;
-
-    @Override
-    protected JpaRepository<RegApp, Long> getRepository() {
-        return regAppRepository;
-    }
 
     @Override
     public List<RegApp> findAll() {

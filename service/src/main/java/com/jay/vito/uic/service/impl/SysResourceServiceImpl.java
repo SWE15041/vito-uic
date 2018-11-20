@@ -7,7 +7,6 @@ import com.jay.vito.uic.domain.SysResourceRepository;
 import com.jay.vito.uic.service.SysResourceService;
 import com.jay.vito.uic.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +23,6 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
     private SysResourceRepository sysResourceRepository;
     @Autowired
     private SysUserService sysUserService;
-
-    @Override
-    protected JpaRepository<SysResource, Long> getRepository() {
-        return sysResourceRepository;
-    }
 
     @Override
     public List<SysResource> findEnableResources() {
