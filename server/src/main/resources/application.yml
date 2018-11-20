@@ -10,9 +10,9 @@ spring:
     name: vito-uic
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.76.192.37:3306/ship_dev?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-    username: ship
-    password: sp@bzxx2018
+    url: jdbc:mysql://192.168.10.55:3306/ai_center?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    username: aicenter
+    password: 123456
     druid:
       # 初始化大小，最小，最大
       initial-size: 5
@@ -39,7 +39,7 @@ spring:
           slow-sql-millis: 2000
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
   mvc:
     throw-exception-if-no-handler-found: true
