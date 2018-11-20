@@ -1,5 +1,6 @@
 package com.jay.vito.uic.service.impl;
 
+import com.jay.vito.common.exception.HttpBadRequestException;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
@@ -11,7 +12,6 @@ import com.jay.vito.uic.domain.SysUserRole;
 import com.jay.vito.uic.service.SysUserRoleService;
 import com.jay.vito.uic.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
@@ -29,17 +29,11 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
     @Autowired
     private SysUserRoleService sysUserRoleService;
 
-    @Autowired
-    private SysUserRepository sysUserRepository;
-
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private SysUserMapper sysUserMapper;
-
-    @Override
-    protected JpaRepository<SysUser, Long> getRepository() {
-        return sysUserRepository;
-    }
+    @Autowired
+    private SysUserRepository sysUserRepository;
 
     @Override
     public SysUser findByLoginName(String loginName) {
@@ -70,11 +64,11 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
         String mobile = user.getMobile();
         boolean existsByMobile = sysUserRepository.existsByMobile(mobile);
         if (existsByMobile) {
-            throw new RuntimeException("此手机号已注册过账户");
+            throw new HttpBadRequestException("此手机号已注册过账户");
         }
         boolean existsByLoginName = sysUserRepository.existsByLoginName(user.getLoginName());
         if (existsByLoginName) {
-            throw new RuntimeException("已有账户，登录");
+            throw new HttpBadRequestException("登录名已存在");
         }
         handleUserRoles(user);
         if (Validator.isNull(user.getPassword())) {

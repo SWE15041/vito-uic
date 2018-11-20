@@ -4,7 +4,6 @@ import com.jay.vito.uic.domain.SysRoleResource;
 import com.jay.vito.uic.domain.SysRoleResourceRepository;
 import com.jay.vito.uic.service.SysRoleResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,11 +20,6 @@ public class SysRoleResourceServiceImpl extends BusinessEntityCRUDServiceImpl<Sy
 
     @Autowired
     private SysRoleResourceRepository sysRoleResourceRepository;
-
-    @Override
-    protected JpaRepository<SysRoleResource, Long> getRepository() {
-        return sysRoleResourceRepository;
-    }
 
     @Override
     public List<Long> findRoleResources(Long roleId) {

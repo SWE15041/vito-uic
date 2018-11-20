@@ -1,20 +1,22 @@
 package com.jay.vito.uic.web;
 
-import com.jay.vito.uic.core.cache.AppDataCache;
-import com.jay.vito.website.web.listener.SystemInitListener;
-
 import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 /**
  * 作者: zhaixm
  * 日期: 2017/11/29 16:44
  * 描述: 应用初始化监听器
  */
-public class AppInitListener extends SystemInitListener {
+public class AppInitListener implements ServletContextListener {
 
     @Override
-    public void otherInit(ServletContextEvent event) {
-        super.otherInit(event);
-        AppDataCache.init();
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
+
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+
     }
 }
