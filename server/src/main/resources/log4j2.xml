@@ -41,7 +41,7 @@
     </appenders>
 
     <loggers>
-        <logger name="com.vito" level="DEBUG" additivity="false">
+        <logger name="com.jay" level="DEBUG" additivity="false">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>
