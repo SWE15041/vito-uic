@@ -5,20 +5,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Order(5)
-@Configuration("authClientConfig")
-public class AutoConfiguration extends WebMvcConfigurerAdapter {
+@Configuration
+public class AuthClientAutoConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getUserAuthRestInterceptor());
-        super.addInterceptors(registry);
+        registry.addInterceptor(getUserAuthInterceptor());
     }
 
     @Bean
-    UserAuthInterceptor getUserAuthRestInterceptor() {
+    UserAuthInterceptor getUserAuthInterceptor() {
         return new UserAuthInterceptor();
     }
 

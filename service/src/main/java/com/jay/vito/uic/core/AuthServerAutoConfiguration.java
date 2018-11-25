@@ -19,13 +19,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@Configuration("authServerConfig")
+@Configuration
 @EnableJpaRepositories(basePackages = {"com.jay.vito.uic.domain"}, repositoryBaseClass = MyJpaRepositoryImpl.class, repositoryFactoryBeanClass = MyRepositoryFactoryBean.class)
 @EntityScan("com.jay.vito.uic.domain")
 @MapperScan(basePackages = "com.jay.vito.uic.domain", markerInterface = MybatisMapper.class)
 @ComponentScan(basePackages = {"com.jay.vito.uic.service"})
 @EnableVitoWebServer
-public class AutoConfiguration {
+public class AuthServerAutoConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
