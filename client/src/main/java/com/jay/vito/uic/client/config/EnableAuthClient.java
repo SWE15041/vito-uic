@@ -29,7 +29,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import(AuthClientAutoConfiguration.class)
+@Import(AuthClientConfiguration.class)
 public @interface EnableAuthClient {
 
 }

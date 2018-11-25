@@ -25,7 +25,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @MapperScan(basePackages = "com.jay.vito.uic.domain", markerInterface = MybatisMapper.class)
 @ComponentScan(basePackages = {"com.jay.vito.uic.service"})
 @EnableVitoWebServer
-public class AuthServerAutoConfiguration {
+public class AuthServerConfiguration {
 
     @ConditionalOnMissingBean
     @Bean

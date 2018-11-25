@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Order(5)
 @Configuration
-public class AuthClientAutoConfiguration implements WebMvcConfigurer {
+public class AuthClientConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
