@@ -18,6 +18,7 @@ public class TokenData {
     private String uicDomain;
     private Set<String> appDomains = new HashSet<>();
     private Date loginTime;
+    private String token;
 
     public TokenData() {
         this.loginTime = new Date();
@@ -104,5 +105,13 @@ public class TokenData {
 
     public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -102,6 +102,7 @@ public class TokenUtil {
             }
             Date loginTime = jwt.getIssuedAt();
             tokenData.setLoginTime(loginTime);
+            tokenData.setToken(jwtToken);
             long end = System.currentTimeMillis();
             logger.debug("解析token花费时间：{}", (end - begin));
             return tokenData;
