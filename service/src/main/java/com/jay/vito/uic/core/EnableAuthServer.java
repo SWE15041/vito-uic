@@ -29,7 +29,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import(AutoConfiguration.class)
+@Import(AuthServerConfiguration.class)
 public @interface EnableAuthServer {
 
 }
