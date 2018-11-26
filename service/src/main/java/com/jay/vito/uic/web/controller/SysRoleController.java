@@ -1,7 +1,6 @@
 package com.jay.vito.uic.web.controller;
 
 import com.jay.vito.storage.model.Page;
-import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.domain.SysRole;
 import com.jay.vito.uic.service.SysRoleResourceService;
 import com.jay.vito.uic.service.SysRoleService;
@@ -64,8 +63,4 @@ public class SysRoleController extends BaseGridController<SysRole, Long> {
         return super.delete(id);
     }
 
-    @Override
-    protected EntityCRUDService<SysRole, Long> getEntityService() {
-        return sysRoleService;
-    }
 }

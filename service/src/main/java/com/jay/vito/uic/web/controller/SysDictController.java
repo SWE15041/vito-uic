@@ -2,7 +2,6 @@ package com.jay.vito.uic.web.controller;
 
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.model.Page;
-import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.domain.SysDict;
 import com.jay.vito.uic.service.SysDictService;
 import com.jay.vito.website.web.controller.BaseGridController;
@@ -17,11 +16,6 @@ public class SysDictController extends BaseGridController<SysDict, Long> {
 
     @Autowired
     private SysDictService sysDictService;
-
-    @Override
-    protected EntityCRUDService<SysDict, Long> getEntityService() {
-        return sysDictService;
-    }
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     public Page<SysDict> query() {

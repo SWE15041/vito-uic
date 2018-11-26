@@ -5,7 +5,6 @@ import com.jay.vito.uic.domain.SysDict;
 import com.jay.vito.uic.domain.SysDictRepository;
 import com.jay.vito.uic.service.SysDictService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +19,6 @@ public class SysDictServiceImpl extends EntityCRUDServiceImpl<SysDict, Long> imp
 
     @Autowired
     private SysDictRepository sysDictRepository;
-
-    @Override
-    protected JpaRepository<SysDict, Long> getRepository() {
-        return sysDictRepository;
-    }
 
     @Override
     public List<SysDict> findByName(String name) {

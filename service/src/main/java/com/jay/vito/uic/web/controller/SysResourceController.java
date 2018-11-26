@@ -2,7 +2,6 @@ package com.jay.vito.uic.web.controller;
 
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.model.Page;
-import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.constant.ResourceType;
 import com.jay.vito.uic.domain.SysResource;
@@ -95,11 +94,6 @@ public class SysResourceController extends BaseGridController<SysResource, Long>
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Boolean delete(@PathVariable("id") Long id) {
         return super.delete(id);
-    }
-
-    @Override
-    protected EntityCRUDService<SysResource, Long> getEntityService() {
-        return sysResourceService;
     }
 
     @RequestMapping(value = "/menuTree", method = RequestMethod.GET)

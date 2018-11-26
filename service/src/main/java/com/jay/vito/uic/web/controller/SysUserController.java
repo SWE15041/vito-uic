@@ -4,7 +4,6 @@ import com.jay.vito.common.exception.ErrorCodes;
 import com.jay.vito.common.exception.HttpException;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.storage.model.Page;
-import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.domain.SysUser;
 import com.jay.vito.uic.service.SysUserService;
@@ -49,11 +48,6 @@ public class SysUserController extends BaseGridController<SysUser, Long> {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Boolean delete(@PathVariable("id") Long id) {
         return super.delete(id);
-    }
-
-    @Override
-    protected EntityCRUDService<SysUser, Long> getEntityService() {
-        return sysUserService;
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)

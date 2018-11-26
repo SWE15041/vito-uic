@@ -50,16 +50,16 @@ public class TokenUtil {
             long begin = System.currentTimeMillis();
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
-                    .withIssuer(tokenData.getUicDomain())
-                    .withIssuedAt(tokenData.getLoginTime())
-                    .withAudience(tokenData.getAppDomains()
-                            .toArray(new String[tokenData.getAppDomains().size()]))
-                    .withClaim(USER_ID_KEY, tokenData.getUserId())
-                    .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
+                              .withIssuer(tokenData.getUicDomain())
+                              .withIssuedAt(tokenData.getLoginTime())
+                              .withAudience(tokenData.getAppDomains()
+                                                     .toArray(new String[tokenData.getAppDomains().size()]))
+                              .withClaim(USER_ID_KEY, tokenData.getUserId())
+                              .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
 //                              .withClaim(USER_NAME_KEY, tokenData.getUserName())
-                    .withClaim(MANAGER_KEY, tokenData.isManager())
-                    .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60 * 3))
-                    .sign(algorithm);
+                              .withClaim(MANAGER_KEY, tokenData.isManager())
+                              .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60 * 3))
+                              .sign(algorithm);
             long end = System.currentTimeMillis();
             logger.debug("生成token花费时间：{}", (end - begin));
             return token;
@@ -84,7 +84,7 @@ public class TokenUtil {
                 verification.withIssuer(uicDomain);
             }
             JWTVerifier verifier = verification.acceptLeeway(30) // 30 sec for nbf, iat and exp
-                    .build();
+                                               .build();
 
             DecodedJWT jwt = verifier.verify(jwtToken);
             Claim uidClaim = jwt.getClaim(USER_ID_KEY);
@@ -123,7 +123,7 @@ public class TokenUtil {
      */
     public static String getToken(HttpServletRequest httpReq) {
         String authorization = httpReq.getHeader("Authorization");
-        if (Validator.isNotNull(authorization)) {
+        if (Validator.isNotNull(authorization) && authorization.startsWith("bearer")) {
             String token = authorization.split(" ")[1];
             return token;
         }
