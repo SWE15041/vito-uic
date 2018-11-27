@@ -1,4 +1,4 @@
-package com.jay.vito.uic.web;
+package com.jay.vito.uic.server.web;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

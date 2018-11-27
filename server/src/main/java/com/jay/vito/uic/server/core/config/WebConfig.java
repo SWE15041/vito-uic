@@ -1,6 +1,6 @@
-package com.jay.vito.uic.core.config;
+package com.jay.vito.uic.server.core.config;
 
-import com.jay.vito.uic.web.AppInitListener;
+import com.jay.vito.uic.server.web.AppInitListener;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
