@@ -28,29 +28,29 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 			return super.preHandle(request, response, handler);
 
 		}
-		HandlerMethod handlerMethod = (HandlerMethod) handler;
-		// 配置该注解，说明不进行用户拦截
-		IgnoreUserAuth ignoreAnnotation = handlerMethod.getBeanType().getAnnotation(IgnoreUserAuth.class);
-		if (ignoreAnnotation == null) {
-			ignoreAnnotation = handlerMethod.getMethodAnnotation(IgnoreUserAuth.class);
-		}
-		if (ignoreAnnotation != null) {
-			return super.preHandle(request, response, handler);
-		} else {
-			String token = getToken(request);
-			if (Validator.isNotNull(token)) {
-				try {
-					TokenData tokenData = parseToken(token, uicDomain, appDomain);
-					UserContextHolder.setUserContext(tokenData);
-				} catch (Exception e) {
-					logger.error("token解析失败", e);
+		if (handler instanceof HandlerMethod) {
+			HandlerMethod handlerMethod = (HandlerMethod) handler;
+			// 配置该注解，说明不进行用户拦截
+			IgnoreUserAuth ignoreAnnotation = handlerMethod.getBeanType().getAnnotation(IgnoreUserAuth.class);
+			if (ignoreAnnotation == null) {
+				ignoreAnnotation = handlerMethod.getMethodAnnotation(IgnoreUserAuth.class);
+			}
+			if (ignoreAnnotation == null) {
+				String token = getToken(request);
+				if (Validator.isNotNull(token)) {
+					try {
+						TokenData tokenData = parseToken(token, uicDomain, appDomain);
+						UserContextHolder.setUserContext(tokenData);
+					} catch (Exception e) {
+						logger.error("token解析失败", e);
+						throw new HttpUnauthorizedException("token解析失败");
+					}
+				} else {
 					throw new HttpUnauthorizedException("token解析失败");
 				}
-			} else {
-				throw new HttpUnauthorizedException("token解析失败");
 			}
-			return super.preHandle(request, response, handler);
 		}
+		return super.preHandle(request, response, handler);
 	}
 
 
