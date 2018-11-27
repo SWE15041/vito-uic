@@ -1,8 +1,8 @@
 package com.jay.vito.uic.core.cache;
 
 import com.jay.vito.common.model.enums.YesNoEnum;
-import com.jay.vito.uic.domain.RegApp;
-import com.jay.vito.uic.service.RegAppService;
+import com.jay.vito.uic.server.domain.RegApp;
+import com.jay.vito.uic.server.service.RegAppService;
 import com.jay.vito.website.core.Application;
 
 import java.util.ArrayList;

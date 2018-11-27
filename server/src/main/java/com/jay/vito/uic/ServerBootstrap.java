@@ -1,7 +1,7 @@
 package com.jay.vito.uic;
 
 import com.jay.vito.uic.client.config.EnableAuthClient;
-import com.jay.vito.uic.core.EnableAuthServer;
+import com.jay.vito.uic.server.EnableAuthServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Order(5)
-@Configuration
+@Configuration("vitoAuthClientConfiguration")
 public class AuthClientConfiguration implements WebMvcConfigurer {
 
     @Override

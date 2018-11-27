@@ -1,7 +1,8 @@
 package com.jay.vito.uic.service;
 
 import com.jay.vito.uic.ApplicationTests;
-import com.jay.vito.uic.domain.SysUser;
+import com.jay.vito.uic.server.domain.SysUser;
+import com.jay.vito.uic.server.service.SysUserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
