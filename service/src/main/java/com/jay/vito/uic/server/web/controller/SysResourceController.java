@@ -22,7 +22,7 @@ import java.util.Map;
  * 描述: 资源控制器
  */
 @RestController
-@RequestMapping("/api/resources")
+@RequestMapping("/resources")
 public class SysResourceController extends BaseGridController<SysResource, Long> {
 
     @Autowired

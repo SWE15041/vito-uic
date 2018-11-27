@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 @RestController
-@RequestMapping(value = "/api/wechat")
+@RequestMapping(value = "/wechat")
 public class WechatController extends BaseAPI {
     private static Logger logger = LoggerFactory.getLogger(WechatController.class);
     //    private String OPEN_URI = "https://open.weixin.qq.com/connect/oauth2/authorize?";

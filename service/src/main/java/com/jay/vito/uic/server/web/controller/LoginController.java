@@ -51,7 +51,7 @@ public class LoginController {
      * @param user
      */
     @IgnoreUserAuth
-    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public AuthResponse login(@RequestBody SysUser user) {
         SysUser loginUser = sysUserService.findByLoginName(user.getLoginName());
         if (Validator.isNull(loginUser)) {
@@ -79,7 +79,7 @@ public class LoginController {
     }
 
     @IgnoreUserAuth
-    @RequestMapping(value = "/api/wechat/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/wechat/login", method = RequestMethod.POST)
     public AuthResponse wechatLogin(@RequestBody String authCode) {
         // todo 通过authCode换取openid，并查询user表是否有相关记录 如果有生成token并返回
         String appid = "";
@@ -105,7 +105,7 @@ public class LoginController {
     }
 
     @IgnoreUserAuth
-    @RequestMapping(value = "/api/wechat/bind", method = RequestMethod.POST)
+    @RequestMapping(value = "/wechat/bind", method = RequestMethod.POST)
     public AuthResponse wechatBind(@RequestBody WechatVo wechatVo, HttpSession session) {
         // todo 传入手机号、openid、短信验证码   将openid与手机对应的用户关联起来
         String messageCode = String.valueOf(session.getAttribute("MessageCode"));
@@ -138,14 +138,14 @@ public class LoginController {
      *
      * @return
      */
-    @RequestMapping(value = "/api/onceToken", method = RequestMethod.GET)
+    @RequestMapping(value = "/onceToken", method = RequestMethod.GET)
     public Map<String, Object> getToken() {
         String token = CodeGenerateUtil.generateUUID();
         userCache.put(token, UserContextHolder.getCurrentUserId());
         return ImmutableMap.of("token", token);
     }
 
-    @RequestMapping(value = "/api/userInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public Map<String, Object> info(@RequestParam String token) {
         Long userId = userCache.get(token);
         if (Validator.isNull(userId)) {
@@ -160,7 +160,7 @@ public class LoginController {
     }
 
     @IgnoreUserAuth
-    @RequestMapping(value = "/api/forgetPwd", method = RequestMethod.POST)
+    @RequestMapping(value = "/forgetPwd", method = RequestMethod.POST)
     public boolean resetPwd(@RequestBody SysUserVo sysUserVo, HttpSession session) {
         // 验证手机号验证码 messageValidCode
         String validMessage = String.valueOf(session.getAttribute("MessageCode"));

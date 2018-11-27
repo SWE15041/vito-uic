@@ -19,7 +19,7 @@ import java.util.List;
  * 描述:
  */
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/roles")
 public class SysRoleController extends BaseGridController<SysRole, Long> {
 
     @Autowired

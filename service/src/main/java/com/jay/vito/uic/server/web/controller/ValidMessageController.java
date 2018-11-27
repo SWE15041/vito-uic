@@ -14,9 +14,7 @@ import java.util.Map;
 import java.util.Random;
 
 @RestController
-@RequestMapping(value = "/api")
 public class ValidMessageController {
-
 
     private String apikey = "bc7a912879e2bb5dfba641017c9c664b";
     private String textConstant = "【云片网】您的验证码是";

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/dicts")
+@RequestMapping(value = "/dicts")
 public class SysDictController extends BaseGridController<SysDict, Long> {
 
     @Autowired

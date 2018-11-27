@@ -5,15 +5,20 @@ server:
     accesslog:
       enabled: true
     basedir: target/tomcat
+  servlet:
+    context-path: /api
 
 spring:
   application:
     name: vito-uic
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.10.55:3306/ai_center?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-    username: aicenter
+    url: jdbc:mysql://localhost:3306/ai_center?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC
+    username: root
     password: 123456
+#    url: jdbc:mysql://192.168.10.55:3306/ai_center?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC
+#    username: aicenter
+#    password: 123456
     druid:
       # 初始化大小，最小，最大
       initial-size: 5
@@ -56,7 +61,7 @@ spring:
         exclusions: /static/*,*.ico,/druid/*
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
   mvc:
     throw-exception-if-no-handler-found: true
