@@ -2,7 +2,7 @@ package com.jay.vito.uic.server.service.impl;
 
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.server.domain.SysDict;
-import com.jay.vito.uic.server.domain.SysDictRepository;
+import com.jay.vito.uic.server.repository.SysDictRepository;
 import com.jay.vito.uic.server.service.SysDictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

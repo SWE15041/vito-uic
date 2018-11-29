@@ -1,7 +1,8 @@
 package com.jay.vito.uic.server.service.impl;
 
+import com.jay.vito.uic.client.service.BusinessEntityCRUDServiceImpl;
 import com.jay.vito.uic.server.domain.SysRoleResource;
-import com.jay.vito.uic.server.domain.SysRoleResourceRepository;
+import com.jay.vito.uic.server.repository.SysRoleResourceRepository;
 import com.jay.vito.uic.server.service.SysRoleResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

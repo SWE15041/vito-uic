@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.jay.vito</groupId>
-            <artifactId>vito-common</artifactId>
+            <artifactId>vito-website</artifactId>
             <version>${vito.version}</version>
         </dependency>
         <dependency>

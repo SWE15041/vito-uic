@@ -1,9 +1,10 @@
 package com.jay.vito.uic.server.service.impl;
 
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.uic.client.service.BusinessEntityCRUDServiceImpl;
 import com.jay.vito.uic.server.constant.ResourceType;
 import com.jay.vito.uic.server.domain.SysResource;
-import com.jay.vito.uic.server.domain.SysResourceRepository;
+import com.jay.vito.uic.server.repository.SysResourceRepository;
 import com.jay.vito.uic.server.service.SysResourceService;
 import com.jay.vito.uic.server.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;

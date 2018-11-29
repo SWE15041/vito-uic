@@ -1,9 +1,9 @@
-package com.jay.vito.uic.server.service.impl;
+package com.jay.vito.uic.client.service;
 
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.client.core.UserContextHolder;
-import com.jay.vito.uic.server.domain.BaseBusinessEntity;
+import com.jay.vito.uic.client.domain.BaseBusinessEntity;
 
 import java.io.Serializable;
 

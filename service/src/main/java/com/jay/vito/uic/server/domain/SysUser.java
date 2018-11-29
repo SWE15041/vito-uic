@@ -6,6 +6,7 @@ package com.jay.vito.uic.server.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.uic.client.domain.BaseBusinessEntity;
 import com.jay.vito.uic.server.constant.UserSex;
 
 import javax.persistence.*;
