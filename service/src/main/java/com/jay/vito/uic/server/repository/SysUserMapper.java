@@ -1,4 +1,4 @@
-package com.jay.vito.uic.server.domain;
+package com.jay.vito.uic.server.repository;
 
 import com.jay.vito.storage.domain.MybatisMapper;
 import org.apache.ibatis.annotations.Mapper;

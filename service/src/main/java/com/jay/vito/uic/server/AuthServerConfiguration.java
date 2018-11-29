@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration("vitoAuthServerConfiguration")
 @EnableJpaRepositories(repositoryBaseClass = MyJpaRepositoryImpl.class, repositoryFactoryBeanClass = MyRepositoryFactoryBean.class)
 @EntityScan
-@MapperScan(basePackages = {"com.jay.vito.uic.server.domain"}, markerInterface = MybatisMapper.class)
+@MapperScan(basePackages = {"com.jay.vito.uic.server.repository"}, markerInterface = MybatisMapper.class)
 @ComponentScan(basePackages = {"com.jay.vito.uic.server.service"})
 @EnableVitoWebServer
 public class AuthServerConfiguration {

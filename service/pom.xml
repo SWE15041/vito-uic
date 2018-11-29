@@ -20,11 +20,6 @@
     <dependencies>
         <dependency>
             <groupId>com.jay.vito</groupId>
-            <artifactId>vito-website</artifactId>
-            <version>${vito.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jay.vito</groupId>
             <artifactId>vito-uic-client</artifactId>
             <version>${uic.version}</version>
         </dependency>
