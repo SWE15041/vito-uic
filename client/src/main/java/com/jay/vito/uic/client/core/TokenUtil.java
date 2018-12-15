@@ -24,13 +24,14 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * 作者: zhaixm
  * 日期: 2017/12/6 10:22
  * 描述: token工具
+ *
+ * @author zhaixm
  */
 public class TokenUtil {
     private static final Logger logger = LoggerFactory.getLogger(TokenUtil.class);
-
+    public static final String TOKEN_HEADER = "Authorization";
     private static final String USER_ID_KEY = "uid";
     private static final String GROUP_ID_KEY = "gid";
     private static final String USER_NAME_KEY = "uname";
@@ -50,16 +51,16 @@ public class TokenUtil {
             long begin = System.currentTimeMillis();
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
-                              .withIssuer(tokenData.getUicDomain())
-                              .withIssuedAt(tokenData.getLoginTime())
-                              .withAudience(tokenData.getAppDomains()
-                                                     .toArray(new String[tokenData.getAppDomains().size()]))
-                              .withClaim(USER_ID_KEY, tokenData.getUserId())
-                              .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
+                    .withIssuer(tokenData.getUicDomain())
+                    .withIssuedAt(tokenData.getLoginTime())
+                    .withAudience(tokenData.getAppDomains()
+                            .toArray(new String[tokenData.getAppDomains().size()]))
+                    .withClaim(USER_ID_KEY, tokenData.getUserId())
+                    .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
 //                              .withClaim(USER_NAME_KEY, tokenData.getUserName())
-                              .withClaim(MANAGER_KEY, tokenData.isManager())
-                              .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60 * 3))
-                              .sign(algorithm);
+                    .withClaim(MANAGER_KEY, tokenData.isManager())
+                    .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60 * 3))
+                    .sign(algorithm);
             long end = System.currentTimeMillis();
             logger.debug("生成token花费时间：{}", (end - begin));
             return token;
@@ -83,8 +84,8 @@ public class TokenUtil {
             if (Validator.isNotNull(uicDomain)) {
                 verification.withIssuer(uicDomain);
             }
-            JWTVerifier verifier = verification.acceptLeeway(30) // 30 sec for nbf, iat and exp
-                                               .build();
+            // 30 sec for nbf, iat and exp
+            JWTVerifier verifier = verification.acceptLeeway(30).build();
 
             DecodedJWT jwt = verifier.verify(jwtToken);
             Claim uidClaim = jwt.getClaim(USER_ID_KEY);
@@ -122,7 +123,7 @@ public class TokenUtil {
      * @return
      */
     public static String getToken(HttpServletRequest httpReq) {
-        String authorization = httpReq.getHeader("Authorization");
+        String authorization = httpReq.getHeader(TOKEN_HEADER);
         if (Validator.isNotNull(authorization) && authorization.startsWith("bearer")) {
             String token = authorization.split(" ")[1];
             return token;
