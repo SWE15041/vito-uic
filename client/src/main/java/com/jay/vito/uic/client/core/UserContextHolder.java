@@ -39,4 +39,8 @@ public class UserContextHolder {
         userContextLocal.set(new UserContext(tokenData));
     }
 
+    public static void clearUserContext() {
+    	userContextLocal.remove();
+    }
+
 }

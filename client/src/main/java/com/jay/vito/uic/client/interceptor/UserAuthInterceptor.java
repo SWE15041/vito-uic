@@ -53,5 +53,9 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 		return super.preHandle(request, response, handler);
 	}
 
-
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+		UserContextHolder.clearUserContext();
+		super.afterCompletion(request, response, handler, ex);
+	}
 }

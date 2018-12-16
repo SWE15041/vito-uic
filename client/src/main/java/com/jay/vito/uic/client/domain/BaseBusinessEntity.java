@@ -1,4 +1,4 @@
-package com.jay.vito.uic.server.domain;
+package com.jay.vito.uic.client.domain;
 
 import com.jay.vito.storage.domain.BaseEntity;
 

@@ -5,6 +5,7 @@ package com.jay.vito.uic.server.domain;
 
 
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.uic.client.domain.BaseBusinessEntity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
