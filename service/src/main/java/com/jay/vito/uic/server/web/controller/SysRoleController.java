@@ -1,5 +1,6 @@
 package com.jay.vito.uic.server.web.controller;
 
+import com.jay.vito.storage.model.Page;
 import com.jay.vito.uic.server.domain.SysRole;
 import com.jay.vito.uic.server.service.SysRoleResourceService;
 import com.jay.vito.uic.server.service.SysRoleService;
@@ -24,6 +25,12 @@ public class SysRoleController extends BaseGridController<SysRole, Long, SysRole
 
     @Autowired
     private SysRoleResourceService sysRoleResourceService;
+
+    @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
+    @Override
+    public Page<SysRole> query() {
+        return super.query();
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     @Override
