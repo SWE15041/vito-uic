@@ -1,49 +1,33 @@
 package com.jay.vito.uic.server.web.controller;
 
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.storage.model.Page;
 import com.jay.vito.uic.server.domain.SysDict;
 import com.jay.vito.uic.server.service.SysDictService;
-import com.jay.vito.website.web.controller.BaseGridController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.jay.vito.website.web.controller.BaseGridCRUDController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 字典接口控制器
+ *
+ * @author zhaixm
+ * @date 2018-12-16
+ */
 @RestController
 @RequestMapping(value = "/dicts")
-public class SysDictController extends BaseGridController<SysDict, Long> {
-
-    @Autowired
-    private SysDictService sysDictService;
-
-    @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
-    public Page<SysDict> query() {
-        return super.query();
-    }
+public class SysDictController extends BaseGridCRUDController<SysDict, Long, SysDictService> {
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<SysDict> getAll(@RequestParam String name) {
+    public List<SysDict> queryAll(@RequestParam String name) {
         if (Validator.isNotNull(name)) {
-            return sysDictService.findByName(name);
+            return entityService.findByName(name);
         } else {
-            return super.getAll();
+            return super.queryAll();
         }
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public SysDict save(@RequestBody SysDict sysDict) {
-        return super.save(sysDict);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public SysDict update(@PathVariable("id") Long id, @RequestBody SysDict sysDict) {
-        return super.update(id, sysDict);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Boolean delete(@PathVariable("id") Long id) {
-        return super.delete(id);
     }
 
 }

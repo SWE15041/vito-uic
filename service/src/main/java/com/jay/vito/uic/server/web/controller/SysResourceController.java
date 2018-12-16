@@ -1,15 +1,17 @@
 package com.jay.vito.uic.server.web.controller;
 
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.storage.model.Page;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.server.constant.ResourceType;
 import com.jay.vito.uic.server.domain.SysResource;
 import com.jay.vito.uic.server.service.SysResourceService;
 import com.jay.vito.uic.server.web.vo.ResourceNode;
-import com.jay.vito.website.web.controller.BaseGridController;
+import com.jay.vito.website.web.controller.BaseGridCRUDController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,26 +19,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 作者: zhaixm
- * 日期: 2017/12/7 11:08
- * 描述: 资源控制器
+ * 资源接口控制器
+ *
+ * @author zhaixm
+ * @date 2017/12/7 11:08
  */
 @RestController
 @RequestMapping("/resources")
-public class SysResourceController extends BaseGridController<SysResource, Long> {
+public class SysResourceController extends BaseGridCRUDController<SysResource, Long, SysResourceService> {
 
     @Autowired
     private SysResourceService sysResourceService;
-
-    @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
-    public Page<SysResource> query() {
-        return super.query();
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public SysResource get(@PathVariable Long id) {
-        return super.get(id);
-    }
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     public List<ResourceNode> getResourceTree() {
@@ -79,21 +72,6 @@ public class SysResourceController extends BaseGridController<SysResource, Long>
             }
         });
         return rootNodes;
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public SysResource save(@RequestBody SysResource resource) {
-        return super.save(resource);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public SysResource update(@PathVariable("id") Long id, @RequestBody SysResource resource) {
-        return super.update(id, resource);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Boolean delete(@PathVariable("id") Long id) {
-        return super.delete(id);
     }
 
     @RequestMapping(value = "/menuTree", method = RequestMethod.GET)
