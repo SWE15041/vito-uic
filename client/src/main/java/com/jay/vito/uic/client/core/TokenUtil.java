@@ -39,6 +39,15 @@ public class TokenUtil {
 
     private static final String secret = "vtsj52";
 
+	/**
+	 * 生成jwt token，默认有效期3小时
+	 * @param tokenData
+	 * @return
+	 */
+	public static String genToken(TokenData tokenData) {
+		return genToken(tokenData, 60 * 60 * 3);
+	}
+
     /**
      * 生成token
      *
@@ -46,7 +55,7 @@ public class TokenUtil {
      * @return
      */
     //todo 此方法要移到服务端 secret要想办法只能在uic服务端存储
-    public static String genToken(TokenData tokenData) {
+    public static String genToken(TokenData tokenData, Integer expireSeconds) {
         try {
             long begin = System.currentTimeMillis();
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -59,7 +68,7 @@ public class TokenUtil {
                     .withClaim(GROUP_ID_KEY, tokenData.getGroupId())
 //                              .withClaim(USER_NAME_KEY, tokenData.getUserName())
                     .withClaim(MANAGER_KEY, tokenData.isManager())
-                    .withExpiresAt(DateUtil.addSeconds(new Date(), 60 * 60 * 3))
+                    .withExpiresAt(DateUtil.addSeconds(new Date(), expireSeconds))
                     .sign(algorithm);
             long end = System.currentTimeMillis();
             logger.debug("生成token花费时间：{}", (end - begin));
