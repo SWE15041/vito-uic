@@ -133,7 +133,7 @@ public class TokenUtil {
      */
     public static String getToken(HttpServletRequest httpReq) {
         String authorization = httpReq.getHeader(TOKEN_HEADER);
-        if (Validator.isNotNull(authorization) && authorization.startsWith("bearer")) {
+        if (Validator.isNotNull(authorization) && authorization.startsWith("Bearer")) {
             String token = authorization.split(" ")[1];
             return token;
         }
