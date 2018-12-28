@@ -14,45 +14,50 @@ import java.util.Map;
  */
 public class UserContext extends TokenData {
 
-    private User user;
+	private User user;
 
-    private Map<String, Object> datas = new HashMap<>();
+	private Map<String, Object> datas = new HashMap<>();
 
-    public UserContext(TokenData tokenData) {
-        BeanUtil.copyProperties(this, tokenData);
-    }
+	public UserContext() {
+	}
 
-    public User getUser() {
-        if (user == null) {
-            //todo 从认证服务器获取该用户相关信息
-        }
-        return user;
-    }
+	public UserContext(TokenData tokenData) {
+		BeanUtil.copyProperties(this, tokenData);
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public User getUser() {
+		if (user == null) {
+			//todo 从认证服务器获取该用户相关信息
+		}
+		return user;
+	}
 
-    public Map<String, Object> getDatas() {
-        return datas;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    /**
-     * 获取用户上下文中的缓存数据
-     * @param key
-     * @return
-     */
-    public Object getData(String key) {
-        return this.datas.get(key);
-    }
+	public Map<String, Object> getDatas() {
+		return datas;
+	}
 
-    /**
-     * 在用户上下文添加缓存
-     * @param key
-     * @param data
-     */
-    public void addData(String key, Object data) {
-        this.datas.put(key, data);
-    }
+	/**
+	 * 获取用户上下文中的缓存数据
+	 *
+	 * @param key
+	 * @return
+	 */
+	public Object getData(String key) {
+		return this.datas.get(key);
+	}
+
+	/**
+	 * 在用户上下文添加缓存
+	 *
+	 * @param key
+	 * @param data
+	 */
+	public void addData(String key, Object data) {
+		this.datas.put(key, data);
+	}
 
 }
