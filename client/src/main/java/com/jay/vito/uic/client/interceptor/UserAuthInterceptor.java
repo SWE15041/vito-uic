@@ -2,7 +2,7 @@ package com.jay.vito.uic.client.interceptor;
 
 import com.jay.vito.common.exception.HttpUnauthorizedException;
 import com.jay.vito.common.util.validate.Validator;
-import com.jay.vito.uic.client.core.TokenData;
+import com.jay.vito.uic.client.core.UserContext;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +39,8 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 				String token = getToken(request);
 				if (Validator.isNotNull(token)) {
 					try {
-						TokenData tokenData = parseToken(token, uicDomain, appDomain);
-						UserContextHolder.setUserContext(tokenData);
+						UserContext userContext = parseToken(token, uicDomain, appDomain);
+						UserContextHolder.setUserContext(userContext);
 					} catch (Exception e) {
 						logger.error("token解析失败", e);
 						throw new HttpUnauthorizedException("token解析失败");

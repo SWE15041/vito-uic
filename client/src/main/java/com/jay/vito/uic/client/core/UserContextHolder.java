@@ -32,8 +32,8 @@ public class UserContextHolder {
 		return getContext().getGroupId();
 	}
 
-	public static void setUserContext(TokenData tokenData) {
-		userContextLocal.set(new UserContext(tokenData));
+	public static void setUserContext(UserContext userContext) {
+		userContextLocal.set(userContext);
 	}
 
 	public static void clearUserContext() {

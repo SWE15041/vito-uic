@@ -1,7 +1,6 @@
 package com.jay.vito.uic.client.core;
 
 
-import com.jay.vito.common.util.bean.BeanUtil;
 import com.jay.vito.uic.client.vo.User;
 
 import java.util.HashMap;
@@ -21,8 +20,8 @@ public class UserContext extends TokenData {
 	public UserContext() {
 	}
 
-	public UserContext(TokenData tokenData) {
-		BeanUtil.copyProperties(this, tokenData);
+	public UserContext(Long userId, Long groupId, Boolean manager) {
+		super(userId, groupId, manager);
 	}
 
 	public User getUser() {

@@ -85,7 +85,7 @@ public class TokenUtil {
      * @param jwtToken
      * @return TokenData
      */
-    public static TokenData parseToken(String jwtToken, String uicDomain, String appDomain) {
+    public static UserContext parseToken(String jwtToken, String uicDomain, String appDomain) {
         long begin = System.currentTimeMillis();
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -105,17 +105,17 @@ public class TokenUtil {
 //            String userName = unameClaim.asString();
             Claim managerClaim = jwt.getClaim(MANAGER_KEY);
             boolean manager = managerClaim.asBoolean();
-            TokenData tokenData = new TokenData(userId, groupId, manager);
+	        UserContext userContext = new UserContext(userId, groupId, manager);
             List<String> appDomains = jwt.getAudience();
             if (Validator.isNotNull(appDomains)) {
-                tokenData.setAppDomains(new HashSet<>(appDomains));
+                userContext.setAppDomains(new HashSet<>(appDomains));
             }
             Date loginTime = jwt.getIssuedAt();
-            tokenData.setLoginTime(loginTime);
-            tokenData.setToken(jwtToken);
+            userContext.setLoginTime(loginTime);
+            userContext.setToken(jwtToken);
             long end = System.currentTimeMillis();
             logger.debug("解析token花费时间：{}", (end - begin));
-            return tokenData;
+            return userContext;
         } catch (JWTVerificationException e) {
             logger.error("appToken验证失败", e);
             throw new RuntimeException("appToken验证失败", e);
