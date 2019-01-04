@@ -35,7 +35,7 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 	 */
 	protected boolean isIgnore(HttpServletRequest request, HandlerMethod handlerMethod) {
 		// options方法不拦截
-		if ("OPTIONS".equals(request.getMethod())) {
+		if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
 			return true;
 		}
 		// 有配置该注解，不进行认证拦截
@@ -55,22 +55,23 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 		if (handler instanceof HandlerMethod) {
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 			// 配置该注解，说明不进行用户拦截
-			if (!isIgnore(request, handlerMethod)) {
-				String token = getToken(request);
-				if (Validator.isNotNull(token)) {
-					try {
-						UserContext userContext = parseToken(token, uicDomain, appDomain);
-						UserContextHolder.setUserContext(userContext);
-					} catch (Exception e) {
-						logger.error("token解析失败", e);
-						throw new HttpUnauthorizedException("token解析失败");
-					}
-				} else {
+			if (isIgnore(request, handlerMethod)) {
+				return true;
+			}
+			String token = getToken(request);
+			if (Validator.isNotNull(token)) {
+				try {
+					UserContext userContext = parseToken(token, uicDomain, appDomain);
+					UserContextHolder.setUserContext(userContext);
+				} catch (Exception e) {
+					logger.error("token解析失败", e);
 					throw new HttpUnauthorizedException("token解析失败");
 				}
+			} else {
+				throw new HttpUnauthorizedException("token解析失败");
 			}
 		}
-		return super.preHandle(request, response, handler);
+		return true;
 	}
 
 	@Override
