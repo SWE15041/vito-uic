@@ -17,7 +17,6 @@ import com.jay.vito.uic.client.vo.AuthResponse;
 import com.jay.vito.uic.server.domain.SysUser;
 import com.jay.vito.uic.server.service.SysUserService;
 import com.jay.vito.uic.server.web.vo.SysUserVo;
-import com.jay.vito.uic.server.web.vo.WechatVo;
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
 import org.slf4j.Logger;
@@ -61,7 +60,6 @@ public class LoginController {
 				TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
 				tokenData.setManager(loginUser.manager());
 				tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
-//                tokenData.setAppDomains("");
 				String token = TokenUtil.genToken(tokenData);
 				AuthResponse authResp = new AuthResponse();
 				authResp.setToken("Bearer " + token);
@@ -78,61 +76,6 @@ public class LoginController {
 		}
 	}
 
-	@IgnoreUserAuth
-	@RequestMapping(value = "/wechat/login", method = RequestMethod.POST)
-	public AuthResponse wechatLogin(@RequestBody String authCode) {
-		// todo 通过authCode换取openid，并查询user表是否有相关记录 如果有生成token并返回
-		String appid = "";
-		String secret = "";
-//        SnsToken snsToken = SnsAPI.oauth2AccessToken(appid, secret, authCode);
-//        String openid = snsToken.getOpenid();
-		String openid = "123456789";
-		SysUser user = sysUserService.existsOpenId(openid);
-		if (user != null) {
-			TokenData tokenData = new TokenData(user.getId(), user.getGroupId());
-			tokenData.setManager(user.manager());
-			tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
-			String token = TokenUtil.genToken(tokenData);
-			AuthResponse authResp = new AuthResponse();
-			authResp.setToken(token);
-			authResp.setUserId(user.getId());
-			authResp.setUserName(user.getName());
-			authResp.setManager(user.manager());
-			return authResp;
-		} else {
-			throw new HttpBadRequestException("非本平台用户，无权限", "INVALID_OPENID");
-		}
-	}
-
-	@IgnoreUserAuth
-	@RequestMapping(value = "/wechat/bind", method = RequestMethod.POST)
-	public AuthResponse wechatBind(@RequestBody WechatVo wechatVo, HttpSession session) {
-		// todo 传入手机号、openid、短信验证码   将openid与手机对应的用户关联起来
-		String messageCode = String.valueOf(session.getAttribute("MessageCode"));
-		String messageCode1 = wechatVo.getMessageCode();
-		if (!messageCode.equals(messageCode1)) {
-			throw new HttpBadRequestException("短信验证码填写错误", "INVALID_MESSAGE_CODE");
-		}
-		String mobile = wechatVo.getMobile();
-		String openId = wechatVo.getOpenId();
-		try {
-			SysUser user = sysUserService.bind(mobile, openId);
-			TokenData tokenData = new TokenData(user.getId(), user.getGroupId());
-			tokenData.setManager(user.manager());
-			tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
-			String token = TokenUtil.genToken(tokenData);
-			AuthResponse authResp = new AuthResponse();
-			authResp.setToken(token);
-			authResp.setUserId(user.getId());
-			authResp.setUserName(user.getName());
-			authResp.setManager(user.manager());
-			return authResp;
-		} catch (Exception e) {
-			throw new HttpBadRequestException(e.getMessage(), "FALID_BING_OPENID");
-		}
-
-	}
-
 	/**
 	 * 获取一次性访问token  用于对接第三方系统登录
 	 *
@@ -145,13 +88,18 @@ public class LoginController {
 		return ImmutableMap.of("token", token);
 	}
 
+	/**
+	 * 一次性token获取用户信息
+	 *
+	 * @param token
+	 * @return
+	 */
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	public Map<String, Object> info(@RequestParam String token) {
 		Long userId = userCache.get(token);
 		if (Validator.isNull(userId)) {
 			throw new HttpUnauthorizedException("token无效", "NOT_VALID_TOKEN");
 		}
-//        userCache.remove(token);
 		SysUser user = sysUserService.get(userId);
 		Map<String, Object> data = new HashMap<>();
 		data.put("datas", user);
@@ -159,6 +107,13 @@ public class LoginController {
 		return data;
 	}
 
+	/**
+	 * 忘记密码
+	 *
+	 * @param sysUserVo
+	 * @param session
+	 * @return
+	 */
 	@IgnoreUserAuth
 	@RequestMapping(value = "/forgetPwd", method = RequestMethod.POST)
 	public boolean resetPwd(@RequestBody SysUserVo sysUserVo, HttpSession session) {

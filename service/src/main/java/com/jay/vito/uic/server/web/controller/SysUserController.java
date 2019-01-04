@@ -20,38 +20,62 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class SysUserController extends BaseGridCRUDController<SysUser, Long, SysUserService> {
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    @Override
-    public SysUser update(@PathVariable("id") Long id, @RequestBody SysUser user) {
-        user.setPassword(null);
-        return super.update(id, user);
-    }
+	/**
+	 * 用户更新
+	 *
+	 * @param id
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@Override
+	public SysUser update(@PathVariable("id") Long id, @RequestBody SysUser user) {
+		user.setPassword(null);
+		return super.update(id, user);
+	}
 
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public SysUser info() {
-        return super.get(UserContextHolder.getCurrentUserId());
-    }
+	/**
+	 * 个人信息获取
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/info", method = RequestMethod.GET)
+	public SysUser info() {
+		return super.get(UserContextHolder.getCurrentUserId());
+	}
 
-    @RequestMapping(value = "/info", method = RequestMethod.PUT)
-    public SysUser update(@RequestBody SysUser user) {
-        if (!UserContextHolder.getCurrentUserId().equals(user.getId())) {
-            throw HttpException.of(ErrorCodes.POWERLESS_MODIFY);
-        }
-        user.setPassword(null);
-        return super.update(UserContextHolder.getCurrentUserId(), user);
-    }
+	/**
+	 * 个人信息更新
+	 *
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/info", method = RequestMethod.PUT)
+	public SysUser update(@RequestBody SysUser user) {
+		if (!UserContextHolder.getCurrentUserId().equals(user.getId())) {
+			throw HttpException.of(ErrorCodes.POWERLESS_MODIFY);
+		}
+		user.setPassword(null);
+		return super.update(UserContextHolder.getCurrentUserId(), user);
+	}
 
-    @RequestMapping(value = "/modifyPwd", method = RequestMethod.PUT)
-    public Boolean modifyPwd(@RequestBody PwdModifyVo pwdModifyVo) {
-        String origPwd = pwdModifyVo.getOrigPwd();
-        SysUser user = entityService.get(UserContextHolder.getCurrentUserId());
-        if (!user.getPassword().equals(MD5EncryptUtil.encrypt(origPwd))) {
-            throw HttpException.of(ErrorCodes.INVALID_PASSWORD);
-        }
-        user.setPassword(MD5EncryptUtil.encrypt(pwdModifyVo.getNewPwd()));
-        entityService.update(user);
-        return true;
-    }
+	/**
+	 * 个人修改密码（个人自主修改）
+	 *
+	 * @param pwdModifyVo
+	 * @return
+	 */
+	@RequestMapping(value = "/modifyPwd", method = RequestMethod.PUT)
+	public Boolean modifyPwd(@RequestBody PwdModifyVo pwdModifyVo) {
+		String origPwd = pwdModifyVo.getOldPwd();
+		SysUser user = entityService.get(UserContextHolder.getCurrentUserId());
+		if (!user.getPassword().equals(MD5EncryptUtil.encrypt(origPwd))) {
+			throw HttpException.of(ErrorCodes.INVALID_PASSWORD);
+		}
+		user.setPassword(MD5EncryptUtil.encrypt(pwdModifyVo.getNewPwd()));
+		entityService.update(user);
+		return true;
+	}
 
 
 }

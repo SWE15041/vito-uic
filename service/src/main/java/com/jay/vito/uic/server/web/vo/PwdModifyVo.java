@@ -7,15 +7,15 @@ package com.jay.vito.uic.server.web.vo;
  */
 public class PwdModifyVo {
 
-    private String origPwd;
+    private String oldPwd;
     private String newPwd;
 
-    public String getOrigPwd() {
-        return origPwd;
+    public String getOldPwd() {
+        return oldPwd;
     }
 
-    public void setOrigPwd(String origPwd) {
-        this.origPwd = origPwd;
+    public void setOldPwd(String oldPwd) {
+        this.oldPwd = oldPwd;
     }
 
     public String getNewPwd() {
