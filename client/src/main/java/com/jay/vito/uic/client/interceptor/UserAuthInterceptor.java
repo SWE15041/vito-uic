@@ -29,11 +29,16 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 	/**
 	 * 是否忽略用户认证
 	 *
+	 * @param request
 	 * @param handlerMethod
 	 * @return
 	 */
-	protected boolean isIgnore(HandlerMethod handlerMethod) {
-		// 配置该注解，说明不进行用户拦截
+	protected boolean isIgnore(HttpServletRequest request, HandlerMethod handlerMethod) {
+		// options方法不拦截
+		if ("OPTIONS".equals(request.getMethod())) {
+			return true;
+		}
+		// 有配置该注解，不进行认证拦截
 		IgnoreUserAuth ignoreAnnotation = handlerMethod.getBeanType().getAnnotation(IgnoreUserAuth.class);
 		if (ignoreAnnotation == null) {
 			ignoreAnnotation = handlerMethod.getMethodAnnotation(IgnoreUserAuth.class);
@@ -47,15 +52,10 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		// options方法不拦截
-		if ("OPTIONS".equals(request.getMethod())) {
-			return super.preHandle(request, response, handler);
-
-		}
 		if (handler instanceof HandlerMethod) {
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 			// 配置该注解，说明不进行用户拦截
-			if (!isIgnore(handlerMethod)) {
+			if (!isIgnore(request, handlerMethod)) {
 				String token = getToken(request);
 				if (Validator.isNotNull(token)) {
 					try {
