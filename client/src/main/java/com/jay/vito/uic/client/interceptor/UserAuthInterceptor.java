@@ -15,11 +15,35 @@ import javax.servlet.http.HttpServletResponse;
 import static com.jay.vito.uic.client.core.TokenUtil.getToken;
 import static com.jay.vito.uic.client.core.TokenUtil.parseToken;
 
+/**
+ * 用户认证拦截器
+ *
+ * @author zhaixm
+ */
 public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	protected String uicDomain;
 	protected String appDomain;
+
+	/**
+	 * 是否忽略用户认证
+	 *
+	 * @param handlerMethod
+	 * @return
+	 */
+	protected boolean isIgnore(HandlerMethod handlerMethod) {
+		// 配置该注解，说明不进行用户拦截
+		IgnoreUserAuth ignoreAnnotation = handlerMethod.getBeanType().getAnnotation(IgnoreUserAuth.class);
+		if (ignoreAnnotation == null) {
+			ignoreAnnotation = handlerMethod.getMethodAnnotation(IgnoreUserAuth.class);
+		}
+		if (ignoreAnnotation == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -31,11 +55,7 @@ public class UserAuthInterceptor extends HandlerInterceptorAdapter {
 		if (handler instanceof HandlerMethod) {
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 			// 配置该注解，说明不进行用户拦截
-			IgnoreUserAuth ignoreAnnotation = handlerMethod.getBeanType().getAnnotation(IgnoreUserAuth.class);
-			if (ignoreAnnotation == null) {
-				ignoreAnnotation = handlerMethod.getMethodAnnotation(IgnoreUserAuth.class);
-			}
-			if (ignoreAnnotation == null) {
+			if (!isIgnore(handlerMethod)) {
 				String token = getToken(request);
 				if (Validator.isNotNull(token)) {
 					try {
