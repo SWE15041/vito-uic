@@ -1,5 +1,7 @@
 package com.jay.vito.uic.server.web.vo;
 
+import com.jay.vito.uic.server.constant.ResourceType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,6 +21,7 @@ public class ResourceNode {
     private Integer sortNo;
     private String code;
     private String url;
+    private ResourceType type;
     private List<ResourceNode> children = new ArrayList<>();
 
     public void addChild(ResourceNode childNode) {
@@ -89,4 +92,12 @@ public class ResourceNode {
     public void setUrl(String url) {
         this.url = url;
     }
+
+	public ResourceType getType() {
+		return type;
+	}
+
+	public void setType(ResourceType type) {
+		this.type = type;
+	}
 }
