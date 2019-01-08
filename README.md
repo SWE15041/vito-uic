@@ -26,3 +26,7 @@
 
 使用项目：
 face-sdk
+
+
+**v2.0.20181216**
+1. vito-frame版本使用v2.0.20181216，使用fastjson作为json转换器。
