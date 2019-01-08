@@ -1,6 +1,10 @@
 package com.jay.vito.uic.web.controller;
 
 import com.google.common.collect.ImmutableMap;
+import com.jay.vito.common.exception.ErrorCodes;
+import com.jay.vito.common.exception.HttpBadRequestException;
+import com.jay.vito.common.exception.HttpException;
+import com.jay.vito.common.exception.HttpUnauthorizedException;
 import com.jay.vito.common.util.bean.BeanUtil;
 import com.jay.vito.common.util.string.CodeGenerateUtil;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
@@ -16,14 +20,12 @@ import com.jay.vito.uic.web.vo.SysUserVo;
 import com.jay.vito.uic.web.vo.WechatVo;
 import com.jay.vito.website.core.cache.SystemDataHolder;
 import com.jay.vito.website.core.cache.SystemParamKeys;
-import com.jay.vito.website.core.exception.ErrorCodes;
-import com.jay.vito.website.core.exception.HttpBadRequestException;
-import com.jay.vito.website.core.exception.HttpException;
-import com.jay.vito.website.core.exception.HttpUnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import weixin.popular.api.SnsAPI;
+import weixin.popular.bean.sns.SnsToken;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -84,9 +86,9 @@ public class LoginController {
         // todo 通过authCode换取openid，并查询user表是否有相关记录 如果有生成token并返回
         String appid = "";
         String secret = "";
-//        SnsToken snsToken = SnsAPI.oauth2AccessToken(appid, secret, authCode);
-//        String openid = snsToken.getOpenid();
-        String openid = "123456789";
+        SnsToken snsToken = SnsAPI.oauth2AccessToken(appid, secret, authCode);
+        String openid = snsToken.getOpenid();
+//        String openid = "123456789";
         SysUser user = sysUserService.existsOpenId(openid);
         if (user != null) {
             TokenData tokenData = new TokenData(user.getId(), user.getGroupId());
@@ -145,13 +147,14 @@ public class LoginController {
         return ImmutableMap.of("token", token);
     }
 
-    @RequestMapping(value = "/api/userInfo", method = RequestMethod.GET)
+	@IgnoreUserAuth
+	@RequestMapping(value = "/api/userInfo", method = RequestMethod.GET)
     public Map<String, Object> info(@RequestParam String token) {
         Long userId = userCache.get(token);
         if (Validator.isNull(userId)) {
             throw new HttpUnauthorizedException("token无效", "NOT_VALID_TOKEN");
         }
-//        userCache.remove(token);
+        userCache.remove(token);
         SysUser user = sysUserService.get(userId);
         Map<String, Object> data = new HashMap<>();
         data.put("datas", user);
