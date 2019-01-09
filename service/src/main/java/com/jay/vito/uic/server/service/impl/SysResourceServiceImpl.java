@@ -1,5 +1,6 @@
 package com.jay.vito.uic.server.service.impl;
 
+import com.google.common.collect.Lists;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.uic.client.service.BusinessEntityCRUDServiceImpl;
 import com.jay.vito.uic.server.constant.ResourceType;
@@ -36,26 +37,22 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 		return resources;
 	}
 
-	@Override
-	public List<SysResource> getUserMenus(Long userId) {
-		return getUserResources(userId, ResourceType.Menu);
-	}
-
 	/**
 	 * 获取用户拥有的资源
 	 *
 	 * @param userId
-	 * @param resourceType
+	 * @param resourceTypes
 	 * @return
 	 */
-	private List<SysResource> getUserResources(Long userId, ResourceType resourceType) {
+	@Override
+	public List<SysResource> getUserResources(Long userId, ResourceType... resourceTypes) {
 		boolean manager = sysUserService.isManager(userId);
 		List<SysResource> userResources = new ArrayList<>();
 		List<SysResource> resources;
-		if (resourceType == null) {
+		if (resourceTypes == null) {
 			resources = sysResourceRepository.findByEnable(YesNoEnum.YES);
 		} else {
-			resources = sysResourceRepository.findByEnableAndResourceType(YesNoEnum.YES, resourceType);
+			resources = sysResourceRepository.findByEnableAndResourceTypeIn(YesNoEnum.YES, Lists.newArrayList(resourceTypes));
 		}
 		// 如果该用户是管理员，则返回所有的资源
 		if (manager) {
@@ -70,12 +67,6 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 			}
 		}
 		return userResources;
-	}
-
-
-	@Override
-	public List<SysResource> getUserResources(Long userId) {
-		return getUserResources(userId, null);
 	}
 
 	@Override

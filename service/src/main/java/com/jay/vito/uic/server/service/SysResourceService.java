@@ -30,20 +30,12 @@ public interface SysResourceService extends EntityCRUDService<SysResource, Long>
 	List<SysResource> findByResourceType(ResourceType resourceType);
 
 	/**
-	 * 获取用户菜单
-	 *
-	 * @param currentUserId
-	 * @return
-	 */
-	List<SysResource> getUserMenus(Long currentUserId);
-
-	/**
 	 * 获取用户资源
 	 *
 	 * @param currentUserId
 	 * @return
 	 */
-	List<SysResource> getUserResources(Long currentUserId);
+	List<SysResource> getUserResources(Long currentUserId, ResourceType... resourceTypes);
 
 	/**
 	 * 获取用户资源id集合

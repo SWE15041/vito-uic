@@ -11,10 +11,12 @@ import java.util.List;
 @Repository
 public interface SysResourceRepository extends MyJpaRepository<SysResource, Long> {
 
-    List<SysResource> findByEnable(YesNoEnum enable);
+	List<SysResource> findByEnable(YesNoEnum enable);
 
-    SysResource findFirstByIdAndEnable(Long id, YesNoEnum enable);
+	SysResource findFirstByIdAndEnable(Long id, YesNoEnum enable);
 
-    List<SysResource> findByEnableAndResourceType(YesNoEnum enable, ResourceType resourceType);
+	List<SysResource> findByEnableAndResourceType(YesNoEnum enable, ResourceType resourceType);
+
+	List<SysResource> findByEnableAndResourceTypeIn(YesNoEnum enable, List<ResourceType> resourceTypes);
 
 }
