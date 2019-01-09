@@ -37,44 +37,45 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 	}
 
 	@Override
-	public List<SysResource> getUserMenus(Long currentUserId) {
-		// 如果该用户是管理员，则返回所有的菜单资源
-		boolean manager = sysUserService.isManager(currentUserId);
-		if (manager) {
-			List<SysResource> menus = findByResourceType(ResourceType.MENU);
-			return menus;
-		}
-		Set<String> resourceCodes = sysUserService.findUserResources(currentUserId);
-		List<SysResource> sysResources = findByResourceType(ResourceType.MENU);
-		List<SysResource> menuResources = new ArrayList<>();
+	public List<SysResource> getUserMenus(Long userId) {
+		return getUserResources(userId, ResourceType.Menu);
+	}
 
-		for (SysResource resource : sysResources) {
-			if (resourceCodes.contains(resource.getCode())) {
-				menuResources.add(resource);
+	/**
+	 * 获取用户拥有的资源
+	 *
+	 * @param userId
+	 * @param resourceType
+	 * @return
+	 */
+	private List<SysResource> getUserResources(Long userId, ResourceType resourceType) {
+		boolean manager = sysUserService.isManager(userId);
+		List<SysResource> userResources = new ArrayList<>();
+		List<SysResource> resources;
+		if (resourceType == null) {
+			resources = sysResourceRepository.findByEnable(YesNoEnum.YES);
+		} else {
+			resources = sysResourceRepository.findByEnableAndResourceType(YesNoEnum.YES, resourceType);
+		}
+		// 如果该用户是管理员，则返回所有的资源
+		if (manager) {
+			userResources = resources;
+		} else {
+			// 获取该用户所有的资源的code；
+			Set<String> resourceCodes = sysUserService.findUserResources(userId);
+			for (SysResource resource : resources) {
+				if (resourceCodes.contains(resource.getCode())) {
+					userResources.add(resource);
+				}
 			}
 		}
-		return menuResources;
+		return userResources;
 	}
 
 
 	@Override
-	public List<SysResource> getUserResources(Long currentUserId) {
-		// 如果该用户是管理员，则返回所有的资源
-		boolean manager = sysUserService.isManager(currentUserId);
-		if (manager) {
-			List<SysResource> resources = sysResourceRepository.findByEnable(YesNoEnum.YES);
-			return resources;
-		}
-		// 获取该用户所有的资源的code；
-		Set<String> resourceCodes = sysUserService.findUserResources(currentUserId);
-		List<SysResource> sysResources = sysResourceRepository.findByEnable(YesNoEnum.YES);
-		List<SysResource> resources = new ArrayList<>();
-		for (SysResource sysResource : sysResources) {
-			if (resourceCodes.contains(sysResource.getCode())) {
-				resources.add(sysResource);
-			}
-		}
-		return resources;
+	public List<SysResource> getUserResources(Long userId) {
+		return getUserResources(userId, null);
 	}
 
 	@Override
