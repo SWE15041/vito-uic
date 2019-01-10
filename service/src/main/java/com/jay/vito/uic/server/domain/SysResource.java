@@ -95,9 +95,6 @@ public class SysResource extends BaseBusinessEntity<Long> {
 		getChildren().remove(sysResource);
 	}
 
-	//    @OneToMany(mappedBy = "parent", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
-//    @OrderBy("sortNo asc")
-//    @Fetch(FetchMode.SELECT)
 	@Transient
 	public List<SysResource> getChildren() {
 		if (children == null) {

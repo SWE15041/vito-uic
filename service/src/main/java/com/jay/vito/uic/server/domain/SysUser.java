@@ -4,7 +4,7 @@
 package com.jay.vito.uic.server.domain;
 
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.uic.client.domain.BaseBusinessEntity;
 import com.jay.vito.uic.server.constant.UserSex;
@@ -34,7 +34,7 @@ public class SysUser extends BaseBusinessEntity<Long> {
     /**
      * 密码
      */
-    @JSONField(serialize = false)
+    @JsonIgnore
     private String password;
 
     /**
@@ -54,7 +54,7 @@ public class SysUser extends BaseBusinessEntity<Long> {
     /**
      * 微信号
      */
-    @JSONField(serialize = false)
+    @JsonIgnore
     private String wechatOpenId;
 
     /**
