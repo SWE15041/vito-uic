@@ -28,8 +28,8 @@ public class SysRoleController extends BaseGridController<SysRole, Long, SysRole
 
     @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
     @Override
-    public Page<SysRole> query() {
-        return super.query();
+    public Page<SysRole> queryFormat() {
+        return super.queryFormat();
     }
 
     @RequestMapping(method = RequestMethod.GET)
