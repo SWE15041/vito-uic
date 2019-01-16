@@ -5,6 +5,7 @@ package com.jay.vito.uic.server.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.uic.client.domain.BaseBusinessEntity;
 import com.jay.vito.uic.server.constant.UserSex;
@@ -34,7 +35,6 @@ public class SysUser extends BaseBusinessEntity<Long> {
     /**
      * 密码
      */
-    @JsonIgnore
     private String password;
 
     /**
@@ -128,10 +128,12 @@ public class SysUser extends BaseBusinessEntity<Long> {
         return loginName;
     }
 
-    public String getPassword() {
+	@JsonIgnore
+	public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
