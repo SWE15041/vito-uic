@@ -1,15 +1,15 @@
 package com.jay.vito.uic.server.web.controller;
 
-import com.jay.vito.storage.model.Page;
 import com.jay.vito.uic.server.domain.SysRole;
 import com.jay.vito.uic.server.service.SysRoleResourceService;
 import com.jay.vito.uic.server.service.SysRoleService;
-import com.jay.vito.website.web.controller.BaseGridController;
+import com.jay.vito.website.web.controller.BaseGridCRUDController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 
@@ -21,48 +21,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/roles")
-public class SysRoleController extends BaseGridController<SysRole, Long, SysRoleService> {
+public class SysRoleController extends BaseGridCRUDController<SysRole, Long, SysRoleService> {
 
-    @Autowired
-    private SysRoleResourceService sysRoleResourceService;
+	@Autowired
+	private SysRoleResourceService sysRoleResourceService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"pageNo"})
-    @Override
-    public Page<SysRole> queryFormat() {
-        return super.queryFormat();
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    @Override
-    public List<SysRole> queryAll() {
-        return super.queryAll();
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public SysRole get(@PathVariable("id") Long id) {
-        SysRole role = entityService.get(id);
-        List<Long> roleResources = sysRoleResourceService.findRoleResources(id);
-        role.setResourceIds(new HashSet<>(roleResources));
-        return role;
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public SysRole save(@Valid @RequestBody SysRole role, BindingResult result) {
-        ValidUtil.valid(result);
-        return entityService.save(role);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public SysRole update(@PathVariable("id") Long id, @Valid @RequestBody SysRole role, BindingResult result) {
-        ValidUtil.valid(result);
-        role.setId(id);
-        return entityService.updateNotNull(role);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Boolean delete(@PathVariable("id") Long id) {
-        entityService.delete(id);
-        return true;
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@Override
+	public SysRole get(@PathVariable("id") Long id) {
+		SysRole role = entityService.get(id);
+		List<Long> roleResources = sysRoleResourceService.findRoleResources(id);
+		role.setResourceIds(new HashSet<>(roleResources));
+		return role;
+	}
 
 }

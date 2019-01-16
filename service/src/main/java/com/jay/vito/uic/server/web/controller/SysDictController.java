@@ -21,13 +21,13 @@ import java.util.List;
 @RequestMapping(value = "/dicts")
 public class SysDictController extends BaseGridCRUDController<SysDict, Long, SysDictService> {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<SysDict> queryAll(@RequestParam String name) {
-        if (Validator.isNotNull(name)) {
-            return entityService.findByName(name);
-        } else {
-            return super.queryAll();
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	public List<SysDict> queryAll(@RequestParam String name) {
+		if (Validator.isNotNull(name)) {
+			return entityService.findByName(name);
+		} else {
+			return entityService.getAll();
+		}
+	}
 
 }
