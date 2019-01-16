@@ -2,6 +2,7 @@ package com.jay.vito.uic.server.service.impl;
 
 import com.google.common.collect.Lists;
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.service.BusinessEntityCRUDServiceImpl;
 import com.jay.vito.uic.server.constant.ResourceType;
 import com.jay.vito.uic.server.domain.SysResource;
@@ -49,7 +50,7 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 		boolean manager = sysUserService.isManager(userId);
 		List<SysResource> userResources = new ArrayList<>();
 		List<SysResource> resources;
-		if (resourceTypes == null) {
+		if (Validator.isNull(resourceTypes)) {
 			resources = sysResourceRepository.findByEnable(YesNoEnum.YES);
 		} else {
 			resources = sysResourceRepository.findByEnableAndResourceTypeIn(YesNoEnum.YES, Lists.newArrayList(resourceTypes));
