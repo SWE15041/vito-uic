@@ -26,7 +26,7 @@ public class SysDictController extends BaseGridCRUDController<SysDict, Long, Sys
         if (Validator.isNotNull(name)) {
             return entityService.findByName(name);
         } else {
-            return super.queryAll();
+            return entityService.getAll();
         }
     }
 

@@ -4,12 +4,10 @@ import com.jay.vito.storage.model.Page;
 import com.jay.vito.uic.server.domain.SysRole;
 import com.jay.vito.uic.server.service.SysRoleResourceService;
 import com.jay.vito.uic.server.service.SysRoleService;
-import com.jay.vito.website.web.controller.BaseGridController;
+import com.jay.vito.website.web.controller.BaseGridCRUDController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 
@@ -21,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/roles")
-public class SysRoleController extends BaseGridController<SysRole, Long, SysRoleService> {
+public class SysRoleController extends BaseGridCRUDController<SysRole, Long, SysRoleService> {
 
     @Autowired
     private SysRoleResourceService sysRoleResourceService;
@@ -33,12 +31,12 @@ public class SysRoleController extends BaseGridController<SysRole, Long, SysRole
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    @Override
     public List<SysRole> queryAll() {
-        return super.queryAll();
+        return entityService.getAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @Override
     public SysRole get(@PathVariable("id") Long id) {
         SysRole role = entityService.get(id);
         List<Long> roleResources = sysRoleResourceService.findRoleResources(id);
@@ -47,19 +45,20 @@ public class SysRoleController extends BaseGridController<SysRole, Long, SysRole
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public SysRole save(@Valid @RequestBody SysRole role, BindingResult result) {
-        ValidUtil.valid(result);
+    @Override
+    public SysRole save(@RequestBody SysRole role) {
         return entityService.save(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public SysRole update(@PathVariable("id") Long id, @Valid @RequestBody SysRole role, BindingResult result) {
-        ValidUtil.valid(result);
+    @Override
+    public SysRole update(@PathVariable("id") Long id, @RequestBody SysRole role) {
         role.setId(id);
         return entityService.updateNotNull(role);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @Override
     public Boolean delete(@PathVariable("id") Long id) {
         entityService.delete(id);
         return true;

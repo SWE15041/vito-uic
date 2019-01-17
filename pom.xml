@@ -11,12 +11,12 @@
     </parent>
     <groupId>com.jay.vito</groupId>
     <artifactId>vito-uic</artifactId>
-    <version>2.0.20190108-SNAPSHOT</version>
+    <version>2.0.20190117-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
-        <uic.version>2.0.20190108-SNAPSHOT</uic.version>
-        <vito.version>2.0.20190108-SNAPSHOT</vito.version>
+        <uic.version>2.0.20190117-SNAPSHOT</uic.version>
+        <vito.version>2.0.20190117-SNAPSHOT</vito.version>
     </properties>
 
     <modules>
