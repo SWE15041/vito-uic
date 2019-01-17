@@ -100,10 +100,20 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 
 	@Override
 	public void delete(Long entityId) {
+		validDeletable(entityId);
+		super.delete(entityId);
+	}
+
+	private void validDeletable(Long entityId) {
 		boolean existsChildren = sysResourceRepository.existsByParentId(entityId);
 		if (existsChildren) {
 			throw new BusinessException("该条记录有下级资源，不可删除");
 		}
-		super.delete(entityId);
+	}
+
+	@Override
+	public void delete(SysResource entity) {
+		validDeletable(entity.getId());
+		super.delete(entity);
 	}
 }
