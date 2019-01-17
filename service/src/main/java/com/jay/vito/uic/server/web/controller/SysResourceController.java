@@ -114,7 +114,7 @@ public class SysResourceController extends BaseGridCRUDController<SysResource, L
 		resourceNodeMap.entrySet().forEach(entry -> {
 			ResourceNode node = entry.getValue();
 			Long pid = node.getPid();
-			if (Validator.isNotNull(pid)) {
+			if (Validator.isNotNull(pid) && resourceNodeMap.get(pid) != null) {
 				ResourceNode pNode = resourceNodeMap.get(pid);
 				pNode.addChild(node);
 			} else {
