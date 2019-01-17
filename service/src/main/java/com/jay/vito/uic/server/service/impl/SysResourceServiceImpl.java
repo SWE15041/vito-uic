@@ -1,6 +1,9 @@
 package com.jay.vito.uic.server.service.impl;
 
+import com.google.common.collect.Lists;
+import com.jay.vito.common.exception.BusinessException;
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.service.BusinessEntityCRUDServiceImpl;
 import com.jay.vito.uic.server.constant.ResourceType;
 import com.jay.vito.uic.server.domain.SysResource;
@@ -36,45 +39,36 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 		return resources;
 	}
 
+	/**
+	 * 获取用户拥有的资源
+	 *
+	 * @param userId
+	 * @param resourceTypes
+	 * @return
+	 */
 	@Override
-	public List<SysResource> getUserMenus(Long currentUserId) {
-		// 如果该用户是管理员，则返回所有的菜单资源
-		boolean manager = sysUserService.isManager(currentUserId);
-		if (manager) {
-			List<SysResource> menus = findByResourceType(ResourceType.MENU);
-			return menus;
+	public List<SysResource> getUserResources(Long userId, ResourceType... resourceTypes) {
+		boolean manager = sysUserService.isManager(userId);
+		List<SysResource> userResources = new ArrayList<>();
+		List<SysResource> resources;
+		if (Validator.isNull(resourceTypes)) {
+			resources = sysResourceRepository.findByEnable(YesNoEnum.YES);
+		} else {
+			resources = sysResourceRepository.findByEnableAndResourceTypeIn(YesNoEnum.YES, Lists.newArrayList(resourceTypes));
 		}
-		Set<String> resourceCodes = sysUserService.findUserResources(currentUserId);
-		List<SysResource> sysResources = findByResourceType(ResourceType.MENU);
-		List<SysResource> menuResources = new ArrayList<>();
-
-		for (SysResource resource : sysResources) {
-			if (resourceCodes.contains(resource.getCode())) {
-				menuResources.add(resource);
-			}
-		}
-		return menuResources;
-	}
-
-
-	@Override
-	public List<SysResource> getUserResources(Long currentUserId) {
 		// 如果该用户是管理员，则返回所有的资源
-		boolean manager = sysUserService.isManager(currentUserId);
 		if (manager) {
-			List<SysResource> resources = sysResourceRepository.findByEnable(YesNoEnum.YES);
-			return resources;
-		}
-		// 获取该用户所有的资源的code；
-		Set<String> resourceCodes = sysUserService.findUserResources(currentUserId);
-		List<SysResource> sysResources = sysResourceRepository.findByEnable(YesNoEnum.YES);
-		List<SysResource> resources = new ArrayList<>();
-		for (SysResource sysResource : sysResources) {
-			if (resourceCodes.contains(sysResource.getCode())) {
-				resources.add(sysResource);
+			userResources = resources;
+		} else {
+			// 获取该用户所有的资源的code；
+			Set<String> resourceCodes = sysUserService.findUserResources(userId);
+			for (SysResource resource : resources) {
+				if (resourceCodes.contains(resource.getCode())) {
+					userResources.add(resource);
+				}
 			}
 		}
-		return resources;
+		return userResources;
 	}
 
 	@Override
@@ -102,5 +96,24 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 			}
 		}
 		return resourceIds;
+	}
+
+	@Override
+	public void delete(Long entityId) {
+		validDeletable(entityId);
+		super.delete(entityId);
+	}
+
+	private void validDeletable(Long entityId) {
+		boolean existsChildren = sysResourceRepository.existsByParentId(entityId);
+		if (existsChildren) {
+			throw new BusinessException("该条记录有下级资源，不可删除");
+		}
+	}
+
+	@Override
+	public void delete(SysResource entity) {
+		validDeletable(entity.getId());
+		super.delete(entity);
 	}
 }
