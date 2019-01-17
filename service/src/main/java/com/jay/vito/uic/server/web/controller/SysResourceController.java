@@ -148,4 +148,5 @@ public class SysResourceController extends BaseGridCRUDController<SysResource, L
 		List<Long> resourceIds = sysResourceService.getResourceIds(userId);
 		return resourceIds;
 	}
+
 }

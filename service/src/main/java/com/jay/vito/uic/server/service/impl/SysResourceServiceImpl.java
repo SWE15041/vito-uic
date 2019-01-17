@@ -1,6 +1,7 @@
 package com.jay.vito.uic.server.service.impl;
 
 import com.google.common.collect.Lists;
+import com.jay.vito.common.exception.BusinessException;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.service.BusinessEntityCRUDServiceImpl;
@@ -95,5 +96,14 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
 			}
 		}
 		return resourceIds;
+	}
+
+	@Override
+	public void delete(Long entityId) {
+		boolean existsChildren = sysResourceRepository.existsByParentId(entityId);
+		if (existsChildren) {
+			throw new BusinessException("该条记录有下级资源，不可删除");
+		}
+		super.delete(entityId);
 	}
 }
