@@ -1,6 +1,7 @@
 package com.jay.vito.uic.server.web.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.server.constant.ResourceType;
 
 import java.util.ArrayList;
@@ -49,6 +50,19 @@ public class ResourceNode {
 		this.children.add(childNode);
 		childNode.setParent(this);
 		Collections.sort(this.children, Comparator.comparing(ResourceNode::getSortNo));
+	}
+
+	public String getPath() {
+		ResourceNode curNode = this;
+		StringBuilder sb = new StringBuilder();
+		while (curNode != null) {
+			if (Validator.isNotNull(curNode.getCode())) {
+				sb.insert(0, curNode.getCode());
+				sb.insert(0, "/");
+			}
+			curNode = curNode.getParent();
+		}
+		return sb.toString();
 	}
 
 	public Long getId() {

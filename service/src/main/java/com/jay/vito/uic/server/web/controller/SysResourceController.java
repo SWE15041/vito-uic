@@ -6,9 +6,7 @@ import com.jay.vito.uic.server.constant.ResourceType;
 import com.jay.vito.uic.server.domain.SysResource;
 import com.jay.vito.uic.server.service.SysResourceService;
 import com.jay.vito.uic.server.web.vo.ResourceNode;
-import com.jay.vito.uic.server.web.vo.ResourceRoute;
 import com.jay.vito.website.web.controller.BaseGridCRUDController;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +37,7 @@ public class SysResourceController extends BaseGridCRUDController<SysResource, L
 	 * @return
 	 */
 	@RequestMapping(value = "/routes", method = RequestMethod.GET)
-	public List<ResourceRoute> getResourceRoutes() {
+	public List<ResourceNode> getResourceRoutes() {
 		Long currentUserId = UserContextHolder.getCurrentUserId();
 		List<SysResource> resources = sysResourceService.getUserResources(currentUserId, ResourceType.Catalog, ResourceType.Menu);
 		List<ResourceNode> resourceTree = toTree(resources);
@@ -49,30 +47,19 @@ public class SysResourceController extends BaseGridCRUDController<SysResource, L
 	/**
 	 * 将树形结构进行扁平化处理，组装path路径
 	 *
-	 * @param parentNodes
+	 * @param resourceNodes
 	 * @return
 	 */
-	private List<ResourceRoute> flatTree(List<ResourceNode> parentNodes) {
-		List<ResourceRoute> routes = new ArrayList<>();
-		parentNodes.forEach(resourceNode -> {
-			ResourceNode curNode = resourceNode;
-			StringBuilder sb = new StringBuilder();
-			while (curNode != null) {
-				if (Validator.isNotNull(curNode.getCode())) {
-					sb.insert(0, curNode.getCode());
-					sb.insert(0, "/");
-				}
-				curNode = curNode.getParent();
-			}
-			ResourceRoute route = new ResourceRoute();
-			BeanUtils.copyProperties(resourceNode, route);
-			String path = sb.toString();
-			route.setPath(path);
-			routes.add(route);
-			List<ResourceRoute> children = flatTree(resourceNode.getChildren());
-			routes.addAll(children);
-		});
-
+	private List<ResourceNode> flatTree(List<ResourceNode> resourceNodes) {
+		List<ResourceNode> routes = new ArrayList<>();
+		if (Validator.isNotNull(resourceNodes)) {
+			resourceNodes.forEach(resourceNode -> {
+				routes.add(resourceNode);
+				List<ResourceNode> children = flatTree(resourceNode.getChildren());
+				routes.addAll(children);
+				resourceNode.setChildren(null);
+			});
+		}
 		return routes;
 	}
 
