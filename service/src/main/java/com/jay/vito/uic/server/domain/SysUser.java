@@ -71,29 +71,23 @@ public class SysUser extends BaseBusinessEntity<Long> {
 	 * 是否启用  0-未启用 1-启用
 	 */
 	@Enumerated(EnumType.ORDINAL)
-	private YesNoEnum enable;
+	private YesNoEnum enable = YesNoEnum.YES;
 
 	/**
 	 * 是否可登录 0-不可登录 1-可登录
 	 */
 	@Enumerated(EnumType.ORDINAL)
-	private YesNoEnum loginable;
+	private YesNoEnum loginable = YesNoEnum.YES;
 
 	/**
 	 * 是否管理员
 	 */
 	@Enumerated(EnumType.ORDINAL)
-	private YesNoEnum manager;
+	private YesNoEnum manager = YesNoEnum.NO;
 
 	private Set<String> roleCodes = new HashSet<>();
 	private Set<Long> roleIds = new HashSet<>();
 	private Set<String> resourceCodes = new HashSet<>();
-
-//    /**
-//     * 短信验证码
-//     */
-//    @Transient
-//    private String messageValidCode;
 
 	public boolean authorizeResource(String resourceCode) {
 		if (getResourceCodes() == null) {
