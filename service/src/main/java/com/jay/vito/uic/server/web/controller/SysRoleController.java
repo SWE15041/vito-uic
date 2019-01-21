@@ -5,10 +5,7 @@ import com.jay.vito.uic.server.service.SysRoleResourceService;
 import com.jay.vito.uic.server.service.SysRoleService;
 import com.jay.vito.website.web.controller.BaseGridCRUDController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +30,11 @@ public class SysRoleController extends BaseGridCRUDController<SysRole, Long, Sys
 		List<Long> roleResources = sysRoleResourceService.findRoleResources(id);
 		role.setResourceIds(new HashSet<>(roleResources));
 		return role;
+	}
+
+	@GetMapping
+	public List<SysRole> queryAll() {
+		return entityService.getAll();
 	}
 
 }
