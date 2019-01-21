@@ -21,9 +21,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 作者: zhaixm
- * 日期: 2017/11/23 18:16
- * 描述:
+ * 用户服务实现
+ *
+ * @author zhaixm
+ * @date 2017/11/23 18:16
  */
 public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, Long> implements SysUserService {
 
@@ -89,7 +90,11 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 		return super.save(user);
 	}
 
-
+	/**
+	 * 处理用户角色关联
+	 *
+	 * @param user
+	 */
 	private void handleUserRoles(SysUser user) {
 		Long currentGroupId = UserContextHolder.getCurrentGroupId();
 		if (Validator.isNotNull(user.getId())) {
@@ -147,6 +152,14 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void delete(Long id) {
+		if (isManager(id)) {
+			throw new BusinessException("管理员为内置用户，不能删除");
+		}
+		super.delete(id);
 	}
 
 	public static void main(String[] args) {
