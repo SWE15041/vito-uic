@@ -6,6 +6,7 @@
         u.create_time,
         u.update_key,
         u.name,
+        u.login_name,
         u.nick_name,
         u.mobile,
         u.sex,
@@ -16,7 +17,7 @@
             1 = 1
             <if test="name != null and name != ''">
                 <bind name="name_pattern" value="'%' + name + '%'"/>
-                AND (u.name LIKE #{name_pattern})
+                and (u.name like #{name_pattern} or u.login_name like #{name_pattern})
             </if>
         </where>
     </sql>
