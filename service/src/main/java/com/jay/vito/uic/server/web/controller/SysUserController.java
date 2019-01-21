@@ -27,8 +27,8 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class SysUserController extends BaseGridCRUDController<SysUser, Long, SysUserService> {
 
-	@Value("${user.resetPwd:'123456'}")
-	private String RESET_PASSWORD;
+	@Value("${user.defaultPwd:'123456'}")
+	private String DEFAULT_PASSWORD;
 
 	/**
 	 * 用户更新
@@ -53,7 +53,7 @@ public class SysUserController extends BaseGridCRUDController<SysUser, Long, Sys
 	 */
 	@PutMapping("/{id}/resetPwd")
 	public ResponseData<Boolean> resetPwd(@PathVariable Long id, Map<String, String> data) {
-		String password = Optional.ofNullable(data.get("password")).orElse(RESET_PASSWORD);
+		String password = Optional.ofNullable(data.get("password")).orElse(DEFAULT_PASSWORD);
 		if (Validator.isNull(password)) {
 			throw new BusinessException("密码不能为空");
 		}
