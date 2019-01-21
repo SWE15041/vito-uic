@@ -25,79 +25,69 @@ import java.util.Set;
 //@AttributeOverride(name = "userId", column = @Column(name = "id", insertable = false, updatable = false))
 public class SysUser extends BaseBusinessEntity<Long> {
 
-    public static final Long ADMIN_USER_ID = 1L;
+	public static final Long ADMIN_USER_ID = 1L;
 
-    /**
-     * 登录名
-     */
-    private String loginName;
+	/**
+	 * 登录名
+	 */
+	private String loginName;
 
-    /**
-     * 密码
-     */
-    private String password;
+	/**
+	 * 密码
+	 */
+	private String password;
 
-    /**
-     * 姓名
-     */
-    private String name;
+	/**
+	 * 姓名
+	 */
+	private String name;
 
-    /**
-     * 昵称
-     */
-    private String nickName;
+	/**
+	 * 昵称
+	 */
+	private String nickName;
 
-    /**
-     * 微信名称
-     */
-    private String wechatName;
-    /**
-     * 微信号
-     */
-    @JsonIgnore
-    private String wechatOpenId;
+	/**
+	 * 邮箱
+	 */
+	private String email;
+	/**
+	 * 手机号
+	 */
+	private String mobile;
 
-    /**
-     * 邮箱
-     */
-    private String email;
-    /**
-     * 手机号
-     */
-    private String mobile;
+	/**
+	 * 头像
+	 */
+	private String headImg;
 
-    /**
-     * 头像
-     */
-    private String headImg;
+	/**
+	 * 性别
+	 */
+	@Enumerated(EnumType.ORDINAL)
+	private UserSex sex;
 
-    /**
-     * 性别
-     */
-    @Enumerated(EnumType.ORDINAL)
-    private UserSex sex;
+	/**
+	 * 是否启用  0-未启用 1-启用
+	 */
+	@Enumerated(EnumType.ORDINAL)
+	private YesNoEnum enable;
 
-    /**
-     * 是否启用  0-未启用 1-启用
-     */
-    @Enumerated(EnumType.ORDINAL)
-    private YesNoEnum enable;
+	/**
+	 * 是否可登录 0-不可登录 1-可登录
+	 */
+	@Enumerated(EnumType.ORDINAL)
+	private YesNoEnum loginable;
 
-    /**
-     * 是否可登录 0-不可登录 1-可登录
-     */
-    @Enumerated(EnumType.ORDINAL)
-    private YesNoEnum loginable;
+	/**
+	 * 是否管理员
+	 */
+	@Enumerated(EnumType.ORDINAL)
+	private YesNoEnum manager;
 
-    /**
-     * 是否管理员
-     */
-    @Enumerated(EnumType.ORDINAL)
-    private YesNoEnum manager;
-
-    private Set<String> roleCodes = new HashSet<>();
-    private Set<Long> roleIds = new HashSet<>();
-    private Set<String> resourceCodes = new HashSet<>();
+	private Set<String> roleCodes = new HashSet<>();
+	private Set<Long> roleIds = new HashSet<>();
+	private Set<String> resourceCodes = new HashSet<>();
 
 //    /**
 //     * 短信验证码
@@ -105,182 +95,159 @@ public class SysUser extends BaseBusinessEntity<Long> {
 //    @Transient
 //    private String messageValidCode;
 
-    public boolean authorizeResource(String resourceCode) {
-        if (getResourceCodes() == null) {
-            return false;
-        } else {
-            return getResourceCodes().contains(resourceCode);
-        }
-    }
+	public boolean authorizeResource(String resourceCode) {
+		if (getResourceCodes() == null) {
+			return false;
+		} else {
+			return getResourceCodes().contains(resourceCode);
+		}
+	}
 
-    @Transient
-    public Set<String> getResourceCodes() {
-        return resourceCodes;
-    }
+	@Transient
+	public Set<String> getResourceCodes() {
+		return resourceCodes;
+	}
 
-    public void addResourceCode(String... resourceCodes) {
-        for (String resourceCode : resourceCodes) {
-            this.resourceCodes.add(resourceCode);
-        }
-    }
+	public void addResourceCode(String... resourceCodes) {
+		for (String resourceCode : resourceCodes) {
+			this.resourceCodes.add(resourceCode);
+		}
+	}
 
-    public String getLoginName() {
-        return loginName;
-    }
+	public String getLoginName() {
+		return loginName;
+	}
 
 	@JsonIgnore
 	public String getPassword() {
-        return password;
-    }
+		return password;
+	}
 
-    @JsonProperty
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	@JsonProperty
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getNickName() {
-        return nickName;
-    }
+	public String getNickName() {
+		return nickName;
+	}
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 
-    public UserSex getSex() {
-        return sex;
-    }
+	public UserSex getSex() {
+		return sex;
+	}
 
-    public void setSex(UserSex sex) {
-        this.sex = sex;
-    }
+	public void setSex(UserSex sex) {
+		this.sex = sex;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getMobile() {
-        return mobile;
-    }
+	public String getMobile() {
+		return mobile;
+	}
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 
-    public String getWechatName() {
-        return wechatName;
-    }
+	public YesNoEnum getEnable() {
+		return enable;
+	}
 
-    public void setWechatName(String wechatName) {
-        this.wechatName = wechatName;
-    }
+	public void setEnable(YesNoEnum enable) {
+		this.enable = enable;
+	}
 
-    public String getWechatOpenId() {
-        return wechatOpenId;
-    }
+	public boolean enable() {
+		return enable != null && enable == YesNoEnum.YES;
+	}
 
-    public void setWechatOpenId(String wechatOpenId) {
-        this.wechatOpenId = wechatOpenId;
-    }
+	public YesNoEnum getLoginable() {
+		return loginable;
+	}
 
-    public YesNoEnum getEnable() {
-        return enable;
-    }
+	public void setLoginable(YesNoEnum loginable) {
+		this.loginable = loginable;
+	}
 
-    public void setEnable(YesNoEnum enable) {
-        this.enable = enable;
-    }
+	public String getHeadImg() {
+		return headImg;
+	}
 
-    public boolean enable() {
-        return enable != null && enable == YesNoEnum.YES;
-    }
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
+	}
 
-    public YesNoEnum getLoginable() {
-        return loginable;
-    }
+	public YesNoEnum getManager() {
+		return manager;
+	}
 
-    public void setLoginable(YesNoEnum loginable) {
-        this.loginable = loginable;
-    }
+	public void setManager(YesNoEnum manager) {
+		this.manager = manager;
+	}
 
-    public String getHeadImg() {
-        return headImg;
-    }
+	public boolean manager() {
+		return manager != null && manager == YesNoEnum.YES;
+	}
 
-    public void setHeadImg(String headImg) {
-        this.headImg = headImg;
-    }
+	public boolean loginable() {
+		return loginable != null && loginable == YesNoEnum.YES;
+	}
 
-    public YesNoEnum getManager() {
-        return manager;
-    }
+	@Transient
+	public Set<String> getRoleCodes() {
+		return roleCodes;
+	}
 
-    public void setManager(YesNoEnum manager) {
-        this.manager = manager;
-    }
+	public void setRoleCodes(Set<String> roleCodes) {
+		this.roleCodes = roleCodes;
+	}
 
-    public boolean manager() {
-        return manager != null && manager == YesNoEnum.YES;
-    }
+	public void addRoleCode(String... roleCodes) {
+		for (String roleCode : roleCodes) {
+			this.roleCodes.add(roleCode);
+		}
+	}
 
-    public boolean loginable() {
-        return loginable != null && loginable == YesNoEnum.YES;
-    }
+	public boolean containRole(String roleCode) {
+		return this.roleCodes.contains(roleCode);
+	}
 
-    @Transient
-    public Set<String> getRoleCodes() {
-        return roleCodes;
-    }
+	@Transient
+	public Set<Long> getRoleIds() {
+		return roleIds;
+	}
 
-    public void setRoleCodes(Set<String> roleCodes) {
-        this.roleCodes = roleCodes;
-    }
+	public void setRoleIds(Set<Long> roleIds) {
+		this.roleIds = roleIds;
+	}
 
-    public void addRoleCode(String... roleCodes) {
-        for (String roleCode : roleCodes) {
-            this.roleCodes.add(roleCode);
-        }
-    }
+	public void addRoleId(Long... roleIds) {
+		for (Long roleId : roleIds) {
+			this.roleIds.add(roleId);
+		}
+	}
 
-    public boolean containRole(String roleCode) {
-        return this.roleCodes.contains(roleCode);
-    }
-
-    @Transient
-    public Set<Long> getRoleIds() {
-        return roleIds;
-    }
-
-    public void setRoleIds(Set<Long> roleIds) {
-        this.roleIds = roleIds;
-    }
-
-    public void addRoleId(Long... roleIds) {
-        for (Long roleId : roleIds) {
-            this.roleIds.add(roleId);
-        }
-    }
-
-//    public String getMessageValidCode() {
-//        return messageValidCode;
-//    }
-//    @Transient
-//    public void setMessageValidCode(String messageValidCode) {
-//        this.messageValidCode = messageValidCode;
-//    }
 }

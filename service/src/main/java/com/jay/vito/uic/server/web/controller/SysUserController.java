@@ -1,14 +1,21 @@
 package com.jay.vito.uic.server.web.controller;
 
+import com.jay.vito.common.exception.BusinessException;
 import com.jay.vito.common.exception.ErrorCodes;
 import com.jay.vito.common.exception.HttpException;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
+import com.jay.vito.common.util.validate.Validator;
+import com.jay.vito.common.util.web.ResponseData;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.server.domain.SysUser;
 import com.jay.vito.uic.server.service.SysUserService;
 import com.jay.vito.uic.server.web.vo.PwdModifyVo;
 import com.jay.vito.website.web.controller.BaseGridCRUDController;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * 用户接口控制器
@@ -19,6 +26,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 public class SysUserController extends BaseGridCRUDController<SysUser, Long, SysUserService> {
+
+	@Value("${user.resetPwd:'123456'}")
+	private String RESET_PASSWORD;
 
 	/**
 	 * 用户更新
@@ -32,6 +42,23 @@ public class SysUserController extends BaseGridCRUDController<SysUser, Long, Sys
 	public SysUser update(@PathVariable("id") Long id, @RequestBody SysUser user) {
 		user.setPassword(null);
 		return super.update(id, user);
+	}
+
+	/**
+	 * 重置密码
+	 *
+	 * @param id
+	 * @param data
+	 * @return
+	 */
+	@PutMapping("/{id}/resetPwd")
+	public ResponseData<Boolean> resetPwd(@PathVariable Long id, Map<String, String> data) {
+		String password = Optional.ofNullable(data.get("password")).orElse(RESET_PASSWORD);
+		if (Validator.isNull(password)) {
+			throw new BusinessException("密码不能为空");
+		}
+		entityService.updatePwd(id, password);
+		return ResponseData.of(true);
 	}
 
 	/**

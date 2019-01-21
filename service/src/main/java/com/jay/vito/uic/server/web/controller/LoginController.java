@@ -5,7 +5,6 @@ import com.jay.vito.common.exception.ErrorCodes;
 import com.jay.vito.common.exception.HttpBadRequestException;
 import com.jay.vito.common.exception.HttpException;
 import com.jay.vito.common.exception.HttpUnauthorizedException;
-import com.jay.vito.common.util.bean.BeanUtil;
 import com.jay.vito.common.util.string.CodeGenerateUtil;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
@@ -52,7 +51,7 @@ public class LoginController {
 	@IgnoreUserAuth
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public AuthResponse login(@RequestBody SysUser user) {
-		SysUser loginUser = sysUserService.findByLoginName(user.getLoginName());
+		SysUser loginUser = sysUserService.getByLoginName(user.getLoginName());
 		if (Validator.isNull(loginUser)) {
 			throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
 		} else {
@@ -123,9 +122,8 @@ public class LoginController {
 		if (!validMessage.equals(messageValidCode)) {
 			throw new HttpBadRequestException("验证码错误", "INVALID_MESSAGE_VALIDCODE");
 		}
-		SysUser sysUser = new SysUser();
-		BeanUtil.copyProperties(sysUser, sysUserVo);
-		boolean result = sysUserService.updatePwd(sysUser);
+		SysUser sysUser = sysUserService.getByMobile(sysUserVo.getMobile());
+		boolean result = sysUserService.updatePwd(sysUser.getId(), sysUserVo.getPassword());
 		return result;
 	}
 

@@ -21,14 +21,14 @@ public class SysUserServiceTests extends ApplicationTests {
 
     @Test
     public void testFindByLoginName() {
-        SysUser user = sysUserService.findByLoginName("zxm2");
+        SysUser user = sysUserService.getByLoginName("zxm2");
         Assert.assertNotNull(user);
         Assert.assertEquals(user.getId().longValue(), 1L);
     }
 
     @Test
     public void testFindUserResources() {
-        SysUser user = sysUserService.findByLoginName("zxm");
+        SysUser user = sysUserService.getByLoginName("zxm");
         Set<String> resourceCodes = sysUserService.findUserResources(user.getId());
         System.out.println(resourceCodes);
     }

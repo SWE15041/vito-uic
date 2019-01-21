@@ -7,17 +7,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysUserRepository extends MyJpaRepository<SysUser, Long> {
 
-    SysUser findByLoginName(String loginName);
+	SysUser findFirstByLoginNameAndGroupId(String loginName, Long groupId);
 
-    boolean existsByMobile(String mobile);
+	SysUser findFirstByMobileAndGroupId(String mobile, Long groupId);
 
-    boolean existsByLoginName(String loginName);
+	boolean existsByMobileAndGroupId(String mobile, Long groupId);
 
-    SysUser findByMobile(String mobile);
+	boolean existsByLoginNameAndGroupId(String loginName, Long groupId);
 
-    SysUser findByWechatOpenId(String wechatOpenId);
-
-    boolean existsByWechatOpenId(String wechatOpenId);
-
-    boolean existsByWechatOpenIdAndMobile(String wechatOpenId, String mobile);
 }

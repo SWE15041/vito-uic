@@ -12,19 +12,54 @@ import java.util.Set;
  */
 public interface SysUserService extends EntityCRUDService<SysUser, Long> {
 
-    SysUser findByLoginName(String loginName);
+	/**
+	 * 根据登录名获取用户
+	 *
+	 * @param loginName
+	 * @return
+	 */
+	SysUser getByLoginName(String loginName);
 
-    Set<String> findUserResources(Long userId);
+	/**
+	 * 获取用户所有资源编码
+	 *
+	 * @param userId
+	 * @return
+	 */
+	Set<String> findUserResources(Long userId);
 
-    boolean updatePwd(SysUser sysUser);
+	/**
+	 * 更新密码
+	 *
+	 * @param id  用户id
+	 * @param pwd 新密码
+	 * @return
+	 */
+	boolean updatePwd(Long id, String pwd);
 
-    Long getIdByLoginName(String loginName);
+	/**
+	 * 根据手机号查找用户
+	 *
+	 * @param mobile
+	 * @return
+	 */
+	SysUser getByMobile(String mobile);
 
-    boolean isManager(Long userId);
+	/**
+	 * 是否管理员
+	 *
+	 * @param userId
+	 * @return
+	 */
+	boolean isManager(Long userId);
 
-    boolean isRoleCode(Long userId, String codeType);
+	/**
+	 * 是否包含指定角色
+	 *
+	 * @param userId
+	 * @param roleCode
+	 * @return
+	 */
+	boolean containRoleCode(Long userId, String roleCode);
 
-    SysUser existsOpenId(String openId);
-
-    SysUser bind(String mobile, String openId);
 }
