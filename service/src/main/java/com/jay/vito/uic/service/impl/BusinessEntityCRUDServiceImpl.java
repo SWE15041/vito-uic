@@ -1,6 +1,5 @@
 package com.jay.vito.uic.service.impl;
 
-import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.storage.service.EntityCRUDServiceImpl;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.domain.BaseBusinessEntity;
@@ -11,11 +10,11 @@ public abstract class BusinessEntityCRUDServiceImpl<T extends BaseBusinessEntity
 
     @Override
     public T save(T entity) {
-        if (Validator.isNull(entity.getCreateUser())) {
+        if (entity.getCreateUser() == null) {
             entity.setCreateUser(UserContextHolder.getCurrentUserId());
         }
 
-        if (Validator.isNull(entity.getGroupId())) {
+        if (entity.getGroupId() == null) {
             entity.setGroupId(UserContextHolder.getCurrentGroupId());
         }
         return super.save(entity);
