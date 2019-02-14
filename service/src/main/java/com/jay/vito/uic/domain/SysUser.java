@@ -7,6 +7,7 @@ package com.jay.vito.uic.domain;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.uic.constant.UserSex;
+import com.jay.vito.uic.constant.UserType;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -97,6 +98,16 @@ public class SysUser extends BaseBusinessEntity<Long> {
     private Set<String> roleCodes = new HashSet<>();
     private Set<Long> roleIds = new HashSet<>();
     private Set<String> resourceCodes = new HashSet<>();
+
+    private UserType userType ;
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
 
 //    /**
 //     * 短信验证码
@@ -272,6 +283,7 @@ public class SysUser extends BaseBusinessEntity<Long> {
             this.roleIds.add(roleId);
         }
     }
+
 
 //    public String getMessageValidCode() {
 //        return messageValidCode;
