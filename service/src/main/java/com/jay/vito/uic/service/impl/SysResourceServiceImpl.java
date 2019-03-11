@@ -1,6 +1,7 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.constant.ResourceType;
 import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.domain.SysResourceRepository;
@@ -101,5 +102,17 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
             }
         }
         return resourceIds;
+    }
+
+    @Override
+    public List<SysResource> getAllResources() {
+        Long currentUserId = UserContextHolder.getCurrentUserId();
+        //如果该用户是管理员，则返回所有的资源
+        boolean manager = sysUserService.isManager(currentUserId);
+        if (manager) {
+            List<SysResource> manResources = sysResourceRepository.findByEnable(YesNoEnum.YES);
+            return manResources;
+        }
+        return null;
     }
 }
