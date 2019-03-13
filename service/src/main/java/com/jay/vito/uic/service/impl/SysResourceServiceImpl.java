@@ -1,18 +1,18 @@
 package com.jay.vito.uic.service.impl;
 
 import com.jay.vito.common.model.enums.YesNoEnum;
+import com.jay.vito.common.util.validate.Validator;
 import com.jay.vito.uic.client.core.UserContextHolder;
 import com.jay.vito.uic.constant.ResourceType;
 import com.jay.vito.uic.domain.SysResource;
 import com.jay.vito.uic.domain.SysResourceRepository;
 import com.jay.vito.uic.service.SysResourceService;
 import com.jay.vito.uic.service.SysUserService;
+import com.jay.vito.uic.web.vo.ResourceNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 作者: zhaixm
@@ -114,5 +114,41 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
             return manResources;
         }
         return null;
+    }
+
+    public List<ResourceNode> sortResources(List<SysResource> resources) {
+
+        Map<Long, ResourceNode> resourceNodeMap = new HashMap<>();
+        resources.forEach(resource -> {
+            ResourceNode node = new ResourceNode();
+            node.setId(resource.getId());
+            node.setPid(resource.getParentId());
+            node.setName(resource.getName());
+            node.setSortNo(resource.getSortNo());
+            String icon = "glyphicon glyphicon-th-large";
+            ResourceType resourceType = Validator.isNotNull(resource.getResourceType()) ? resource.getResourceType() : ResourceType.FUNC;
+            switch (resourceType) {
+                case MODULE:
+                    icon = "glyphicon glyphicon-book";
+                    break;
+                case FUNC:
+                    icon = "glyphicon glyphicon-cog";
+                    break;
+            }
+            node.setIcon(icon);
+            resourceNodeMap.put(resource.getId(), node);
+        });
+        List<ResourceNode> rootNodes = new ArrayList<>();
+        resourceNodeMap.entrySet().forEach(entry -> {
+            ResourceNode node = entry.getValue();
+            Long pid = node.getPid();
+            if (Validator.isNotNull(pid)) {
+                ResourceNode pNode = resourceNodeMap.get(pid);
+                pNode.addChild(node);
+            } else {
+                rootNodes.add(node);
+            }
+        });
+        return rootNodes;
     }
 }

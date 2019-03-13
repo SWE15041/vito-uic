@@ -3,6 +3,7 @@ package com.jay.vito.uic.service;
 import com.jay.vito.storage.service.EntityCRUDService;
 import com.jay.vito.uic.constant.ResourceType;
 import com.jay.vito.uic.domain.SysResource;
+import com.jay.vito.uic.web.vo.ResourceNode;
 
 import java.util.List;
 
@@ -24,4 +25,12 @@ public interface SysResourceService extends EntityCRUDService<SysResource, Long>
     List<Long> getResourceIds(Long userId);
 
     List<SysResource> getAllResources();
+
+    /**
+     * 给资源排序
+     * @param resources
+     * @return
+     */
+    List<ResourceNode> sortResources(List<SysResource> resources);
+
 }
