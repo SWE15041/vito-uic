@@ -116,6 +116,7 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
         return null;
     }
 
+    @Override
     public List<ResourceNode> sortResources(List<SysResource> resources) {
 
         Map<Long, ResourceNode> resourceNodeMap = new HashMap<>();
@@ -126,6 +127,8 @@ public class SysResourceServiceImpl extends BusinessEntityCRUDServiceImpl<SysRes
             node.setName(resource.getName());
             node.setSortNo(resource.getSortNo());
             String icon = "glyphicon glyphicon-th-large";
+            node.setUrl(resource.getUrl());
+            node.setCode(resource.getCode());
             ResourceType resourceType = Validator.isNotNull(resource.getResourceType()) ? resource.getResourceType() : ResourceType.FUNC;
             switch (resourceType) {
                 case MODULE:
