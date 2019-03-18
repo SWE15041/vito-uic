@@ -1,10 +1,8 @@
 package com.jay.vito.uic.server.web.controller;
 
 import com.google.common.collect.ImmutableMap;
-import com.jay.vito.common.exception.ErrorCodes;
-import com.jay.vito.common.exception.HttpBadRequestException;
-import com.jay.vito.common.exception.HttpException;
-import com.jay.vito.common.exception.HttpUnauthorizedException;
+import com.jay.vito.common.exception.*;
+import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.string.CodeGenerateUtil;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
@@ -54,24 +52,29 @@ public class LoginController {
 		SysUser loginUser = sysUserService.getByLoginName(user.getLoginName());
 		if (Validator.isNull(loginUser)) {
 			throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
+		}
+		if (loginUser.getEnable() == YesNoEnum.NO) {
+			throw new BusinessException("该用户已被禁用");
+		}
+		if (loginUser.getLoginable() == YesNoEnum.NO) {
+			throw new BusinessException("该用户没有登录权限");
+		}
+		if (MD5EncryptUtil.encrypt(user.getPassword()).equals(loginUser.getPassword())) {
+			TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
+			tokenData.setManager(loginUser.manager());
+			tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
+			String token = TokenUtil.genToken(tokenData);
+			AuthResponse authResp = new AuthResponse();
+			authResp.setToken("Bearer " + token);
+			authResp.setUserId(loginUser.getId());
+			authResp.setUserName(loginUser.getName());
+			authResp.setManager(loginUser.manager());
+			// 获取用户分配的应用及相关资源
+			Set<String> resources = sysUserService.findUserResources(loginUser.getId());
+			authResp.setResources(resources);
+			return authResp;
 		} else {
-			if (MD5EncryptUtil.encrypt(user.getPassword()).equals(loginUser.getPassword())) {
-				TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
-				tokenData.setManager(loginUser.manager());
-				tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
-				String token = TokenUtil.genToken(tokenData);
-				AuthResponse authResp = new AuthResponse();
-				authResp.setToken("Bearer " + token);
-				authResp.setUserId(loginUser.getId());
-				authResp.setUserName(loginUser.getName());
-				authResp.setManager(loginUser.manager());
-				// 获取用户分配的应用及相关资源
-				Set<String> resources = sysUserService.findUserResources(loginUser.getId());
-				authResp.setResources(resources);
-				return authResp;
-			} else {
-				throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
-			}
+			throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
 		}
 	}
 
