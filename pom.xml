@@ -16,7 +16,7 @@
 
     <properties>
         <uic.version>2.0.20190318-SNAPSHOT</uic.version>
-        <vito.version>2.0.20190117-SNAPSHOT</vito.version>
+        <vito.version>2.0.20190307-SNAPSHOT</vito.version>
     </properties>
 
     <modules>
