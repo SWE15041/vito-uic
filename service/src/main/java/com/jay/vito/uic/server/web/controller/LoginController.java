@@ -60,15 +60,7 @@ public class LoginController {
 			throw new BusinessException("该用户没有登录权限");
 		}
 		if (MD5EncryptUtil.encrypt(user.getPassword()).equals(loginUser.getPassword())) {
-			TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
-			tokenData.setManager(loginUser.manager());
-			tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
-			String token = TokenUtil.genToken(tokenData);
-			AuthResponse authResp = new AuthResponse();
-			authResp.setToken("Bearer " + token);
-			authResp.setUserId(loginUser.getId());
-			authResp.setUserName(loginUser.getName());
-			authResp.setManager(loginUser.manager());
+			AuthResponse authResp = genTokenResponse(loginUser);
 			// 获取用户分配的应用及相关资源
 			Set<String> resources = sysUserService.findUserResources(loginUser.getId());
 			authResp.setResources(resources);
@@ -76,6 +68,37 @@ public class LoginController {
 		} else {
 			throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
 		}
+	}
+
+	/**
+	 * 生成token返回数据
+	 *
+	 * @param loginUser
+	 * @return
+	 */
+	private AuthResponse genTokenResponse(SysUser loginUser) {
+		TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
+		tokenData.setManager(loginUser.manager());
+		tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
+		String token = TokenUtil.genToken(tokenData);
+		AuthResponse authResp = new AuthResponse();
+		authResp.setToken("Bearer " + token);
+		authResp.setUserId(loginUser.getId());
+		authResp.setUserName(loginUser.getName());
+		authResp.setManager(loginUser.manager());
+		return authResp;
+	}
+
+	/**
+	 * 刷新token
+	 *
+	 * @return
+	 */
+	@GetMapping("/token/refresh")
+	public AuthResponse refreshToken() {
+		SysUser sysUser = sysUserService.get(UserContextHolder.getCurrentUserId());
+		AuthResponse authResponse = genTokenResponse(sysUser);
+		return authResponse;
 	}
 
 	/**
