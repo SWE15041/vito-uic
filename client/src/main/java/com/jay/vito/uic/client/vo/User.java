@@ -4,6 +4,7 @@
 package com.jay.vito.uic.client.vo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -19,8 +20,10 @@ import java.util.Set;
 public class User {
 
     protected Long id;
-    private Date createTime;
-    private Date updateTime;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date updateTime;
     private String updateKey;
     private Long userId;
     private Long groupId;

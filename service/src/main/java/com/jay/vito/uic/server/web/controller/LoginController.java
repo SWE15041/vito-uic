@@ -1,11 +1,8 @@
 package com.jay.vito.uic.server.web.controller;
 
 import com.google.common.collect.ImmutableMap;
-import com.jay.vito.common.exception.ErrorCodes;
-import com.jay.vito.common.exception.HttpBadRequestException;
-import com.jay.vito.common.exception.HttpException;
-import com.jay.vito.common.exception.HttpUnauthorizedException;
-import com.jay.vito.common.util.bean.BeanUtil;
+import com.jay.vito.common.exception.*;
+import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.string.CodeGenerateUtil;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
 import com.jay.vito.common.util.validate.Validator;
@@ -52,28 +49,56 @@ public class LoginController {
 	@IgnoreUserAuth
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public AuthResponse login(@RequestBody SysUser user) {
-		SysUser loginUser = sysUserService.findByLoginName(user.getLoginName());
+		SysUser loginUser = sysUserService.getByLoginName(user.getLoginName());
 		if (Validator.isNull(loginUser)) {
 			throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
-		} else {
-			if (MD5EncryptUtil.encrypt(user.getPassword()).equals(loginUser.getPassword())) {
-				TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
-				tokenData.setManager(loginUser.manager());
-				tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
-				String token = TokenUtil.genToken(tokenData);
-				AuthResponse authResp = new AuthResponse();
-				authResp.setToken("Bearer " + token);
-				authResp.setUserId(loginUser.getId());
-				authResp.setUserName(loginUser.getName());
-				authResp.setManager(loginUser.manager());
-				// 获取用户分配的应用及相关资源
-				Set<String> resources = sysUserService.findUserResources(loginUser.getId());
-				authResp.setResources(resources);
-				return authResp;
-			} else {
-				throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
-			}
 		}
+		if (loginUser.getEnable() == YesNoEnum.NO) {
+			throw new BusinessException("该用户已被禁用");
+		}
+		if (loginUser.getLoginable() == YesNoEnum.NO) {
+			throw new BusinessException("该用户没有登录权限");
+		}
+		if (MD5EncryptUtil.encrypt(user.getPassword()).equals(loginUser.getPassword())) {
+			AuthResponse authResp = genTokenResponse(loginUser);
+			// 获取用户分配的应用及相关资源
+			Set<String> resources = sysUserService.findUserResources(loginUser.getId());
+			authResp.setResources(resources);
+			return authResp;
+		} else {
+			throw HttpException.of(ErrorCodes.INVALID_USERNAME_PASSWORD);
+		}
+	}
+
+	/**
+	 * 生成token返回数据
+	 *
+	 * @param loginUser
+	 * @return
+	 */
+	private AuthResponse genTokenResponse(SysUser loginUser) {
+		TokenData tokenData = new TokenData(loginUser.getId(), loginUser.getGroupId());
+		tokenData.setManager(loginUser.manager());
+		tokenData.setUicDomain(SystemDataHolder.getParam(SystemParamKeys.UIC_DOMAIN, String.class));
+		String token = TokenUtil.genToken(tokenData);
+		AuthResponse authResp = new AuthResponse();
+		authResp.setToken("Bearer " + token);
+		authResp.setUserId(loginUser.getId());
+		authResp.setUserName(loginUser.getName());
+		authResp.setManager(loginUser.manager());
+		return authResp;
+	}
+
+	/**
+	 * 刷新token
+	 *
+	 * @return
+	 */
+	@GetMapping("/token/refresh")
+	public AuthResponse refreshToken() {
+		SysUser sysUser = sysUserService.get(UserContextHolder.getCurrentUserId());
+		AuthResponse authResponse = genTokenResponse(sysUser);
+		return authResponse;
 	}
 
 	/**
@@ -123,9 +148,8 @@ public class LoginController {
 		if (!validMessage.equals(messageValidCode)) {
 			throw new HttpBadRequestException("验证码错误", "INVALID_MESSAGE_VALIDCODE");
 		}
-		SysUser sysUser = new SysUser();
-		BeanUtil.copyProperties(sysUser, sysUserVo);
-		boolean result = sysUserService.updatePwd(sysUser);
+		SysUser sysUser = sysUserService.getByMobile(sysUserVo.getMobile());
+		boolean result = sysUserService.updatePwd(sysUser.getId(), sysUserVo.getPassword());
 		return result;
 	}
 

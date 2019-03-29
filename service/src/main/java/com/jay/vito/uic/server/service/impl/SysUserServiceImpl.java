@@ -1,5 +1,6 @@
 package com.jay.vito.uic.server.service.impl;
 
+import com.jay.vito.common.exception.BusinessException;
 import com.jay.vito.common.exception.HttpBadRequestException;
 import com.jay.vito.common.model.enums.YesNoEnum;
 import com.jay.vito.common.util.string.encrypt.MD5EncryptUtil;
@@ -14,16 +15,16 @@ import com.jay.vito.uic.server.service.SysUserRoleService;
 import com.jay.vito.uic.server.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * 作者: zhaixm
- * 日期: 2017/11/23 18:16
- * 描述:
+ * 用户服务实现
+ *
+ * @author zhaixm
+ * @date 2017/11/23 18:16
  */
 public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, Long> implements SysUserService {
 
@@ -37,8 +38,13 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 	private SysUserRepository sysUserRepository;
 
 	@Override
-	public SysUser findByLoginName(String loginName) {
-		return sysUserRepository.findByLoginName(loginName);
+	public SysUser getByLoginName(String loginName) {
+		return sysUserRepository.findFirstByLoginNameAndGroupId(loginName, UserContextHolder.getCurrentGroupId());
+	}
+
+	@Override
+	public SysUser getByMobile(String mobile) {
+		return sysUserRepository.findFirstByMobileAndGroupId(mobile, UserContextHolder.getCurrentGroupId());
 	}
 
 	@Override
@@ -54,6 +60,9 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 	@Override
 	public SysUser get(Long id) {
 		SysUser user = super.get(id);
+		if (user == null) {
+			throw new BusinessException("用户不存在");
+		}
 		List<Long> userRoles = sysUserRoleService.findUserRoles(id);
 		user.setRoleIds(new HashSet<>(userRoles));
 		return user;
@@ -62,11 +71,11 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 	@Override
 	public SysUser save(SysUser user) {
 		String mobile = user.getMobile();
-		boolean existsByMobile = sysUserRepository.existsByMobile(mobile);
+		boolean existsByMobile = sysUserRepository.existsByMobileAndGroupId(mobile, UserContextHolder.getCurrentGroupId());
 		if (existsByMobile) {
 			throw new HttpBadRequestException("此手机号已注册过账户");
 		}
-		boolean existsByLoginName = sysUserRepository.existsByLoginName(user.getLoginName());
+		boolean existsByLoginName = sysUserRepository.existsByLoginNameAndGroupId(user.getLoginName(), UserContextHolder.getCurrentGroupId());
 		if (existsByLoginName) {
 			throw new HttpBadRequestException("登录名已存在");
 		}
@@ -81,7 +90,11 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 		return super.save(user);
 	}
 
-
+	/**
+	 * 处理用户角色关联
+	 *
+	 * @param user
+	 */
 	private void handleUserRoles(SysUser user) {
 		Long currentGroupId = UserContextHolder.getCurrentGroupId();
 		if (Validator.isNotNull(user.getId())) {
@@ -101,22 +114,16 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 	}
 
 	@Override
-	public boolean updatePwd(SysUser user) {
-		SysUser sysUser = sysUserRepository.findByMobile(user.getMobile());
+	public boolean updatePwd(Long id, String pwd) {
+		SysUser sysUser = super.get(id);
 		if (sysUser == null) {
-			throw new RuntimeException("该手机号未注册使用过");
+			throw new BusinessException("该用户不存在");
 		}
-		sysUser.setPassword(MD5EncryptUtil.encrypt(user.getPassword()));
+		sysUser.setPassword(MD5EncryptUtil.encrypt(pwd));
 		super.update(sysUser);
 		return true;
 	}
 
-	@Override
-	public Long getIdByLoginName(String loginName) {
-		SysUser sysUser = sysUserRepository.findByLoginName(loginName);
-		Long userId = sysUser.getId();
-		return userId;
-	}
 
 	@Override
 	public boolean isManager(Long userId) {
@@ -135,48 +142,24 @@ public class SysUserServiceImpl extends BusinessEntityCRUDServiceImpl<SysUser, L
 	 * 如果用户编号为userId的用户包含codeType类型的角色编码；则返回true;
 	 *
 	 * @param userId
-	 * @param codeType
+	 * @param roleCode
 	 * @return
 	 */
 	@Override
-	public boolean isRoleCode(Long userId, String codeType) {
+	public boolean containRoleCode(Long userId, String roleCode) {
 		List<String> roleCodes = sysUserMapper.queryUserRoles(userId);
-		if (roleCodes.contains(codeType)) {
+		if (roleCodes.contains(roleCode)) {
 			return true;
 		}
-//        for (String roleCode : roleCodes) {
-//            if(roleCode.equals(codeType)){
-//                return true;
-//            }
-//        }
 		return false;
 	}
 
 	@Override
-	public SysUser existsOpenId(String openId) {
-		boolean existsOpenId = sysUserRepository.existsByWechatOpenId(openId);
-		if (existsOpenId) {
-			SysUser sysUser = sysUserRepository.findByWechatOpenId(openId);
-			return sysUser;
+	public void delete(Long id) {
+		if (isManager(id)) {
+			throw new BusinessException("管理员为内置用户，不能删除");
 		}
-		return null;
-	}
-
-	@Transactional(rollbackOn = Exception.class)
-	@Override
-	public SysUser bind(String mobile, String openId) {
-		//判断用户的openId是否绑定手机号
-		boolean exists = sysUserRepository.existsByWechatOpenIdAndMobile(openId, mobile);
-		if (exists) {
-			throw new RuntimeException("用户已绑定");
-		}
-		SysUser user = sysUserRepository.findByMobile(mobile);
-		if (user == null) {
-			throw new RuntimeException("用户不存在");
-		}
-		user.setWechatOpenId(openId);
-		update(user);
-		return user;
+		super.delete(id);
 	}
 
 	public static void main(String[] args) {
