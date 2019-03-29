@@ -7,7 +7,6 @@ import com.jay.vito.uic.client.core.UserContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,35 +19,11 @@ import static com.jay.vito.uic.client.core.TokenUtil.parseToken;
  *
  * @author zhaixm
  */
-public class UserAuthInterceptor extends HandlerInterceptorAdapter {
+public class UserAuthInterceptor extends BaseAuthInterceptor {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	protected String uicDomain;
 	protected String appDomain;
-
-	/**
-	 * 是否忽略用户认证
-	 *
-	 * @param request
-	 * @param handlerMethod
-	 * @return
-	 */
-	protected boolean isIgnore(HttpServletRequest request, HandlerMethod handlerMethod) {
-		// options方法不拦截
-		if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-			return true;
-		}
-		// 有配置该注解，不进行认证拦截
-		IgnoreUserAuth ignoreAnnotation = handlerMethod.getBeanType().getAnnotation(IgnoreUserAuth.class);
-		if (ignoreAnnotation == null) {
-			ignoreAnnotation = handlerMethod.getMethodAnnotation(IgnoreUserAuth.class);
-		}
-		if (ignoreAnnotation == null) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
