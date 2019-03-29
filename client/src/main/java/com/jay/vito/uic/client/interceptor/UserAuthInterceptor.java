@@ -38,6 +38,7 @@ public class UserAuthInterceptor extends BaseAuthInterceptor {
 				try {
 					UserContext userContext = parseToken(token, uicDomain, appDomain);
 					UserContextHolder.setUserContext(userContext);
+					return true;
 				} catch (Exception e) {
 					logger.error("token解析失败", e);
 					throw new HttpUnauthorizedException("token解析失败");
@@ -46,7 +47,7 @@ public class UserAuthInterceptor extends BaseAuthInterceptor {
 				throw new HttpUnauthorizedException("token解析失败");
 			}
 		}
-		return true;
+		return super.preHandle(request, response, handler);
 	}
 
 	@Override
