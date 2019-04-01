@@ -11,7 +11,7 @@
         <where>
             <if test="name != null and name != ''">
                 <bind name="name_pattern" value="'%' + name + '%'"/>
-               and s.name = #{name_pattern}
+               and s.name like #{name_pattern}
             </if>
         </where>
     </sql>
